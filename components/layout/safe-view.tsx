@@ -8,5 +8,5 @@ export default function SafeView({
     children,
     ...props
 }: { children: ReactNode } & SafeAreaViewProps) {
-    return <SafeAreaView className="flex-1">{children}</SafeAreaView>;
+    return <SafeAreaView  className="flex-1">{children}</SafeAreaView>;
 }

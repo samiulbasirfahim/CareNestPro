@@ -1,6 +1,15 @@
 import { Stack } from "expo-router";
-import { canGoBack } from "expo-router/build/global-state/routing";
+import { StatusBar } from "expo-status-bar";
 
 export default function AuthLayout() {
-    return <Stack />
-} 
+    return (
+        <>
+            <StatusBar style="dark" />
+            <Stack
+                screenOptions={{
+                    headerShown: false,
+                }}
+            />
+        </>
+    );
+}

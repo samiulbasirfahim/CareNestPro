@@ -27,7 +27,7 @@ export default function PaginationDots({
             {widths.map((width, i) => (
                 <Animated.View
                     key={i}
-                    className={`${currentIndex !== i ? "h-3 bg-accent rounded-full" : "h-3 bg-primary rounded-lg"}`}
+                    className={`${currentIndex !== i ? "h-3 bg-[#C5EEFB] rounded-full" : "h-3 bg-primary rounded-lg"}`}
                     style={{ width: width }}
                 />
             ))}
