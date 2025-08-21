@@ -1,7 +1,9 @@
-import OTPImage from "@/assets/images/otp-image.png";
+import SUCCESSImage from "@/assets/images/success-image.png";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { router, Stack } from "expo-router";
 import SafeView from "@/components/layout/safe-view";
+import { SvgUri } from "react-native-svg";
+import SuccessIcon from "@/assets/svgs/success";
 
 export default function Page() {
     return (
@@ -13,7 +15,12 @@ export default function Page() {
             />
             <SafeView>
                 <View className="flex-1 bg-white p-6 gap-6 items-center pt-8">
-                    <Image width={0} className="h-auto w-2/3" source={OTPImage} />
+                    {
+                        // <Image width={0} className="h-auto w-2/3" source={SUCCESSImage} />
+                    }
+
+                    <SuccessIcon />
+
                     <Text className="text-4xl text-title text-center">
                         Password Reset Succesfull
                     </Text>

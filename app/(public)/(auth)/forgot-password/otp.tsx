@@ -2,11 +2,15 @@ import { OtpInput } from "react-native-otp-entry";
 import OTPImage from "@/assets/images/otp-image.png";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
+import OtpIcon from "@/assets/svgs/otp";
 
 export default function Page() {
     return (
         <View className="flex-1 bg-white p-6 gap-6 items-center">
-            <Image width={0} className="h-auto w-2/3" source={OTPImage} />
+            {
+                // <Image width={0} className="h-auto w-2/3" source={OTPImage} />
+            }
+            <OtpIcon />
             <Text className="text-4xl text-title">OTP Verification</Text>
             <Text className="text-xl text-foreground text-center">
                 Enter the OTP sent to{" "}
