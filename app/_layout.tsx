@@ -1,4 +1,4 @@
-import { router, Stack } from "expo-router";
+import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import { Host } from "react-native-portalize";
 import "./global.css";
@@ -7,7 +7,7 @@ export default function RootLayout() {
     const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
-        if (isReady) router.replace("/on-boarding/details");
+        // if (isReady) router.replace("/on-boarding/details");
         // if (isReady) router.replace("/splash");
     }, [isReady]);
 

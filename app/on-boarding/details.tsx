@@ -9,7 +9,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 export default function Page() {
 
-    const [showModal, setShowModal] = useState<boolean>(true)
+    const [showModal, setShowModal] = useState<boolean>(false)
 
     return (
         <>

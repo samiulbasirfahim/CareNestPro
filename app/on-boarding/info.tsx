@@ -1,13 +1,9 @@
-import { EnableLocationModal } from "@/components/common/enable-location-modal";
 import DropDown from "@/components/ui/dropdown";
 import { Header } from "@/components/ui/header";
 import { Typography } from "@/components/ui/typography";
-import { useState } from "react";
 import { ScrollView, TouchableOpacity } from "react-native";
 
 export default function Page() {
-
-    const [showModal, setShowModal] = useState<boolean>(true)
 
     return (
         <>
@@ -31,11 +27,6 @@ export default function Page() {
                 </TouchableOpacity>
                 {/* </Link> */}
             </ScrollView>
-            <EnableLocationModal showModal={showModal} onClose={() => {
-
-                setShowModal(false)
-                // router.push("/on-boarding/details")
-            }} />
         </>
     );
 }
