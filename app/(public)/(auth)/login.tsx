@@ -1,5 +1,6 @@
 import SafeView from "@/components/layout/safe-view";
 import { Input, InputPassword } from "@/components/ui/input";
+import { Typography } from "@/components/ui/typography";
 import { Link } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
 
@@ -9,10 +10,10 @@ export default function Page() {
             <SafeView>
                 <View className="p-6 gap-8">
                     <View className="gap-4">
-                        <Text className="text-4xl text-title">Log In</Text>
-                        <Text className="text-xl text-foreground">
+                        <Typography variant="title">Log In</Typography>
+                        <Typography variant="subtitle">
                             Welcome back, Please enter your login details
-                        </Text>
+                        </Typography>
                     </View>
                     <Input label="Email Address" placeholder="Input email address" />
                     <View className="gap-2">

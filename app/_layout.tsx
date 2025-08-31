@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
-import "./global.css";
 import { router, Stack } from "expo-router";
+import { useEffect, useState } from "react";
+import { Host } from "react-native-portalize";
+import "./global.css";
 
 export default function RootLayout() {
     const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
-        // if (isReady) router.replace("/forgot-password/otp");
-        if (isReady) router.replace("/splash");
+        if (isReady) router.replace("/on-boarding/details");
+        // if (isReady) router.replace("/splash");
     }, [isReady]);
 
     useEffect(() => {
@@ -17,8 +18,10 @@ export default function RootLayout() {
     }, []);
 
     return (
-        <Stack>
-            <Stack.Screen name="(public)" options={{ headerShown: false }} />
-        </Stack>
+        <Host>
+            <Stack>
+                <Stack.Screen name="(public)" options={{ headerShown: false }} />
+            </Stack>
+        </Host>
     );
 }
