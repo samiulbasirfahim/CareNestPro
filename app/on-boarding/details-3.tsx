@@ -2,8 +2,7 @@ import DropDown from "@/components/ui/dropdown";
 import { Header } from "@/components/ui/header";
 import { Typography } from "@/components/ui/typography";
 import { useRouter } from "expo-router";
-import { ScrollView, Text, TouchableHighlight, View } from "react-native";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { ScrollView, TouchableHighlight, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Page() {
@@ -16,594 +15,68 @@ export default function Page() {
 				subtitle="Kindly select options to help us understand your preferences"
 			/>
 			<ScrollView
-				className="p-5"
+				className="p-3"
 				contentContainerStyle={{
 					flexGrow: 1,
 					paddingBottom: 40,
 				}}
 			>
 				<View className="w-full flex flex-wrap flex-row gap-1 py-3">
-					<Text className="font-semibold text-black">
-						What qualities matter most to you in a care provider?
-					</Text>
-					<Text>Select the ones that feel right.</Text>
+					<Typography className="font-semibold text-black">
+						What qualities, skills and language would you like your
+						caregiver to possess (optional)?
+						<Typography className="font-normal text-[#808080]">
+							{" "}
+							Select care giver preference.
+						</Typography>
+					</Typography>
 				</View>
 
-				<View className="flex-col gap-4 w-full border rounded-md border-[#E6E6E6] p-4">
-					<View className="w-full flex flex-row gap-6">
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Patient
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Reliable
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Friendly
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-					</View>
-
-					<View className="w-full flex flex-row gap-6">
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Nurthuring
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Empathetic
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Calm
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-					</View>
-
-					<View className="w-full flex flex-row gap-6">
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Observant
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Supportive
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-					</View>
+				<View className="w-full flex flex-row gap-6 py-3">
+					<DropDown
+						list={["Live-In", "Live-Out", "Hybrid"]}
+						title="Personality and Interpersonal Skills"
+						isMulti={true}
+					/>
 				</View>
 
-				<Text className="font-semibold text-black py-3">
-					Choose the experiences that would help the care provider
-					support you better.
-				</Text>
-
-				<View className="flex-col flex-1 flex-wrap gap-4 w-full border rounded-md border-[#E6E6E6] p-4">
-					<View className="w-full flex flex-row gap-6 flex-1 flex-wrap">
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Sleep-in
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Live-in
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-					</View>
-
-					<View className="w-full flex flex-row gap-6 flex-1 flex-wrap">
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Non-smoker
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Cook basic meals
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-					</View>
-
-					<View className="w-full flex flex-row gap-6 flex-1 flex-wrap">
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Help with homework
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Sign language
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-					</View>
-
-					<View className="w-full flex flex-row gap-6 flex-1 flex-wrap">
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Experience with autism
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Can drive
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-					</View>
-
-					<View className="w-full flex flex-1 flex-wrap flex-row gap-6">
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Special needs experience
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Experience with speech delay
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-					</View>
-
-					<View className="w-full flex flex-row gap-6 flex-1 flex-wrap">
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Experience with twins
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Behavioral support
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-					</View>
-
-					<View className="w-full flex flex-row gap-6 flex-1 flex-wrap">
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Speaks Yoruba Fluently
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Willing to live-in
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-					</View>
-
-					<View className="w-full flex flex-row gap-6 flex-1 flex-wrap">
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Speaks Hausa Fluently
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Speaks Igbo Fluently
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-					</View>
-
-					<View className="w-full flex-1 flex-wrap flex flex-row gap-6">
-						<View className="flex-row">
-							<BouncyCheckbox
-								className="flex-row items-center gap-2"
-								size={20}
-								fillColor="#0D99C9"
-								unFillColor="#FFFFFF"
-								textComponent={
-									<Text className="font-medium text-foreground">
-										Speaks French Fluently
-									</Text>
-								}
-								iconStyle={{ borderColor: "#0D99C9" }}
-								innerIconStyle={{
-									borderWidth: 1.5,
-									borderRadius: 3,
-									borderColor: "#CCCCCC",
-								}}
-								textStyle={{ fontFamily: "Inter" }}
-							/>
-						</View>
-					</View>
+				<View className="w-full flex flex-row gap-6 py-3">
+					<DropDown
+						list={[
+							"Fluent in English",
+							"Fluent in French",
+							"Fluent in Spanish",
+							"Fluent in Yoruba",
+							"Fluent in Igbo",
+							"Fluent in Idoma",
+							"Fluent in Edo",
+						]}
+						title="Communication & Language"
+						isMulti={true}
+					/>
 				</View>
 
-				<View className="w-full flex flex-wrap flex-row gap-1 py-3">
-					<Text className="font-semibold text-black">
-						Want your care provider to offer more than one type of
-						care?
-					</Text>
-					<Text>Select an extra category below.</Text>
+				<View className="w-full flex flex-row gap-6 py-3">
+					<DropDown
+						list={[
+							"Experience with Autism",
+							"Experience with ADHD",
+							"Experience with Cerebral Palsy",
+							"Experience with Twins or Multiples",
+							"Experience with Special Needs",
+							"Experience with Speech Delay",
+						]}
+						title="Special Preferences"
+						isMulti={true}
+					/>
 				</View>
 
-				<DropDown
-					list={[
-						"Elderly Care",
-						"Tutoring",
-						"Housekeeping",
-						"Babysitter",
-					]}
-					title="Select option"
-				/>
+				<View className="w-full flex flex-row gap-6 py-3">
+					<DropDown
+						list={["Elderly Care", "Tutoring", "Housekeeping"]}
+						title="Want your care provider to offer more than one type of care?"
+					/>
+				</View>
 
 				<TouchableHighlight
 					onPress={() => router.push("/on-boarding/details-4")}

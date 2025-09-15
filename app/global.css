@@ -4,5 +4,5 @@
 @tailwind utilities;
 
 @base {
-  --font-display: "Inter", sans-serif;
+	--font-display: "Inter", sans-serif;
 }

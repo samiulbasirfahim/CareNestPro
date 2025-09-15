@@ -1,11 +1,20 @@
+import DateInput from "@/components/ui/date-input";
 import DropDown from "@/components/ui/dropdown";
 import { Header } from "@/components/ui/header";
 import { Typography } from "@/components/ui/typography";
 import { useRouter } from "expo-router";
-import { SafeAreaView, ScrollView, TouchableHighlight } from "react-native";
+import { useState } from "react";
+import {
+	SafeAreaView,
+	ScrollView,
+	TouchableHighlight,
+	View,
+} from "react-native";
 
 export default function Page() {
 	const router = useRouter();
+
+	const [ageOfChildOne, setAgeOfChildOne] = useState<Date | null>(null);
 
 	return (
 		<SafeAreaView className="w-full h-full">
@@ -27,10 +36,24 @@ export default function Page() {
 					]}
 					title="Numbers of child(ren) that needs care"
 				/>
-				<DropDown
-					list={["Option 1", "Option 2", "Option 3"]}
-					title="Gender of child 1"
-				/>
+
+				<View className="w-full flex-row gap-3 items-start">
+					<View className="w-[36%] flex-1 flex items-center">
+						<DateInput
+							label="Age of child 1"
+							placeholder="DD-MM-YYYY"
+							value={ageOfChildOne}
+							onChange={setAgeOfChildOne}
+						/>
+					</View>
+
+					<View className="w-[60%] flex-1 flex items-center">
+						<DropDown
+							list={["Option 1", "Option 2", "Option 3"]}
+							title="Gender of child 1"
+						/>
+					</View>
+				</View>
 
 				<TouchableHighlight
 					onPress={() => router.push("/on-boarding/details-3")}
