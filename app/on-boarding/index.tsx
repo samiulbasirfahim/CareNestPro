@@ -64,11 +64,11 @@ export default function Page() {
 							pathname:
 								selectedProvider === "childcare"
 									? "/on-boarding/child-care/details-1"
-									: // : selectedProvider === "elderly"
-										// ? "/on-boarding/elderly/details-1"
-										// : selectedProvider === "tutoring"
-										// ? "/on-boarding/tutoring/details-1"
-										"/splash",
+									: selectedProvider === "elderly"
+										? "/on-boarding/elderly-care/details-1"
+										: // : selectedProvider === "tutoring"
+											// ? "/on-boarding/tutoring/details-1"
+											"/splash",
 						});
 					}}
 				>
