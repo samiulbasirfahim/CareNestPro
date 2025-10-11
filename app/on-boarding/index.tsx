@@ -7,7 +7,10 @@ import { useState } from "react";
 import { SafeAreaView, TouchableHighlight, View } from "react-native";
 
 export default function Page() {
-	const [selected, setSelected] = useState<string>("");
+	const [selectedProvider, setSelectedProvider] = useState<
+		"childcare" | "elderly" | "tutoring" | "housekeeping"
+	>("childcare");
+
 	return (
 		<SafeAreaView className="w-full h-full">
 			<Header
@@ -21,12 +24,15 @@ export default function Page() {
 							image={require("@/assets/images/on-boarding/category/image-1.png")}
 							title="Childcare"
 							subtitle="Find the Right child Care Provider"
-							selected
+							selected={selectedProvider === "childcare"}
+							onPress={() => setSelectedProvider("childcare")}
 						/>
 						<OptionCard
 							image={require("@/assets/images/on-boarding/category/image-2.png")}
 							title="Elderly Care"
 							subtitle="Find Your Perfect Elderly Care provider"
+							selected={selectedProvider === "elderly"}
+							onPress={() => setSelectedProvider("elderly")}
 						/>
 					</View>
 					<View className="gap-4 flex-row">
@@ -34,16 +40,31 @@ export default function Page() {
 							image={require("@/assets/images/on-boarding/category/image-3.png")}
 							title="Tutoring"
 							subtitle="Find Expert Tutors for Every Subject Area"
+							selected={selectedProvider === "tutoring"}
+							onPress={() => setSelectedProvider("tutoring")}
 						/>
 						<OptionCard
 							image={require("@/assets/images/on-boarding/category/image-4.png")}
 							title="HouseKeeping"
 							subtitle="Find Reliable House Keepers"
+							selected={selectedProvider === "housekeeping"}
+							onPress={() => setSelectedProvider("housekeeping")}
 						/>
 					</View>
 				</View>
 
-				<Link href={"/on-boarding/details-1"} asChild>
+				<Link
+					href={
+						selectedProvider === "childcare"
+							? "/on-boarding/child-care/details-1"
+							: // : selectedProvider === "elderly"
+								// ? "/on-boarding/elderly/details-1"
+								// : selectedProvider === "tutoring"
+								// ? "/on-boarding/tutoring/details-1"
+								"/on-boarding/details-1"
+					}
+					asChild
+				>
 					<TouchableHighlight
 						underlayColor={"transparent"}
 						className="bg-primary items-center py-3 rounded-lg w-full"

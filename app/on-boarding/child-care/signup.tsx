@@ -1,0 +1,37 @@
+import SafeView from "@/components/layout/safe-view";
+import { InputPassword } from "@/components/ui/input";
+import { Text, TouchableOpacity, View } from "react-native";
+
+export default function Page() {
+	return (
+		<>
+			<SafeView>
+				<View className="p-6 gap-8">
+					<View className="gap-4">
+						<Text className="text-4xl text-title">Sign Up</Text>
+						<Text className="text-xl text-foreground">
+							Kindly enter your password
+						</Text>
+					</View>
+					<InputPassword
+						label="Password"
+						placeholder="Input Password"
+					/>
+
+					<InputPassword
+						label="Confirm Password"
+						placeholder="Input Password"
+					/>
+
+					<View className="mt-10 items-center gap-2">
+						<TouchableOpacity className="bg-primary items-center py-3 rounded-lg w-full">
+							<Text className="text-center text-lg text-white font-semibold">
+								Sign Up
+							</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
+			</SafeView>
+		</>
+	);
+}
