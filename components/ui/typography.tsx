@@ -24,7 +24,7 @@ export const Typography = ({
 	return (
 		<Text
 			{...props}
-			className={twMerge(variants[variant], className, "leading-normal")}
+			className={twMerge("leading-normal", variants[variant], className)}
 		>
 			{children}
 		</Text>
