@@ -1,3 +1,4 @@
+import { cn } from "@/app/lib";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { CalendarDays } from "lucide-react-native";
 import { useState } from "react";
@@ -14,6 +15,7 @@ interface DateInputProps {
 	placeholder?: string;
 	value?: Date | null;
 	onChange?: (date: Date | null) => void;
+	className?: string;
 }
 
 const DateInput: React.FC<DateInputProps> = ({
@@ -21,6 +23,7 @@ const DateInput: React.FC<DateInputProps> = ({
 	placeholder = "Select date",
 	value,
 	onChange,
+	className,
 }) => {
 	const [date, setDate] = useState<Date>(value || new Date());
 	const [showPicker, setShowPicker] = useState(false);
@@ -45,7 +48,7 @@ const DateInput: React.FC<DateInputProps> = ({
 		<View className="flex flex-col gap-3">
 			<Text className="text-[#4D4D4D] font-medium">{label}</Text>
 			<TouchableHighlight
-				className="border border-[#E6E6E6] rounded-md p-1 px-3 bg-white flex flex-row items-center"
+				className="border border-[#E6E6E6] rounded-md p-1 px-3 bg-transparent flex flex-row items-center"
 				onPress={() => setShowPicker(true)}
 				activeOpacity={0.7}
 				underlayColor={"transparent"}
@@ -58,7 +61,10 @@ const DateInput: React.FC<DateInputProps> = ({
 						editable={false}
 						pointerEvents="none"
 						showSoftInputOnFocus={false}
-						className="flex-1 text-base text-[#999999] font-normal"
+						className={cn(
+							"flex-1 text-base text-[#999999] font-normal",
+							className
+						)}
 					/>
 					<CalendarDays size={20} color="#888" />
 				</View>
