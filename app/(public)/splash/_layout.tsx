@@ -59,7 +59,7 @@ function SplashTabBar({ state, navigation }: MaterialTopTabBarProps) {
 						})}
 						onPress={() => {
 							if (currentIndex === totalPage - 1) {
-								return router.push("/register");
+								return router.push("/login");
 							}
 							goRight();
 						}}
@@ -84,7 +84,7 @@ function SplashTabBar({ state, navigation }: MaterialTopTabBarProps) {
 					className="bg-primary rounded-2xl px-6 py-3 border-2 border-primary"
 					onPress={() => {
 						router.push({
-							pathname: "/register",
+							pathname: "/on-boarding",
 						});
 					}}
 				>
