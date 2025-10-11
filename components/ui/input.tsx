@@ -14,7 +14,7 @@ export function Input({ label, labelStyle, inputStyle, ...props }: Props) {
 	return (
 		<View className="items-start gap-2 w-full">
 			<Text
-				className={twMerge("text-title text-lg", labelStyle)}
+				className={twMerge("text-title font-semibold", labelStyle)}
 				nativeID={id}
 			>
 				{label}
