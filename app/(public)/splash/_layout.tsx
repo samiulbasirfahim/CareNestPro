@@ -73,7 +73,7 @@ function SplashTabBar({ state, navigation }: MaterialTopTabBarProps) {
 				</Text>
 
 				<TouchableHighlight
-					className="bg-primary rounded-2xl px-6 py-3"
+					className="bg-primary rounded-2xl px-6 py-3 border-2 border-primary"
 					underlayColor={"transparent"}
 					onPress={() => {
 						router.push({
@@ -87,7 +87,7 @@ function SplashTabBar({ state, navigation }: MaterialTopTabBarProps) {
 				</TouchableHighlight>
 
 				<TouchableHighlight
-					className="bg-white rounded-2xl px-6 py-3"
+					className="bg-white rounded-2xl px-6 py-3 border-2 border-white"
 					underlayColor={"transparent"}
 					onPress={() => {
 						router.push({

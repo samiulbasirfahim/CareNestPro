@@ -35,7 +35,7 @@ export default function Page() {
 					<View className="mt-16 items-center gap-2">
 						<TouchableHighlight
 							underlayColor={"transparent"}
-							className="bg-primary items-center py-3 rounded-lg w-full"
+							className="bg-primary items-center py-3 rounded-lg w-full border-2 border-primary"
 						>
 							<Link
 								href={"/on-boarding"}
