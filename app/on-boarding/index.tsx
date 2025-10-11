@@ -66,9 +66,9 @@ export default function Page() {
 									? "/on-boarding/child-care/details-1"
 									: selectedProvider === "elderly"
 										? "/on-boarding/elderly-care/details-1"
-										: // : selectedProvider === "tutoring"
-											// ? "/on-boarding/tutoring/details-1"
-											"/splash",
+										: selectedProvider === "tutoring"
+											? "/on-boarding/tutoring/details-1"
+											: "/splash",
 						});
 					}}
 				>
