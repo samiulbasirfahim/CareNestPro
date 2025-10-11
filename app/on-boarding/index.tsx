@@ -2,9 +2,9 @@ import { OptionCard } from "@/components/common/option-card";
 import SafeView from "@/components/layout/safe-view";
 import { Header } from "@/components/ui/header";
 import { Typography } from "@/components/ui/typography";
-import { Link } from "expo-router";
+import { router } from "expo-router";
 import { useState } from "react";
-import { SafeAreaView, TouchableHighlight, View } from "react-native";
+import { Pressable, SafeAreaView, View } from "react-native";
 
 export default function Page() {
 	const [selectedProvider, setSelectedProvider] = useState<
@@ -53,30 +53,32 @@ export default function Page() {
 					</View>
 				</View>
 
-				<Link
-					href={
-						selectedProvider === "childcare"
-							? "/on-boarding/child-care/details-1"
-							: // : selectedProvider === "elderly"
-								// ? "/on-boarding/elderly/details-1"
-								// : selectedProvider === "tutoring"
-								// ? "/on-boarding/tutoring/details-1"
-								"/on-boarding/details-1"
-					}
-					asChild
+				<Pressable
+					style={({ pressed }) => ({
+						opacity: pressed ? 0.7 : 1,
+						transform: [{ scale: pressed ? 0.98 : 1 }],
+					})}
+					className="bg-primary items-center py-3 rounded-lg w-full border-2 border-primary"
+					onPress={() => {
+						router.push({
+							pathname:
+								selectedProvider === "childcare"
+									? "/on-boarding/child-care/details-1"
+									: // : selectedProvider === "elderly"
+										// ? "/on-boarding/elderly/details-1"
+										// : selectedProvider === "tutoring"
+										// ? "/on-boarding/tutoring/details-1"
+										"/splash",
+						});
+					}}
 				>
-					<TouchableHighlight
-						underlayColor={"transparent"}
-						className="bg-primary items-center py-3 rounded-lg w-full"
+					<Typography
+						variant="subtitle"
+						className="text-center text-lg text-white font-semibold"
 					>
-						<Typography
-							variant="subtitle"
-							className="text-center text-lg text-white font-semibold"
-						>
-							Next
-						</Typography>
-					</TouchableHighlight>
-				</Link>
+						Next
+					</Typography>
+				</Pressable>
 			</SafeView>
 		</SafeAreaView>
 	);

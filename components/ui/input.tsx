@@ -1,12 +1,6 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useId, useState } from "react";
-import {
-	Text,
-	TextInput,
-	TextInputProps,
-	TouchableOpacity,
-	View,
-} from "react-native";
+import { Pressable, Text, TextInput, TextInputProps, View } from "react-native";
 import { twMerge } from "tailwind-merge";
 
 type Props = {
@@ -58,7 +52,11 @@ export function InputPassword({ label, ...props }: Props) {
 						textAlignVertical: "center",
 					}}
 				/>
-				<TouchableOpacity
+				<Pressable
+					style={({ pressed }) => ({
+						opacity: pressed ? 0.7 : 1,
+						transform: [{ scale: pressed ? 0.98 : 1 }],
+					})}
 					onPress={() => setShowPassword((prev) => !prev)}
 					className="absolute right-4"
 				>
@@ -67,7 +65,7 @@ export function InputPassword({ label, ...props }: Props) {
 						size={24}
 						color={"#9b9b9b"}
 					/>
-				</TouchableOpacity>
+				</Pressable>
 			</View>
 		</View>
 	);

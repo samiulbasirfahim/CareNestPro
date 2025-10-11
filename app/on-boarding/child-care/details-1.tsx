@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Typography } from "@/components/ui/typography";
 import { router } from "expo-router";
 import { useState } from "react";
-import { SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
+import { Pressable, SafeAreaView, ScrollView, View } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 export default function Page() {
@@ -70,8 +70,12 @@ export default function Page() {
 				/>
 
 				{/* <Link href={"/on-boarding/details"} asChild> */}
-				<TouchableOpacity
-					className="bg-primary items-center py-3 rounded-lg w-full"
+				<Pressable
+					style={({ pressed }) => ({
+						opacity: pressed ? 0.7 : 1,
+						transform: [{ scale: pressed ? 0.98 : 1 }],
+					})}
+					className="bg-primary items-center py-3 rounded-lg w-full border-2 border-primary"
 					onPress={() => setShowModal(true)}
 				>
 					<Typography
@@ -80,7 +84,7 @@ export default function Page() {
 					>
 						Next
 					</Typography>
-				</TouchableOpacity>
+				</Pressable>
 				{/* </Link> */}
 			</ScrollView>
 			<EnableLocationModal

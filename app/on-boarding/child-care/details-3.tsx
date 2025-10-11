@@ -2,7 +2,7 @@ import DropDown from "@/components/ui/dropdown";
 import { Header } from "@/components/ui/header";
 import { Typography } from "@/components/ui/typography";
 import { useRouter } from "expo-router";
-import { ScrollView, TouchableHighlight, View } from "react-native";
+import { Pressable, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Page() {
@@ -79,11 +79,14 @@ export default function Page() {
 					/>
 				</View>
 
-				<TouchableHighlight
+				<Pressable
+					style={({ pressed }) => ({
+						opacity: pressed ? 0.7 : 1,
+						transform: [{ scale: pressed ? 0.98 : 1 }],
+					})}
 					onPress={() =>
 						router.push("/on-boarding/child-care/details-4")
 					}
-					underlayColor={"transparent"}
 					className="bg-primary items-center py-3 rounded-lg w-full mt-6"
 				>
 					<Typography
@@ -92,7 +95,7 @@ export default function Page() {
 					>
 						Next
 					</Typography>
-				</TouchableHighlight>
+				</Pressable>
 			</ScrollView>
 		</SafeAreaView>
 	);

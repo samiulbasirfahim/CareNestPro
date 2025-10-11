@@ -4,12 +4,7 @@ import { Header } from "@/components/ui/header";
 import { Typography } from "@/components/ui/typography";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import {
-	SafeAreaView,
-	ScrollView,
-	TouchableHighlight,
-	View,
-} from "react-native";
+import { Pressable, SafeAreaView, ScrollView, View } from "react-native";
 
 export default function Page() {
 	const router = useRouter();
@@ -62,11 +57,14 @@ export default function Page() {
 					</View>
 				</View>
 
-				<TouchableHighlight
+				<Pressable
+					style={({ pressed }) => ({
+						opacity: pressed ? 0.7 : 1,
+						transform: [{ scale: pressed ? 0.98 : 1 }],
+					})}
 					onPress={() =>
 						router.push("/on-boarding/child-care/details-3")
 					}
-					underlayColor={"transparent"}
 					className="bg-primary items-center py-3 rounded-lg w-full"
 				>
 					<Typography
@@ -75,7 +73,7 @@ export default function Page() {
 					>
 						Next
 					</Typography>
-				</TouchableHighlight>
+				</Pressable>
 			</ScrollView>
 		</SafeAreaView>
 	);

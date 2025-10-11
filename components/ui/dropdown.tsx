@@ -1,6 +1,6 @@
 import { Check } from "lucide-react-native";
 import React, { useEffect, useState } from "react";
-import { Text, TouchableHighlight, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { Typography } from "./typography";
 
@@ -37,7 +37,11 @@ const MultiSelectComponent = ({
 
 		if (isMulti) {
 			return (
-				<TouchableHighlight
+				<Pressable
+					style={({ pressed }) => ({
+						opacity: pressed ? 0.7 : 1,
+						transform: [{ scale: pressed ? 0.98 : 1 }],
+					})}
 					onPress={() => {
 						// Toggle selection
 						if (isSelected) {
@@ -48,7 +52,6 @@ const MultiSelectComponent = ({
 							setSelected([...selected, item.value]);
 						}
 					}}
-					underlayColor={"transparent"}
 					className="px-4 py-3"
 				>
 					<View className="flex-row items-center justify-start gap-3">
@@ -63,7 +66,7 @@ const MultiSelectComponent = ({
 							{item.label}
 						</Text>
 					</View>
-				</TouchableHighlight>
+				</Pressable>
 			);
 		} else {
 			return (

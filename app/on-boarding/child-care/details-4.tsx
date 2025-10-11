@@ -15,7 +15,6 @@ import {
 	Pressable,
 	ScrollView,
 	Text,
-	TouchableHighlight,
 	useWindowDimensions,
 	View,
 } from "react-native";
@@ -45,9 +44,12 @@ export default function Page() {
 				}}
 			>
 				<View className="w-full h-16 flex-row flex-wrap items-center justify-center gap-3 p-1.5 rounded-md border-[0.5px] border-[#CCCCCC]">
-					<TouchableHighlight
+					<Pressable
+						style={({ pressed }) => ({
+							opacity: pressed ? 0.7 : 1,
+							transform: [{ scale: pressed ? 0.98 : 1 }],
+						})}
 						onPress={() => setActiveTab("reoccuring")}
-						underlayColor={"transparent"}
 						className={twMerge(
 							"h-full w-[48%] flex items-center justify-center p-3 rounded-md",
 							activeTab === "reoccuring"
@@ -67,11 +69,14 @@ export default function Page() {
 								Reoccuring
 							</Text>
 						</View>
-					</TouchableHighlight>
+					</Pressable>
 
-					<TouchableHighlight
+					<Pressable
+						style={({ pressed }) => ({
+							opacity: pressed ? 0.7 : 1,
+							transform: [{ scale: pressed ? 0.98 : 1 }],
+						})}
 						onPress={() => setActiveTab("one-off")}
-						underlayColor={"transparent"}
 						className={twMerge(
 							"h-full w-[48%] flex items-center justify-center p-3 rounded-md",
 							activeTab === "one-off"
@@ -89,14 +94,17 @@ export default function Page() {
 								One - Off
 							</Text>
 						</View>
-					</TouchableHighlight>
+					</Pressable>
 				</View>
 
 				{activeTab === "reoccuring" ? <Reoccuring /> : <OneOff />}
 
-				<TouchableHighlight
+				<Pressable
+					style={({ pressed }) => ({
+						opacity: pressed ? 0.7 : 1,
+						transform: [{ scale: pressed ? 0.98 : 1 }],
+					})}
 					onPress={() => setShowModal(true)}
-					underlayColor={"transparent"}
 					className="bg-primary items-center py-3 rounded-lg w-full mt-6"
 				>
 					<Typography
@@ -105,7 +113,7 @@ export default function Page() {
 					>
 						Next
 					</Typography>
-				</TouchableHighlight>
+				</Pressable>
 			</ScrollView>
 			<SignupModal
 				showModal={showModal}
@@ -178,7 +186,11 @@ const Reoccuring = () => {
 
 				<View className="w-full flex flex-row gap-2 items-center justify-around flex-wrap">
 					{["S", "M", "T", "W", "T", "F", "S"].map((day, index) => (
-						<TouchableHighlight
+						<Pressable
+							style={({ pressed }) => ({
+								opacity: pressed ? 0.7 : 1,
+								transform: [{ scale: pressed ? 0.98 : 1 }],
+							})}
 							key={index}
 							onPress={() => {
 								if (
@@ -196,7 +208,6 @@ const Reoccuring = () => {
 									]);
 								}
 							}}
-							underlayColor={"transparent"}
 						>
 							<View
 								className={cn(
@@ -210,7 +221,7 @@ const Reoccuring = () => {
 									{day}
 								</Text>
 							</View>
-						</TouchableHighlight>
+						</Pressable>
 					))}
 				</View>
 			</View>

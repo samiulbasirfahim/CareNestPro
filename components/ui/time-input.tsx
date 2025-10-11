@@ -1,13 +1,7 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Clock3 } from "lucide-react-native";
 import { useState } from "react";
-import {
-	Platform,
-	Text,
-	TextInput,
-	TouchableHighlight,
-	View,
-} from "react-native";
+import { Platform, Pressable, Text, TextInput, View } from "react-native";
 
 interface DateInputProps {
 	label?: string;
@@ -44,11 +38,13 @@ const TimeInput: React.FC<DateInputProps> = ({
 	return (
 		<View className="flex flex-col gap-3">
 			<Text className="text-[#4D4D4D] font-medium">{label}</Text>
-			<TouchableHighlight
+			<Pressable
+				style={({ pressed }) => ({
+					opacity: pressed ? 0.7 : 1,
+					transform: [{ scale: pressed ? 0.98 : 1 }],
+				})}
 				className="border border-[#E6E6E6] rounded-md p-1 px-3 bg-white flex flex-row items-center"
 				onPress={() => setShowPicker(true)}
-				activeOpacity={0.7}
-				underlayColor={"transparent"}
 			>
 				<View className="w-full flex flex-row items-center justify-between">
 					<TextInput
@@ -62,7 +58,7 @@ const TimeInput: React.FC<DateInputProps> = ({
 					/>
 					<Clock3 size={20} color="#888" />
 				</View>
-			</TouchableHighlight>
+			</Pressable>
 
 			{/* Date Picker Modal */}
 			{showPicker && (

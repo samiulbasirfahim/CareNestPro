@@ -1,6 +1,6 @@
 import SafeView from "@/components/layout/safe-view";
 import { InputPassword } from "@/components/ui/input";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
 export default function Page() {
 	return (
@@ -24,11 +24,17 @@ export default function Page() {
 					/>
 
 					<View className="mt-10 items-center gap-2">
-						<TouchableOpacity className="bg-primary items-center py-3 rounded-lg w-full">
+						<Pressable
+							style={({ pressed }) => ({
+								opacity: pressed ? 0.7 : 1,
+								transform: [{ scale: pressed ? 0.98 : 1 }],
+							})}
+							className="bg-primary items-center py-3 rounded-lg w-full"
+						>
 							<Text className="text-center text-lg text-white font-semibold">
 								Sign Up
 							</Text>
-						</TouchableOpacity>
+						</Pressable>
 					</View>
 				</View>
 			</SafeView>

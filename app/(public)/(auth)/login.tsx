@@ -2,7 +2,7 @@ import SafeView from "@/components/layout/safe-view";
 import { Input, InputPassword } from "@/components/ui/input";
 import { Typography } from "@/components/ui/typography";
 import { Link } from "expo-router";
-import { Text, TouchableHighlight, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
 export default function Page() {
 	return (
@@ -33,8 +33,11 @@ export default function Page() {
 					</View>
 
 					<View className="mt-16 items-center gap-2">
-						<TouchableHighlight
-							underlayColor={"transparent"}
+						<Pressable
+							style={({ pressed }) => ({
+								opacity: pressed ? 0.7 : 1,
+								transform: [{ scale: pressed ? 0.98 : 1 }],
+							})}
 							className="bg-primary items-center py-3 rounded-lg w-full border-2 border-primary"
 						>
 							<Link
@@ -44,7 +47,7 @@ export default function Page() {
 							>
 								Login
 							</Link>
-						</TouchableHighlight>
+						</Pressable>
 
 						<Text className="text-foreground text-lg">
 							Don&apos;t have an account yet?{" "}
