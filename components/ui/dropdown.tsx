@@ -139,6 +139,12 @@ const MultiSelectComponent = ({
 			<View className="w-full gap-2">
 				<Typography className="text-title font-semibold">
 					{title}
+					{subtitle && (
+						<Typography className="font-normal text-[#808080]">
+							{" "}
+							{subtitle}
+						</Typography>
+					)}
 				</Typography>
 				<Dropdown
 					style={{
