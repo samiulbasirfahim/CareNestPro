@@ -67,7 +67,7 @@ export default function Page() {
 									: selectedProvider === "elderly"
 										? "/on-boarding/seeker/elderly-care/details-1"
 										: selectedProvider === "tutoring"
-											? "/on-boarding/seeker/tutoring/details-1"
+											? "/on-boarding/provider/tutoring"
 											: selectedProvider ===
 												  "housekeeping"
 												? "/on-boarding/seeker/housekeeping/details-1"
