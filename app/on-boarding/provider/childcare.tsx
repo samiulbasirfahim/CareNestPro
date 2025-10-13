@@ -2,10 +2,11 @@ import { EnableLocationModal } from "@/components/common/enable-location-modal";
 import DropDown from "@/components/ui/dropdown";
 import { Header } from "@/components/ui/header";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Typography } from "@/components/ui/typography";
 import { router } from "expo-router";
 import { useState } from "react";
-import { Pressable, SafeAreaView, ScrollView, View } from "react-native";
+import { Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 export default function Page() {
@@ -49,7 +50,9 @@ export default function Page() {
 							fillColor="#0D99C9"
 						/>
 					</View>
-					<Typography>Use my current Location instead</Typography>
+					<Typography className="flex-1">
+						Use my current Location instead
+					</Typography>
 				</View>
 
 				<DropDown
@@ -80,143 +83,618 @@ export default function Page() {
 					title="What kind of child care provider are you"
 				/>
 
-				<View className="w-full flex flex-row gap-1 items-center justify-start">
-					<View className="flex-row w-[48%]">
-						<View className="flex-shrink-0 w-8">
-							<BouncyCheckbox
-								innerIconStyle={{
-									borderWidth: 2,
-									width: 20,
-									height: 20,
-									borderRadius: 6,
-									borderColor: "#CCCCCC",
-								}}
-								iconStyle={{
-									width: 20,
-									height: 20,
-									borderRadius: 6,
-									borderColor: "#CCCCCC",
-								}}
-								fillColor="#0D99C9"
-							/>
+				<Text className="text-[#4D4D4D] font-medium text-base">
+					Choose the services you can provide
+				</Text>
+
+				<View className="p-4 flex flex-col gap-4 rounded-lg border border-[#E6E6E6]">
+					<View className="w-full flex flex-row gap-1 items-center justify-start">
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">sleep-in</Typography>
 						</View>
-						<Typography>sleep-in</Typography>
+
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">live-in</Typography>
+						</View>
 					</View>
 
-					<View className="flex-row w-[48%]">
-						<View className="flex-shrink-0 w-8">
-							<BouncyCheckbox
-								innerIconStyle={{
-									borderWidth: 2,
-									width: 20,
-									height: 20,
-									borderRadius: 6,
-									borderColor: "#CCCCCC",
-								}}
-								iconStyle={{
-									width: 20,
-									height: 20,
-									borderRadius: 6,
-									borderColor: "#CCCCCC",
-								}}
-								fillColor="#0D99C9"
-							/>
+					<View className="w-full flex flex-row gap-1 items-center justify-start">
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">
+								Non-smoker
+							</Typography>
 						</View>
-						<Typography>live-in</Typography>
+
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">
+								Cook basic meals
+							</Typography>
+						</View>
+					</View>
+
+					<View className="w-full flex flex-row gap-1 items-center justify-start">
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">
+								Help with homework
+							</Typography>
+						</View>
+
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">
+								Sign language
+							</Typography>
+						</View>
+					</View>
+
+					<View className="w-full flex flex-row gap-1 items-center justify-start">
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">
+								Experience with autism
+							</Typography>
+						</View>
+
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">
+								Can drive
+							</Typography>
+						</View>
+					</View>
+
+					<View className="w-full flex flex-row gap-1 items-center justify-start">
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">
+								Special needs experience
+							</Typography>
+						</View>
+
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">
+								Experience with speech delay
+							</Typography>
+						</View>
+					</View>
+
+					<View className="w-full flex flex-row gap-1 items-center justify-start">
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">
+								Experience with twins
+							</Typography>
+						</View>
+
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">
+								Behavioral support
+							</Typography>
+						</View>
+					</View>
+
+					<View className="w-full flex flex-row gap-1 items-center justify-start">
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">
+								Speaks Yoruba fluently
+							</Typography>
+						</View>
+
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">
+								Willingly to live-in
+							</Typography>
+						</View>
+					</View>
+
+					<View className="w-full flex flex-row gap-1 items-center justify-start">
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">
+								Speaks Hausa fluently
+							</Typography>
+						</View>
+
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">
+								Speaks Igbo fluently
+							</Typography>
+						</View>
+					</View>
+
+					<View className="w-full flex flex-row gap-1 items-center justify-start">
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">
+								Speaks French fluently
+							</Typography>
+						</View>
 					</View>
 				</View>
 
-				<View className="w-full flex flex-row gap-1 items-center justify-start">
-					<View className="flex-row w-[48%]">
-						<View className="flex-shrink-0 w-8">
-							<BouncyCheckbox
-								innerIconStyle={{
-									borderWidth: 2,
-									width: 20,
-									height: 20,
-									borderRadius: 6,
-									borderColor: "#CCCCCC",
-								}}
-								iconStyle={{
-									width: 20,
-									height: 20,
-									borderRadius: 6,
-									borderColor: "#CCCCCC",
-								}}
-								fillColor="#0D99C9"
-							/>
-						</View>
-						<Typography>Non-smoker</Typography>
-					</View>
+				<Text className="text-[#4D4D4D] font-medium text-base">
+					Choose the experience level
+				</Text>
 
-					<View className="flex-row w-[48%]">
-						<View className="flex-shrink-0 w-8">
-							<BouncyCheckbox
-								innerIconStyle={{
-									borderWidth: 2,
-									width: 20,
-									height: 20,
-									borderRadius: 6,
-									borderColor: "#CCCCCC",
-								}}
-								iconStyle={{
-									width: 20,
-									height: 20,
-									borderRadius: 6,
-									borderColor: "#CCCCCC",
-								}}
-								fillColor="#0D99C9"
-							/>
+				<View className="p-4 flex flex-col gap-4 rounded-lg border border-[#E6E6E6]">
+					<View className="w-full flex flex-row gap-1 items-center justify-start">
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">
+								Newborn (Up to 12 months)
+							</Typography>
 						</View>
-						<Typography>Cook basic meals</Typography>
+
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">
+								Toddler (1-3 years)
+							</Typography>
+						</View>
+					</View>
+					<View className="w-full flex flex-row gap-1 items-center justify-start">
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">
+								Early School Age (4 - 6 years)
+							</Typography>
+						</View>
+
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">
+								Primary school age (7-12 years)
+							</Typography>
+						</View>
+					</View>
+					<View className="w-full flex flex-row gap-1 items-center justify-start">
+						<View className="flex-row w-[48%]">
+							<View className="flex-shrink-0 w-8">
+								<BouncyCheckbox
+									innerIconStyle={{
+										borderWidth: 2,
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									iconStyle={{
+										width: 20,
+										height: 20,
+										borderRadius: 6,
+										borderColor: "#CCCCCC",
+									}}
+									fillColor="#0D99C9"
+								/>
+							</View>
+							<Typography className="flex-1">
+								Teenager (12+ years)
+							</Typography>
+						</View>
 					</View>
 				</View>
 
-				<View className="w-full flex flex-row gap-1 items-center justify-start">
-					<View className="flex-row w-[48%]">
-						<View className="flex-shrink-0 w-8">
-							<BouncyCheckbox
-								innerIconStyle={{
-									borderWidth: 2,
-									width: 20,
-									height: 20,
-									borderRadius: 6,
-									borderColor: "#CCCCCC",
-								}}
-								iconStyle={{
-									width: 20,
-									height: 20,
-									borderRadius: 6,
-									borderColor: "#CCCCCC",
-								}}
-								fillColor="#0D99C9"
-							/>
-						</View>
-						<Typography>Help with homework</Typography>
-					</View>
+				<Textarea
+					label="Tell us about yourself"
+					placeholder="Kindly highlight your skills and experience, The childcare services you offer and other relevant information."
+				/>
 
-					<View className="flex-row w-[48%]">
-						<View className="flex-shrink-0 w-8">
-							<BouncyCheckbox
-								innerIconStyle={{
-									borderWidth: 2,
-									width: 20,
-									height: 20,
-									borderRadius: 6,
-									borderColor: "#CCCCCC",
-								}}
-								iconStyle={{
-									width: 20,
-									height: 20,
-									borderRadius: 6,
-									borderColor: "#CCCCCC",
-								}}
-								fillColor="#0D99C9"
-							/>
-						</View>
-						<Typography>Sign language</Typography>
+				<Textarea
+					label="Title"
+					placeholder="Give your application a title that sums you up as a child care provider"
+				/>
+
+				<View className="flex-row">
+					<View className="flex-shrink-0 w-8">
+						<BouncyCheckbox
+							innerIconStyle={{
+								borderWidth: 2,
+								width: 20,
+								height: 20,
+								borderRadius: 6,
+								borderColor: "#CCCCCC",
+							}}
+							iconStyle={{
+								width: 20,
+								height: 20,
+								borderRadius: 6,
+								borderColor: "#CCCCCC",
+							}}
+							fillColor="#0D99C9"
+						/>
 					</View>
+					<Typography className="flex-1">
+						I would like to automatically send the above application
+						to potential careseekers
+					</Typography>
 				</View>
+
+				<DropDown
+					list={["1 - 3 years", "4 - 8 years", "9 - 12 years"]}
+					title="Years of experience"
+				/>
+
+				<DropDown
+					list={["English", "Mandarine", "Others"]}
+					title="Native Language"
+				/>
+
+				<DropDown
+					list={["English", "Mandarine", "Others"]}
+					title="Other Language"
+				/>
+
+				<DropDown
+					list={["English", "Mandarine", "Others"]}
+					title="Other services you can offer"
+				/>
 
 				<Pressable
 					style={({ pressed }) => ({
