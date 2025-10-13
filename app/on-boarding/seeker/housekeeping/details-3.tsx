@@ -1,4 +1,4 @@
-import { cn } from "@/app/lib";
+import WeekCalendar from "@/components/common/week-calendar";
 import { Button } from "@/components/ui/button";
 import DateInput from "@/components/ui/date-input";
 import MultiSelectComponent from "@/components/ui/dropdown";
@@ -6,7 +6,6 @@ import { Header } from "@/components/ui/header";
 import { Input } from "@/components/ui/input";
 import TimeInput from "@/components/ui/time-input";
 import { Typography } from "@/components/ui/typography";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import { useRouter } from "expo-router";
 import { Info } from "lucide-react-native";
@@ -181,58 +180,7 @@ const Reoccuring = () => {
 				</View>
 			</View>
 
-			<View className="flex flex-col gap-3">
-				<View className="flex flex-row gap-3 items-center justify-start">
-					<Ionicons
-						name="chevron-back-outline"
-						size={16}
-						color="#666666"
-					/>
-					<Text className="text-[#666666] text-base font-normal">
-						May 12, 2025
-					</Text>
-
-					<Ionicons
-						name="chevron-forward-outline"
-						size={16}
-						color="#666666"
-					/>
-				</View>
-
-				<View className="w-full flex flex-1 flex-row gap-3 items-center">
-					{Array.from({ length: 8 }).map((_, index) => (
-						<Pressable
-							onPress={() => {
-								setSelectedDate(index);
-							}}
-							key={index}
-							className={cn(
-								"w-4 h-4 p-2 border border-[#E6E6E6] rounded-md flex flex-col items-center gap-2",
-								selectedDate === index
-									? "border-primary bg-primary"
-									: ""
-							)}
-						>
-							<Text
-								className={cn(
-									"text-sm font-normal text-[#B3B3B3]",
-									selectedDate === index ? "text-white" : ""
-								)}
-							>
-								Sun
-							</Text>
-							<Text
-								className={cn(
-									"text-sm font-semibold text-[#666666]",
-									selectedDate === index ? "text-white" : ""
-								)}
-							>
-								{index}
-							</Text>
-						</Pressable>
-					))}
-				</View>
-			</View>
+			<WeekCalendar />
 
 			<View className="w-full flex flex-row gap-3 items-center">
 				<View className="w-[48%] flex-1 flex items-center">

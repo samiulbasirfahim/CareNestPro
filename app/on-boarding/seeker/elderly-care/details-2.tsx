@@ -1,10 +1,10 @@
-import DateInput from "@/components/ui/date-input";
 import DropDown from "@/components/ui/dropdown";
 import { Header } from "@/components/ui/header";
+import { Input } from "@/components/ui/input";
 import { Typography } from "@/components/ui/typography";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Pressable, SafeAreaView, ScrollView, View } from "react-native";
+import { Pressable, SafeAreaView, ScrollView } from "react-native";
 
 export default function Page() {
 	const router = useRouter();
@@ -14,48 +14,66 @@ export default function Page() {
 	return (
 		<SafeAreaView className="w-full h-full">
 			<Header
-				title="Child care details"
+				title="Elderly care details"
 				subtitle="Kindly select options to help us understand your preferences"
 			/>
 			<ScrollView
 				className="p-6"
 				contentContainerStyle={{
 					flexGrow: 1,
-					paddingBottom: 40,
+					paddingBottom: 60,
 				}}
 				contentContainerClassName="gap-6"
 			>
 				<DropDown
-					list={["Nanny", "babysitter"]}
-					title="Childcare Type"
+					list={["Copanionship", "Carer"]}
+					title="Elderly care Type"
 				/>
 				<DropDown
-					list={[
-						"1 Child",
-						"2 Children",
-						"3 Children",
-						"4+ Children",
-					]}
-					title="Numbers of child(ren) that needs care"
+					list={["Cousin", "Friend", "Niece", "Other"]}
+					title="Relationship with elderly"
 				/>
 
-				<View className="w-full flex-row gap-3 items-start">
-					<View className="w-[36%] flex-1 flex items-center">
-						<DateInput
-							label="Age of child 1"
-							placeholder="DD-MM-YYYY"
-							value={ageOfChildOne}
-							onChange={setAgeOfChildOne}
-						/>
-					</View>
+				<Input
+					className="text-title font-semibold"
+					label="Age of elderly"
+					placeholder="Input age"
+				/>
 
-					<View className="w-[60%] flex-1 flex items-center">
-						<DropDown
-							list={["Male", "Female", "Other"]}
-							title="Gender of child 1"
-						/>
-					</View>
-				</View>
+				<DropDown
+					list={["Male", "Female", "Other"]}
+					title="Gender of elderly"
+				/>
+
+				<DropDown
+					list={[
+						"Stroke",
+						"Cancer",
+						"Hypertension",
+						"Just old age symptoms",
+						"Dimentia",
+						"Others",
+					]}
+					title="Health condition of elderly"
+					isMulti={true}
+				/>
+
+				<Input
+					label="(If others) Specify"
+					placeholder="Input health condition of elderly"
+				/>
+
+				<DropDown
+					list={[
+						"Mobility",
+						"Feeding",
+						"Bathing",
+						"Company",
+						"Others",
+					]}
+					title="What form of assistance is needed"
+					isMulti={true}
+				/>
 
 				<Pressable
 					style={({ pressed }) => ({
@@ -63,7 +81,9 @@ export default function Page() {
 						transform: [{ scale: pressed ? 0.98 : 1 }],
 					})}
 					onPress={() =>
-						router.push("/on-boarding/child-care/details-3")
+						router.push(
+							"/on-boarding/seeker/elderly-care/details-3"
+						)
 					}
 					className="bg-primary items-center py-3 rounded-lg w-full"
 				>

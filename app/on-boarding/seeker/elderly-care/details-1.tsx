@@ -1,6 +1,7 @@
 import { EnableLocationModal } from "@/components/common/enable-location-modal";
 import DropDown from "@/components/ui/dropdown";
 import { Header } from "@/components/ui/header";
+import { Input } from "@/components/ui/input";
 import { Typography } from "@/components/ui/typography";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -13,7 +14,7 @@ export default function Page() {
 	return (
 		<SafeAreaView className="w-full h-full">
 			<Header
-				title="Housekeeping details"
+				title="Elderly care details"
 				subtitle="Welcome! Kindly select options to help us understand your preferences"
 			/>
 			<ScrollView
@@ -24,6 +25,11 @@ export default function Page() {
 				}}
 				contentContainerClassName="gap-6"
 			>
+				<View className="flex flex-col gap-6">
+					<Input label="First Name" placeholder="Input First Name" />
+					<Input label="Last Name" placeholder="Input Last Name" />
+				</View>
+
 				<View className="flex-row">
 					<View className="flex-shrink-0">
 						<BouncyCheckbox
@@ -63,7 +69,6 @@ export default function Page() {
 					title="City"
 				/>
 
-				{/* <Link href={"/on-boarding/details"} asChild> */}
 				<Pressable
 					style={({ pressed }) => ({
 						opacity: pressed ? 0.7 : 1,
@@ -79,13 +84,12 @@ export default function Page() {
 						Next
 					</Typography>
 				</Pressable>
-				{/* </Link> */}
 			</ScrollView>
 			<EnableLocationModal
 				showModal={showModal}
 				onClose={() => {
 					setShowModal(false);
-					router.push("/on-boarding/housekeeping/details-2");
+					router.push("/on-boarding/seeker/elderly-care/details-2");
 				}}
 			/>
 		</SafeAreaView>

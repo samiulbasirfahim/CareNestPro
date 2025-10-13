@@ -63,14 +63,14 @@ export default function Page() {
 						router.push({
 							pathname:
 								selectedProvider === "childcare"
-									? "/on-boarding/child-care/details-1"
+									? "/on-boarding/seeker/child-care/details-1"
 									: selectedProvider === "elderly"
-										? "/on-boarding/elderly-care/details-1"
+										? "/on-boarding/seeker/elderly-care/details-1"
 										: selectedProvider === "tutoring"
-											? "/on-boarding/tutoring/details-1"
+											? "/on-boarding/seeker/tutoring/details-1"
 											: selectedProvider ===
 												  "housekeeping"
-												? "/on-boarding/housekeeping/details-1"
+												? "/on-boarding/seeker/housekeeping/details-1"
 												: "/splash",
 						});
 					}}

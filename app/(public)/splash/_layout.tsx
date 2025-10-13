@@ -84,7 +84,7 @@ function SplashTabBar({ state, navigation }: MaterialTopTabBarProps) {
 					className="bg-primary rounded-2xl px-6 py-3 border-2 border-primary"
 					onPress={() => {
 						router.push({
-							pathname: "/on-boarding",
+							pathname: "/on-boarding/seeker",
 						});
 					}}
 				>

@@ -81,7 +81,9 @@ export default function Page() {
 						transform: [{ scale: pressed ? 0.98 : 1 }],
 					})}
 					onPress={() =>
-						router.push("/on-boarding/housekeeping/details-3")
+						router.push(
+							"/on-boarding/seeker/housekeeping/details-3"
+						)
 					}
 					className="bg-primary items-center py-3 rounded-lg w-full"
 				>

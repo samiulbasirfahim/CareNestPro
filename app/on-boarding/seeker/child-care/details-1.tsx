@@ -69,7 +69,6 @@ export default function Page() {
 					title="City"
 				/>
 
-				{/* <Link href={"/on-boarding/details"} asChild> */}
 				<Pressable
 					style={({ pressed }) => ({
 						opacity: pressed ? 0.7 : 1,
@@ -85,13 +84,12 @@ export default function Page() {
 						Next
 					</Typography>
 				</Pressable>
-				{/* </Link> */}
 			</ScrollView>
 			<EnableLocationModal
 				showModal={showModal}
 				onClose={() => {
 					setShowModal(false);
-					router.push("/on-boarding/child-care/details-2");
+					router.push("/on-boarding/seeker/child-care/details-2");
 				}}
 			/>
 		</SafeAreaView>

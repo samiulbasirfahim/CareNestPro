@@ -14,7 +14,7 @@ export default function Page() {
 	return (
 		<SafeAreaView className="w-full h-full">
 			<Header
-				title="Elderly care details"
+				title="Tutoring details"
 				subtitle="Welcome! Kindly select options to help us understand your preferences"
 			/>
 			<ScrollView
@@ -69,7 +69,6 @@ export default function Page() {
 					title="City"
 				/>
 
-				{/* <Link href={"/on-boarding/details"} asChild> */}
 				<Pressable
 					style={({ pressed }) => ({
 						opacity: pressed ? 0.7 : 1,
@@ -85,13 +84,12 @@ export default function Page() {
 						Next
 					</Typography>
 				</Pressable>
-				{/* </Link> */}
 			</ScrollView>
 			<EnableLocationModal
 				showModal={showModal}
 				onClose={() => {
 					setShowModal(false);
-					router.push("/on-boarding/elderly-care/details-2");
+					router.push("/on-boarding/seeker/tutoring/details-2");
 				}}
 			/>
 		</SafeAreaView>
