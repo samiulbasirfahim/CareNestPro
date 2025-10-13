@@ -5,16 +5,17 @@ import {
 } from "@react-navigation/material-top-tabs";
 import { router, withLayoutContext } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text, useColorScheme, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const { Navigator } = createMaterialTopTabNavigator();
 export const Tab = withLayoutContext(Navigator);
+const colorScheme = useColorScheme();
 
 export default function SplashLayout() {
 	return (
 		<>
-			<StatusBar style="light" />
+			<StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
 			<Tab
 				tabBarPosition="bottom"
 				tabBar={SplashTabBar}
@@ -59,14 +60,15 @@ function SplashTabBar({ state, navigation }: MaterialTopTabBarProps) {
 						})}
 						onPress={() => {
 							if (currentIndex === totalPage - 1) {
-								return router.push("/login");
+								return router.push("/on-boarding/provider");
 							}
 							goRight();
 						}}
 					>
 						<Text className="text-primary text-xl">
 							{currentIndex === totalPage - 1
-								? "Get Started"
+								? // ? "Get Started"
+									"Care Provider"
 								: "Next"}
 						</Text>
 					</Pressable>

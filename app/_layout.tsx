@@ -1,13 +1,13 @@
 import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { useColorScheme } from "react-native";
+import { StatusBar, useColorScheme, View } from "react-native";
 import { Host } from "react-native-portalize";
 import "./global.css";
 
 export default function RootLayout() {
 	const [isReady, setIsReady] = useState(false);
 	const colorScheme = useColorScheme();
+	const isDark = colorScheme === "dark";
 
 	useEffect(() => {
 		// if (isReady) router.replace("/on-boarding/details");
@@ -22,11 +22,14 @@ export default function RootLayout() {
 
 	return (
 		<Host>
-			<StatusBar
-				style={colorScheme === "dark" ? "light" : "dark"}
-				translucent={true}
-				backgroundColor="transparent"
+			<View
+				style={{
+					height: StatusBar.currentHeight,
+					backgroundColor: isDark ? "#000" : "#000",
+				}}
 			/>
+
+			<StatusBar translucent={true} backgroundColor="transparent" />
 			<Stack>
 				<Stack.Screen
 					name="(public)"
