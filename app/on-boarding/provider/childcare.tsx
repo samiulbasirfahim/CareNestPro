@@ -716,7 +716,7 @@ export default function Page() {
 				showModal={showModal}
 				onClose={() => {
 					setShowModal(false);
-					router.push("/on-boarding/seeker/child-care/details-2");
+					router.push("/signup");
 				}}
 			/>
 		</SafeAreaView>
