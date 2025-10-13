@@ -65,12 +65,12 @@ export default function Page() {
 								selectedProvider === "childcare"
 									? "/on-boarding/provider/childcare"
 									: selectedProvider === "elderly"
-										? "/on-boarding/seeker/elderly-care/details-1"
+										? "/on-boarding/provider/elderly"
 										: selectedProvider === "tutoring"
 											? "/on-boarding/provider/tutoring"
 											: selectedProvider ===
 												  "housekeeping"
-												? "/on-boarding/seeker/housekeeping/details-1"
+												? "/on-boarding/provider/housekeeping"
 												: "/splash",
 						});
 					}}
