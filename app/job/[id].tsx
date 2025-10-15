@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useLocalSearchParams } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
-import { jobs } from "../home";
+import { jobs } from "../(tabs)/home";
 
 export default function JobDetails() {
 	const { id } = useLocalSearchParams();
@@ -49,6 +49,7 @@ export default function JobDetails() {
 					<Text className="text-[#808080] text-base font-medium">
 						Skills and expertise
 					</Text>
+					<View className="w-full flex flex-row flex-wrap gap-3"></View>
 
 					<Button title="Apply Now" className="mt-8" />
 				</View>
