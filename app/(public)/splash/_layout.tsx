@@ -10,12 +10,17 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const { Navigator } = createMaterialTopTabNavigator();
 export const Tab = withLayoutContext(Navigator);
-const colorScheme = useColorScheme();
 
 export default function SplashLayout() {
+	const colorScheme = useColorScheme();
+	const isDark = colorScheme === "dark";
+
 	return (
 		<>
-			<StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
+			<StatusBar
+				translucent={true}
+				backgroundColor={isDark ? "transparent" : "#000"}
+			/>
 			<Tab
 				tabBarPosition="bottom"
 				tabBar={SplashTabBar}

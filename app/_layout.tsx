@@ -22,6 +22,10 @@ export default function RootLayout() {
 
 	return (
 		<Host>
+			<StatusBar
+				translucent={true}
+				backgroundColor={isDark ? "transparent" : "#000"}
+			/>
 			<View
 				style={{
 					height: StatusBar.currentHeight,
@@ -29,11 +33,21 @@ export default function RootLayout() {
 				}}
 			/>
 
-			<StatusBar translucent={true} backgroundColor="transparent" />
-			<Stack>
+			<Stack
+				screenOptions={{
+					headerShown: false,
+				}}
+			>
+				<Stack.Screen name="/" options={{ headerShown: false }} />
+				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+
 				<Stack.Screen
-					name="(public)"
-					options={{ headerShown: false }}
+					name="job/[id]"
+					options={{
+						headerShown: true,
+						title: "Job Details",
+						presentation: "card",
+					}}
 				/>
 			</Stack>
 		</Host>

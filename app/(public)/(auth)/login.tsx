@@ -41,7 +41,7 @@ export default function Page() {
 							className="bg-primary items-center py-3 rounded-lg w-full border-2 border-primary"
 						>
 							<Link
-								href={"/on-boarding"}
+								href={"/on-boarding/seeker"}
 								replace
 								className="text-center text-lg text-white font-semibold"
 							>
