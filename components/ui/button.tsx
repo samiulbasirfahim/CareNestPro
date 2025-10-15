@@ -4,7 +4,8 @@ import { Typography } from "./typography";
 
 type Props = {
 	title: string;
-	textClassName: string;
+	textClassName?: string;
+	className?: string;
 } & TouchableOpacityProps;
 
 export function Button({ title, textClassName, className, ...props }: Props) {
