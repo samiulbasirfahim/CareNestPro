@@ -15,7 +15,7 @@ export default function Page() {
 				subtitle="Kindly select options to help us understand your preferences"
 			/>
 			<ScrollView
-				className="p-3"
+				className="p-3 bg-white"
 				contentContainerStyle={{
 					flexGrow: 1,
 					paddingBottom: 40,

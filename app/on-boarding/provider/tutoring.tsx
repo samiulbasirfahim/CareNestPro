@@ -13,13 +13,13 @@ export default function Page() {
 	const [showModal, setShowModal] = useState<boolean>(false);
 
 	return (
-		<SafeAreaView className="w-full h-full">
+		<SafeAreaView className="w-full h-full bg-white">
 			<Header
 				title="Tutoring details"
 				subtitle="Welcome! Kindly select options to help us understand your preferences"
 			/>
 			<ScrollView
-				className="p-6"
+				className="p-6 bg-white"
 				contentContainerStyle={{
 					flexGrow: 1,
 					paddingBottom: 40,

@@ -12,7 +12,7 @@ export default function Page() {
 	>("childcare");
 
 	return (
-		<SafeAreaView className="w-full h-full">
+		<SafeAreaView className="w-full h-full bg-white">
 			<Header
 				title="What category of Care are you Interested in"
 				subtitle="Kindly select options to help us understand your preferences"

@@ -8,13 +8,13 @@ export default function Page() {
 	const router = useRouter();
 
 	return (
-		<SafeAreaView className="w-full h-full">
+		<SafeAreaView className="w-full h-full bg-white">
 			<Header
 				title="Details"
 				subtitle="Kindly select options to help us understand your preferences"
 			/>
 			<ScrollView
-				className="p-6"
+				className="p-6 bg-white"
 				contentContainerStyle={{
 					flexGrow: 1,
 					paddingBottom: 40,
