@@ -1,5 +1,7 @@
+import { Button } from "@/components/ui/button";
+import DateInput from "@/components/ui/date-input";
 import { useRouter } from "expo-router";
-import { ArrowLeft } from "lucide-react-native";
+import { ArrowLeft, ChevronDown } from "lucide-react-native";
 import { useState } from "react";
 import { Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
 import { twMerge } from "tailwind-merge";
@@ -10,6 +12,10 @@ export default function WalletHistoryFilter() {
 	const [activeTab, setActiveTab] = useState("Custom Period");
 
 	const tabs = ["Custom Period", "This Week", "Last Week"];
+	const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(
+		null
+	);
+	const [selectedEndDate, setSelectedEndDate] = useState<Date | null>(null);
 
 	return (
 		<SafeAreaView className="w-full h-full bg-white">
@@ -63,6 +69,26 @@ export default function WalletHistoryFilter() {
 						);
 					})}
 				</View>
+
+				<DateInput
+					placeholder="Start date"
+					iconColor="#0D99C9"
+					value={selectedStartDate}
+					onChange={setSelectedStartDate}
+				/>
+
+				<DateInput
+					placeholder="End date"
+					iconColor="#0D99C9"
+					value={selectedEndDate}
+					onChange={setSelectedEndDate}
+				/>
+				<Button title="View" />
+				<Button
+					variant="primary-outline"
+					renderIcon={<ChevronDown size={20} color="#0D99C9" />}
+					title="Download"
+				/>
 			</ScrollView>
 		</SafeAreaView>
 	);

@@ -1,5 +1,6 @@
+import { Button } from "@/components/ui/button";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { ArrowLeft } from "lucide-react-native";
+import { ArrowLeft, ChevronDown } from "lucide-react-native";
 import { Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
 
 export default function WalletHistory() {
@@ -19,13 +20,65 @@ export default function WalletHistory() {
 				</View>
 			</View>
 			<ScrollView
-				className="p-5 bg-white"
+				className="p-5 mt-5 bg-white"
 				contentContainerStyle={{
 					flexGrow: 1,
 					paddingBottom: 40,
 				}}
 				contentContainerClassName="gap-6"
-			></ScrollView>
+			>
+				<View className="w-full flex flex-row items-center justify-between">
+					<Text className="text-base font-medium text-[#8F8F8F]">
+						Transaction Number
+					</Text>
+					<Text className="text-[#4F4F4F] text-lg font-normal">
+						#253654547
+					</Text>
+				</View>
+
+				<View className="w-full flex flex-row items-center justify-between">
+					<Text className="text-base font-medium text-[#8F8F8F]">
+						Status
+					</Text>
+					<Text className="text-[#22906B] text-lg font-normal">
+						Withdrawal
+					</Text>
+				</View>
+
+				<View className="w-full flex flex-row items-center justify-between">
+					<Text className="text-base font-medium text-[#8F8F8F]">
+						Transaction Date
+					</Text>
+					<Text className="text-[#4F4F4F] text-lg font-normal">
+						Aug 28, 2024
+					</Text>
+				</View>
+
+				<View className="w-full flex flex-row items-center justify-between">
+					<Text className="text-base font-medium text-[#8F8F8F]">
+						Transaction Time
+					</Text>
+					<Text className="text-[#4F4F4F] text-lg font-normal">
+						2:40 PM
+					</Text>
+				</View>
+
+				<View className="w-full flex flex-row items-center justify-between">
+					<Text className="text-base font-medium text-[#8F8F8F]">
+						Amount Paid
+					</Text>
+					<Text className="text-[#4F4F4F] text-lg font-normal">
+						$3,000.00
+					</Text>
+				</View>
+
+				<Button
+					className="mt-8"
+					variant="primary-outline"
+					renderIcon={<ChevronDown size={20} color="#0D99C9" />}
+					title="Download"
+				/>
+			</ScrollView>
 		</SafeAreaView>
 	);
 }
