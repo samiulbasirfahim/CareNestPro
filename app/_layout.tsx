@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
-import { StatusBar, useColorScheme, View } from "react-native";
+import { StatusBar, useColorScheme } from "react-native";
 import { Host } from "react-native-portalize";
 import "./global.css";
 
@@ -10,11 +10,6 @@ export default function RootLayout() {
 	const isDark = colorScheme === "dark";
 
 	useEffect(() => {
-		// if (isReady) router.replace("/on-boarding/details");
-		// if (isReady) router.replace("/splash");
-	}, [isReady]);
-
-	useEffect(() => {
 		(async () => {
 			setIsReady(true);
 		})();
@@ -22,16 +17,7 @@ export default function RootLayout() {
 
 	return (
 		<Host>
-			<StatusBar
-				translucent={true}
-				backgroundColor={isDark ? "transparent" : "#000"}
-			/>
-			<View
-				style={{
-					height: StatusBar.currentHeight,
-					backgroundColor: isDark ? "#000" : "#000",
-				}}
-			/>
+			<StatusBar backgroundColor="#fff" barStyle="dark-content" />
 
 			<Stack
 				screenOptions={{
@@ -42,7 +28,7 @@ export default function RootLayout() {
 				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 
 				<Stack.Screen
-					name="/app/job/[id]"
+					name="/app/home/[id]"
 					options={{
 						headerShown: true,
 						title: "Job Details",
