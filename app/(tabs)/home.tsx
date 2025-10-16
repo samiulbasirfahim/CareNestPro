@@ -15,6 +15,7 @@ export interface JobProps {
 	description: string;
 	postedAt: string;
 	budget: number;
+	skills: string[];
 }
 
 export const jobs: JobProps[] = [
@@ -25,6 +26,23 @@ export const jobs: JobProps[] = [
 		description:
 			"Experienced housekeeper required to maintain cleanliness in a 3-bedroom apartment in Ikeja. Must be organized, punctual, and detail-oriented. Should know how to handle laundry and basic cooking.",
 		budget: 15000,
+		skills: [
+			"sleep-in",
+			"Non-smoker",
+			"Experience with twins",
+			"cook basic meals",
+			"help with homework",
+			"Sign language",
+			"Special needs experience",
+			"Experience with speech delay",
+			"live-in",
+			"Behavioral support",
+			"Speaks Igbo Fluently",
+			"Experience with autism",
+			"Speaks French Fluently",
+			"Speaks Hausa Fluently",
+			"Speaks Yoruba Fluently",
+		],
 	},
 	{
 		id: 2,
@@ -33,6 +51,23 @@ export const jobs: JobProps[] = [
 		description:
 			"Looking for a caring nanny to stay with two toddlers over weekends. Meals provided. Must have prior childcare experience and references.",
 		budget: 18500,
+		skills: [
+			"sleep-in",
+			"Non-smoker",
+			"Experience with twins",
+			"cook basic meals",
+			"help with homework",
+			"Sign language",
+			"Special needs experience",
+			"Experience with speech delay",
+			"live-in",
+			"Behavioral support",
+			"Speaks Igbo Fluently",
+			"Experience with autism",
+			"Speaks French Fluently",
+			"Speaks Hausa Fluently",
+			"Speaks Yoruba Fluently",
+		],
 	},
 	{
 		id: 3,
@@ -41,6 +76,23 @@ export const jobs: JobProps[] = [
 		description:
 			"Private family in Lekki seeks a personal chef to prepare healthy meals. Knowledge of local and continental dishes required. Accommodation available.",
 		budget: 30000,
+		skills: [
+			"sleep-in",
+			"Non-smoker",
+			"Experience with twins",
+			"cook basic meals",
+			"help with homework",
+			"Sign language",
+			"Special needs experience",
+			"Experience with speech delay",
+			"live-in",
+			"Behavioral support",
+			"Speaks Igbo Fluently",
+			"Experience with autism",
+			"Speaks French Fluently",
+			"Speaks Hausa Fluently",
+			"Speaks Yoruba Fluently",
+		],
 	},
 	{
 		id: 4,
@@ -49,6 +101,23 @@ export const jobs: JobProps[] = [
 		description:
 			"Responsible driver required to pick and drop two kids daily. Must have valid driver’s license and clean record. Vehicle provided.",
 		budget: 10000,
+		skills: [
+			"sleep-in",
+			"Non-smoker",
+			"Experience with twins",
+			"cook basic meals",
+			"help with homework",
+			"Sign language",
+			"Special needs experience",
+			"Experience with speech delay",
+			"live-in",
+			"Behavioral support",
+			"Speaks Igbo Fluently",
+			"Experience with autism",
+			"Speaks French Fluently",
+			"Speaks Hausa Fluently",
+			"Speaks Yoruba Fluently",
+		],
 	},
 	{
 		id: 5,
@@ -57,6 +126,23 @@ export const jobs: JobProps[] = [
 		description:
 			"Caring individual needed to assist an elderly woman with daily routines, light cooking, and companionship. Nursing background preferred.",
 		budget: 22000,
+		skills: [
+			"sleep-in",
+			"Non-smoker",
+			"Experience with twins",
+			"cook basic meals",
+			"help with homework",
+			"Sign language",
+			"Special needs experience",
+			"Experience with speech delay",
+			"live-in",
+			"Behavioral support",
+			"Speaks Igbo Fluently",
+			"Experience with autism",
+			"Speaks French Fluently",
+			"Speaks Hausa Fluently",
+			"Speaks Yoruba Fluently",
+		],
 	},
 	{
 		id: 6,
@@ -65,6 +151,23 @@ export const jobs: JobProps[] = [
 		description:
 			"Seeking trustworthy pet sitter for one week. Must feed, walk, and monitor pets daily. Accommodation optional.",
 		budget: 12000,
+		skills: [
+			"sleep-in",
+			"Non-smoker",
+			"Experience with twins",
+			"cook basic meals",
+			"help with homework",
+			"Sign language",
+			"Special needs experience",
+			"Experience with speech delay",
+			"live-in",
+			"Behavioral support",
+			"Speaks Igbo Fluently",
+			"Experience with autism",
+			"Speaks French Fluently",
+			"Speaks Hausa Fluently",
+			"Speaks Yoruba Fluently",
+		],
 	},
 	{
 		id: 7,
@@ -73,6 +176,23 @@ export const jobs: JobProps[] = [
 		description:
 			"Family in Victoria Island needs a full-time housemaid to handle cleaning, laundry, and childcare support. Meals and accommodation included.",
 		budget: 20000,
+		skills: [
+			"sleep-in",
+			"Non-smoker",
+			"Experience with twins",
+			"cook basic meals",
+			"help with homework",
+			"Sign language",
+			"Special needs experience",
+			"Experience with speech delay",
+			"live-in",
+			"Behavioral support",
+			"Speaks Igbo Fluently",
+			"Experience with autism",
+			"Speaks French Fluently",
+			"Speaks Hausa Fluently",
+			"Speaks Yoruba Fluently",
+		],
 	},
 	{
 		id: 8,
@@ -81,6 +201,23 @@ export const jobs: JobProps[] = [
 		description:
 			"Looking for experienced gardener to manage small residential garden. Duties include trimming, watering, and general upkeep.",
 		budget: 8000,
+		skills: [
+			"sleep-in",
+			"Non-smoker",
+			"Experience with twins",
+			"cook basic meals",
+			"help with homework",
+			"Sign language",
+			"Special needs experience",
+			"Experience with speech delay",
+			"live-in",
+			"Behavioral support",
+			"Speaks Igbo Fluently",
+			"Experience with autism",
+			"Speaks French Fluently",
+			"Speaks Hausa Fluently",
+			"Speaks Yoruba Fluently",
+		],
 	},
 	{
 		id: 9,
@@ -89,6 +226,23 @@ export const jobs: JobProps[] = [
 		description:
 			"Babysitter required for five consecutive evenings. Two children (ages 4 & 6). Must be patient and fun.",
 		budget: 14000,
+		skills: [
+			"sleep-in",
+			"Non-smoker",
+			"Experience with twins",
+			"cook basic meals",
+			"help with homework",
+			"Sign language",
+			"Special needs experience",
+			"Experience with speech delay",
+			"live-in",
+			"Behavioral support",
+			"Speaks Igbo Fluently",
+			"Experience with autism",
+			"Speaks French Fluently",
+			"Speaks Hausa Fluently",
+			"Speaks Yoruba Fluently",
+		],
 	},
 	{
 		id: 10,
@@ -97,6 +251,23 @@ export const jobs: JobProps[] = [
 		description:
 			"Need someone skilled in laundry and ironing for a one-week service. Should provide quick, clean work.",
 		budget: 9500,
+		skills: [
+			"sleep-in",
+			"Non-smoker",
+			"Experience with twins",
+			"cook basic meals",
+			"help with homework",
+			"Sign language",
+			"Special needs experience",
+			"Experience with speech delay",
+			"live-in",
+			"Behavioral support",
+			"Speaks Igbo Fluently",
+			"Experience with autism",
+			"Speaks French Fluently",
+			"Speaks Hausa Fluently",
+			"Speaks Yoruba Fluently",
+		],
 	},
 ];
 
@@ -142,7 +313,7 @@ export default function Page() {
 				</View>
 			</View>
 			<ScrollView
-				className="p-5"
+				className="p-5 bg-white"
 				contentContainerStyle={{
 					flexGrow: 1,
 					paddingBottom: 40,
@@ -157,6 +328,7 @@ export default function Page() {
 						description={job.description}
 						postedAt={job.postedAt}
 						budget={job.budget}
+						skills={job.skills}
 					/>
 				))}
 			</ScrollView>
