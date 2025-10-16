@@ -10,14 +10,16 @@ interface DateInputProps {
 	value?: Date | null;
 	onChange?: (date: Date | null) => void;
 	className?: string;
+	iconColor?: string;
 }
 
 const DateInput: React.FC<DateInputProps> = ({
-	label = "Start Date",
-	placeholder = "Select date",
+	label,
+	placeholder,
 	value,
 	onChange,
 	className,
+	iconColor,
 }) => {
 	const [date, setDate] = useState<Date>(value || new Date());
 	const [showPicker, setShowPicker] = useState(false);
@@ -40,7 +42,9 @@ const DateInput: React.FC<DateInputProps> = ({
 
 	return (
 		<View className="flex flex-col gap-3">
-			<Text className="text-[#4D4D4D] font-medium">{label}</Text>
+			{label && (
+				<Text className="text-[#4D4D4D] font-medium">{label}</Text>
+			)}
 			<Pressable
 				style={({ pressed }) => ({
 					opacity: pressed ? 0.7 : 1,
@@ -62,7 +66,7 @@ const DateInput: React.FC<DateInputProps> = ({
 							className
 						)}
 					/>
-					<CalendarDays size={20} color="#888" />
+					<CalendarDays size={20} color={iconColor || "#888"} />
 				</View>
 			</Pressable>
 
