@@ -72,6 +72,9 @@ export default function TabsLayout() {
 					name="activities"
 					options={{
 						title: "Activities",
+						tabBarButton: (props) => (
+							<NoRippleTabButton {...props} />
+						),
 						tabBarIcon: ({ color, focused }) => (
 							<View
 								style={{
