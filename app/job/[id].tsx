@@ -1,12 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
-import { SafeAreaView, ScrollView, Text, View } from "react-native";
+import { Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
 import { jobs } from "../(tabs)/home";
 
 export default function JobDetails() {
 	const { id } = useLocalSearchParams();
 	const job = jobs.find((job) => job.id === Number(id));
+	const router = useRouter();
 
 	if (!job) {
 		return (
@@ -19,13 +20,15 @@ export default function JobDetails() {
 	return (
 		<SafeAreaView className="w-full h-full">
 			<View className="w-full h-24 flex flex-row gap-3 bg-[#F3FAFC] p-5 items-center">
-				<ArrowLeft size={20} color="#636363" />
+				<Pressable onPress={() => router.back()}>
+					<ArrowLeft size={20} color="#636363" />
+				</Pressable>
 				<Text className="text-[#515151] text-2xl font-medium">
 					Job detail
 				</Text>
 			</View>
 			<ScrollView
-				className="p-5"
+				className="p-5 bg-white"
 				contentContainerStyle={{
 					flexGrow: 1,
 					paddingBottom: 40,
@@ -49,7 +52,18 @@ export default function JobDetails() {
 					<Text className="text-[#808080] text-base font-medium">
 						Skills and expertise
 					</Text>
-					<View className="w-full flex flex-row flex-wrap gap-3"></View>
+					<View className="w-full flex flex-row flex-wrap gap-2">
+						{job.skills.map((skill, index) => (
+							<View
+								key={index}
+								className="bg-[#F4F4F4] rounded-full px-4 py-1 flex items-center"
+							>
+								<Text className="text-[#808080] text-sm font-normal">
+									{skill}
+								</Text>
+							</View>
+						))}
+					</View>
 
 					<Button title="Apply Now" className="mt-8" />
 				</View>
