@@ -13,8 +13,8 @@ export default function WalletHistoryFilter() {
 
 	return (
 		<SafeAreaView className="w-full h-full bg-white">
-			<View className="w-full pt-14 h-24 flex flex-col gap-3 p-5">
-				<View className="w-full flex flex-row items-center gap-3">
+			<View className="w-full pt-14 h-32 flex flex-col gap-3 px-5">
+				<View className="w-full h-full flex flex-row items-center gap-3">
 					<Pressable onPress={() => router.back()}>
 						<ArrowLeft size={20} color="#636363" />
 					</Pressable>

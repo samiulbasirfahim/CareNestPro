@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "expo-router";
 import { ArrowLeft, ListFilter, Search, Wallet } from "lucide-react-native";
 import {
-	FlatList,
 	ImageBackground,
 	Pressable,
 	SafeAreaView,
@@ -69,8 +68,8 @@ export default function WalletPage() {
 
 	return (
 		<SafeAreaView className="w-full h-full bg-white">
-			<View className="w-full pt-14 h-24 flex flex-col gap-3 p-5">
-				<View className="w-full flex flex-row items-center gap-3">
+			<View className="w-full pt-14 h-32 flex flex-col gap-3 px-5">
+				<View className="w-full h-full flex flex-row items-center gap-3">
 					<Pressable onPress={() => router.back()}>
 						<ArrowLeft size={20} color="#636363" />
 					</Pressable>
@@ -154,16 +153,14 @@ export default function WalletPage() {
 					</View>
 				</View>
 
-				<FlatList
-					data={transactions}
-					keyExtractor={(item) => item.id.toString()}
-					renderItem={({ item }) => (
-						<Pressable onPress={() => router.push("/wallet/[id]")}>
-							<TransactionCard {...item} />
-						</Pressable>
-					)}
-					ItemSeparatorComponent={() => <View className="h-3" />}
-				/>
+				{transactions.map((transaction, index) => (
+					<Pressable
+						key={index}
+						onPress={() => router.push("/wallet/[id]")}
+					>
+						<TransactionCard {...transaction} />
+					</Pressable>
+				))}
 			</ScrollView>
 		</SafeAreaView>
 	);
