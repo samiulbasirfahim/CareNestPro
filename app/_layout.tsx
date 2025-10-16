@@ -42,7 +42,7 @@ export default function RootLayout() {
 				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 
 				<Stack.Screen
-					name="job/[id]"
+					name="/app/job/[id]"
 					options={{
 						headerShown: true,
 						title: "Job Details",
