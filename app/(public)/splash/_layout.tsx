@@ -4,8 +4,7 @@ import {
 	MaterialTopTabBarProps,
 } from "@react-navigation/material-top-tabs";
 import { router, withLayoutContext } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import { Pressable, Text, useColorScheme, View } from "react-native";
+import { Pressable, StatusBar, Text, useColorScheme, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const { Navigator } = createMaterialTopTabNavigator();
@@ -21,6 +20,7 @@ export default function SplashLayout() {
 				translucent={true}
 				backgroundColor={isDark ? "transparent" : "#000"}
 			/>
+
 			<Tab
 				tabBarPosition="bottom"
 				tabBar={SplashTabBar}
