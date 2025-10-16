@@ -12,16 +12,11 @@ export default function MessageLayout() {
 				translucent={true}
 				backgroundColor={isDark ? "transparent" : "#000"}
 			/>
-			<Stack.Screen
-				options={{
-					headerShown: false,
-				}}
-			/>
-			<Stack
-				screenOptions={{
-					headerShown: false,
-				}}
-			/>
+
+			<Stack screenOptions={{ headerShown: false }}>
+				<Stack.Screen name="index" />
+				<Stack.Screen name="[id]" options={{ title: "Message" }} />
+			</Stack>
 		</>
 	);
 }
