@@ -1,3 +1,4 @@
+import { useCareProviderStore } from "@/app/store/careProviderStore";
 import { EnableLocationModal } from "@/components/common/enable-location-modal";
 import DropDown from "@/components/ui/dropdown";
 import { Header } from "@/components/ui/header";
@@ -11,6 +12,15 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 export default function Page() {
 	const [showModal, setShowModal] = useState<boolean>(false);
+	const { careProviderData, updateCareProviderData } = useCareProviderStore();
+
+	const updateChangeHandler = (field: string) => (value: string) => {
+		updateCareProviderData({
+			user_data: {
+				[field]: value,
+			},
+		});
+	};
 
 	return (
 		<SafeAreaView className="w-full h-full bg-white">
@@ -27,8 +37,18 @@ export default function Page() {
 				contentContainerClassName="gap-6"
 			>
 				<View className="flex flex-col gap-6">
-					<Input label="First Name" placeholder="Input First Name" />
-					<Input label="Last Name" placeholder="Input Last Name" />
+					<Input
+						value={careProviderData.user_data.first_name}
+						onChange={() => updateChangeHandler("first_name")}
+						label="First Name"
+						placeholder="Input First Name"
+					/>
+					<Input
+						value={careProviderData.user_data.last_name}
+						onChange={() => updateChangeHandler("last_name")}
+						label="Last Name"
+						placeholder="Input Last Name"
+					/>
 				</View>
 
 				<View className="flex-row">
@@ -58,6 +78,7 @@ export default function Page() {
 				<DropDown
 					list={["Option 1", "Option 2", "Option 3"]}
 					title="Preferred Language"
+					onChange={() => updateChangeHandler("user_type")}
 				/>
 				<DropDown
 					list={["Option 1", "Option 2", "Option 3"]}

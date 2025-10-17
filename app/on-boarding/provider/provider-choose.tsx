@@ -1,3 +1,4 @@
+import { useCareProviderStore } from "@/app/store/careProviderStore";
 import { OptionCard } from "@/components/common/option-card";
 import SafeView from "@/components/layout/safe-view";
 import { Header } from "@/components/ui/header";
@@ -5,11 +6,14 @@ import { Typography } from "@/components/ui/typography";
 import { router } from "expo-router";
 import { useState } from "react";
 import { Pressable, SafeAreaView, ScrollView, View } from "react-native";
+import { Toast } from "toastify-react-native";
 
 export default function Page() {
 	const [selectedProvider, setSelectedProvider] = useState<
-		"childcare" | "elderly" | "tutoring" | "housekeeping"
+		"childcare" | "elderlycare" | "tutoring" | "housekeeping"
 	>("childcare");
+
+	const { careProviderData, updateCareProviderData } = useCareProviderStore();
 
 	return (
 		<SafeAreaView className="w-full h-full bg-white">
@@ -39,8 +43,10 @@ export default function Page() {
 								image={require("@/assets/images/on-boarding/category/image-2.png")}
 								title="Elderly Care"
 								subtitle="Be the perfect elderly care provider"
-								selected={selectedProvider === "elderly"}
-								onPress={() => setSelectedProvider("elderly")}
+								selected={selectedProvider === "elderlycare"}
+								onPress={() =>
+									setSelectedProvider("elderlycare")
+								}
 							/>
 						</View>
 						<View className="gap-4 flex-row">
@@ -70,11 +76,22 @@ export default function Page() {
 						})}
 						className="bg-primary items-center py-3 rounded-lg w-full border-2 border-primary"
 						onPress={() => {
+							updateCareProviderData({
+								profile_data: {
+									service_category: selectedProvider,
+								},
+							});
+
+							if (!selectedProvider) {
+								Toast.error("Please select a provider");
+								return;
+							}
+
 							router.push({
 								pathname:
 									selectedProvider === "childcare"
 										? "/on-boarding/provider/childcare"
-										: selectedProvider === "elderly"
+										: selectedProvider === "elderlycare"
 											? "/on-boarding/provider/elderly"
 											: selectedProvider === "tutoring"
 												? "/on-boarding/provider/tutoring"
