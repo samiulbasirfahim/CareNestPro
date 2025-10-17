@@ -10,6 +10,9 @@ type Props = {
 	subtitle?: string;
 	placeholder?: string;
 	isMulti?: boolean;
+	value?: string;
+	values?: string[];
+	onChange?: (value: string) => void;
 };
 
 type Data = {
@@ -23,6 +26,9 @@ const MultiSelectComponent = ({
 	subtitle,
 	placeholder,
 	isMulti: isMulti = false,
+	value,
+	values,
+	onChange,
 }: Props) => {
 	const [data, setData] = useState<Data[]>([]);
 	const [selected, setSelected] = useState<number[]>([]);
@@ -124,10 +130,10 @@ const MultiSelectComponent = ({
 					labelField="label"
 					valueField="value"
 					placeholder={getSelectedText()} // Use placeholder to show selected items
-					value={null} // Keep null to avoid single-select behavior
+					value={value} // Keep null to avoid single-select behavior
 					onFocus={() => setIsFocus(true)}
 					onBlur={() => setIsFocus(false)}
-					onChange={() => {}} // Disable default onChange
+					onChange={() => onChange} // Disable default onChange
 					searchPlaceholder="Search..."
 					renderItem={renderItem}
 					showsVerticalScrollIndicator={true}
