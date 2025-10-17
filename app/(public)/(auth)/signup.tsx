@@ -33,7 +33,7 @@ export default function Page() {
 								transform: [{ scale: pressed ? 0.98 : 1 }],
 							})}
 							onPress={() => {
-								router.push("/(tabs)/home");
+								router.push("/provider/(tabs)/home");
 							}}
 							className="bg-primary items-center py-3 rounded-lg w-full"
 						>
