@@ -144,7 +144,7 @@ export default function WalletPage() {
 
 						<Pressable
 							onPress={() =>
-								router.push("/wallet/history-filter")
+								router.push("/provider/wallet/history-filter")
 							}
 							className="bg-white p-3 rounded-md border border-[#DEF0F7]"
 						>
@@ -156,7 +156,7 @@ export default function WalletPage() {
 				{transactions.map((transaction, index) => (
 					<Pressable
 						key={index}
-						onPress={() => router.push("/wallet/[id]")}
+						onPress={() => router.push("/provider/wallet/[id]")}
 					>
 						<TransactionCard {...transaction} />
 					</Pressable>

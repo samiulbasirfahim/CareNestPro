@@ -340,7 +340,7 @@ function JobCard({ id, title, description, postedAt, budget }: JobProps) {
 	return (
 		<Link
 			href={{
-				pathname: "/home/[id]",
+				pathname: "/provider/(tabs)/home/[id]",
 				params: { id },
 			}}
 			asChild

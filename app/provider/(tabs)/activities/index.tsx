@@ -87,7 +87,7 @@ function ActiveTabItemCard() {
 function ClosedTabItemCard() {
 	const router = useRouter();
 	return (
-		<Pressable onPress={() => router.push("/activities/[id]")}>
+		<Pressable onPress={() => router.push("/provider/activities/[id]")}>
 			<View className="w-full flex flex-col gap-3 border border-[#E6E6E6] bg-white rounded-lg p-4">
 				<Text className="text-[#4D4D4D] text-base font-medium">
 					Professional nanny to care for two kids over 10 days

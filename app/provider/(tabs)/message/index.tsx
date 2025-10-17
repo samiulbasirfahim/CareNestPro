@@ -55,7 +55,9 @@ export default function Message() {
 				{Array.from({ length: 20 }).map((_, index) => (
 					<Pressable
 						key={index}
-						onPress={() => router.push("/(tabs)/message/[id]")}
+						onPress={() =>
+							router.push("/provider/(tabs)/message/[id]")
+						}
 					>
 						<MessageCard />
 					</Pressable>
