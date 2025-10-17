@@ -2,6 +2,7 @@ import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import { StatusBar, useColorScheme } from "react-native";
 import { Host } from "react-native-portalize";
+import ToastManager from "toastify-react-native";
 import "./global.css";
 
 export default function RootLayout() {
@@ -30,6 +31,7 @@ export default function RootLayout() {
 					options={{ headerShown: false }}
 				/>
 			</Stack>
+			<ToastManager />
 		</Host>
 	);
 }
