@@ -25,15 +25,9 @@ export default function RootLayout() {
 				}}
 			>
 				<Stack.Screen name="/" options={{ headerShown: false }} />
-				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-
 				<Stack.Screen
-					name="/app/home/[id]"
-					options={{
-						headerShown: true,
-						title: "Job Details",
-						presentation: "card",
-					}}
+					name="/provider/(tabs)"
+					options={{ headerShown: false }}
 				/>
 			</Stack>
 		</Host>
