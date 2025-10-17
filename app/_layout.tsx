@@ -26,7 +26,7 @@ export default function RootLayout() {
 			>
 				<Stack.Screen name="/" options={{ headerShown: false }} />
 				<Stack.Screen
-					name="/provider/(tabs)"
+					name="provider"
 					options={{ headerShown: false }}
 				/>
 			</Stack>
