@@ -1,3 +1,4 @@
+import { cn } from "@/app/lib";
 import { useCareProviderStore } from "@/app/store/careProviderStore";
 import { EnableLocationModal } from "@/components/common/enable-location-modal";
 import DropDown from "@/components/ui/dropdown";
@@ -5,10 +6,44 @@ import { Header } from "@/components/ui/header";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Typography } from "@/components/ui/typography";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { z } from "zod";
+
+const childCareProviderSchema = z.object({
+	firstName: z.string().min(3, {
+		message: "First name must be at least 3 characters",
+	}),
+	lastName: z.string().min(3, {
+		message: "Last name must be at least 3 characters",
+	}),
+	languages: z.array(z.string()),
+	country: z.string({ message: "Please select a country" }),
+	state: z.string({ message: "Please select a state" }),
+	city: z.string({ message: "Please enter a city" }),
+	zipCode: z.string({ message: "Please enter a zip code" }),
+	nationality: z.string({ message: "Please select a nationality" }),
+	nationalIdentificationNumber: z.string({ message: "Please enter a NIN" }),
+	phoneNumber: z.string({ message: "Please enter a phone number" }),
+	skills: z.array(z.string({ message: "Please select a service" })),
+	experienceLevel: z.string({ message: "Please select an experience level" }),
+	aboutMe: z.string({ message: "Please enter your about me" }),
+	profileTitle: z.string({ message: "Please enter a title" }),
+	yearsOfExperience: z.number({
+		message: "Please select your years of experience",
+	}),
+	nativeLanguage: z.string({ message: "Please select a native language" }),
+	otherLanguage: z.string({ message: "Please select an other language" }),
+	additionalServices: z.array(
+		z.string({ message: "Please select an additional service" })
+	),
+});
+
+type ChildCareProviderFormData = z.infer<typeof childCareProviderSchema>;
 
 export default function Page() {
 	const [showModal, setShowModal] = useState<boolean>(false);
@@ -20,6 +55,57 @@ export default function Page() {
 				[field]: value,
 			},
 		});
+	};
+
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<ChildCareProviderFormData>({
+		resolver: zodResolver(childCareProviderSchema),
+		defaultValues: {
+			firstName: careProviderData.user_data.first_name,
+			lastName: careProviderData.user_data.last_name,
+			languages: careProviderData.profile_data.languages,
+			country: careProviderData.profile_data.country,
+			state: careProviderData.profile_data.state,
+			city: careProviderData.profile_data.city,
+			zipCode: careProviderData.profile_data.zip_code,
+			nationality: careProviderData.profile_data.nationality,
+			nationalIdentificationNumber:
+				// careProviderData.profile_data.national_identification_number,
+				"",
+			phoneNumber: "",
+			skills: careProviderData.profile_data.skills,
+			experienceLevel: careProviderData.profile_data.experience_level,
+			aboutMe: careProviderData.profile_data.about_me,
+			profileTitle: careProviderData.profile_data.profile_title,
+			yearsOfExperience:
+				careProviderData.profile_data.years_of_experience,
+			nativeLanguage: careProviderData.profile_data.native_language,
+			otherLanguage:
+				careProviderData.profile_data.category_specific_details
+					.communication_language,
+			additionalServices:
+				careProviderData.profile_data.additional_services,
+		},
+	});
+
+	const onSubmit = async (data: ChildCareProviderFormData) => {
+		// const success = await login(
+		// 	data.username,
+		// 	data.password,
+		// 	data.isRemember ?? false
+		// );
+		// if (success) {
+		// 	toast.success("Login successful");
+		// 	navigate("/");
+		// } else {
+		// 	toast.error(error || "Login failed. Please try again.");
+		// }
+
+		console.log("On submit");
+		console.log(data);
 	};
 
 	return (
@@ -37,18 +123,40 @@ export default function Page() {
 				contentContainerClassName="gap-6"
 			>
 				<View className="flex flex-col gap-6">
-					<Input
-						value={careProviderData.user_data.first_name}
-						onChange={() => updateChangeHandler("first_name")}
-						label="First Name"
-						placeholder="Input First Name"
-					/>
-					<Input
-						value={careProviderData.user_data.last_name}
-						onChange={() => updateChangeHandler("last_name")}
-						label="Last Name"
-						placeholder="Input Last Name"
-					/>
+					<View className="flex flex-col gap-1">
+						<Input
+							label="First Name"
+							placeholder="Input First Name"
+							{...register("firstName")}
+							inputStyle={cn(
+								errors.firstName
+									? "border border-[#D22853]"
+									: ""
+							)}
+						/>
+						{errors.firstName && (
+							<Text className="text-[#D22853] text-left text-sm w-full">
+								{errors.firstName.message}
+							</Text>
+						)}
+					</View>
+					<View className="flex flex-col gap-1">
+						<Input
+							label="Last Name"
+							placeholder="Input Last Name"
+							{...register("lastName")}
+							inputStyle={cn(
+								errors.firstName
+									? "border border-[#D22853]"
+									: ""
+							)}
+						/>
+						{errors.lastName && (
+							<Text className="text-[#D22853] text-left text-sm w-full">
+								{errors.lastName.message}
+							</Text>
+						)}
+					</View>
 				</View>
 
 				<View className="flex-row">
@@ -78,7 +186,8 @@ export default function Page() {
 				<DropDown
 					list={["Option 1", "Option 2", "Option 3"]}
 					title="Preferred Language"
-					onChange={() => updateChangeHandler("user_type")}
+					// onChange={() => updateChangeHandler("user_type")}
+					// {...register("nativeLanguage")}
 				/>
 				<DropDown
 					list={["Option 1", "Option 2", "Option 3"]}
@@ -723,7 +832,7 @@ export default function Page() {
 						transform: [{ scale: pressed ? 0.98 : 1 }],
 					})}
 					className="bg-primary items-center py-3 rounded-lg w-full border-2 border-primary"
-					onPress={() => setShowModal(true)}
+					onPress={handleSubmit(onSubmit)}
 				>
 					<Typography
 						variant="subtitle"
