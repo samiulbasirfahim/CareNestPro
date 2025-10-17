@@ -156,9 +156,12 @@ export default function TabsLayout() {
 					}}
 				/>
 				<Tabs.Screen
-					name="setting"
+					name="settings"
 					options={{
-						title: "Setting",
+						title: "Settings",
+						tabBarButton: (props) => (
+							<NoRippleTabButton {...props} />
+						),
 						tabBarIcon: ({ color, focused }) => (
 							<View
 								style={{
