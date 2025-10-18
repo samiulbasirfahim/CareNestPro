@@ -10,9 +10,9 @@ type Props = {
 	subtitle?: string;
 	placeholder?: string;
 	isMulti?: boolean;
-	value?: string;
-	values?: string[];
-	onChange?: (value: string) => void;
+	value?: string | number;
+	values?: string[] | number[];
+	onChange?: (value: any) => void;
 };
 
 type Data = {
@@ -31,7 +31,8 @@ const MultiSelectComponent = ({
 	onChange,
 }: Props) => {
 	const [data, setData] = useState<Data[]>([]);
-	const [selected, setSelected] = useState<number[]>([]);
+	const [selectedMulti, setSelectedMulti] = useState<number[]>([]);
+	const [selectedSingle, setSelectedSingle] = useState<number | null>(null);
 	const [isFocus, setIsFocus] = useState(false);
 
 	useEffect(() => {
@@ -39,7 +40,7 @@ const MultiSelectComponent = ({
 	}, [list]);
 
 	const renderItem = (item: Data) => {
-		const isSelected = selected.includes(item.value);
+		const isSelected = selectedMulti.includes(item.value);
 
 		if (isMulti) {
 			return (
@@ -50,12 +51,33 @@ const MultiSelectComponent = ({
 					})}
 					onPress={() => {
 						// Toggle selection
+						// if (isSelected) {
+						// 	setSelected(
+						// 		selected.filter((val) => val !== item.value)
+						// 	);
+						// } else {
+						// 	setSelected([...selected, item.value]);
+						// }
+
+						let updatedSelection: number[];
 						if (isSelected) {
-							setSelected(
-								selected.filter((val) => val !== item.value)
+							updatedSelection = selectedMulti.filter(
+								(val) => val !== item.value
 							);
 						} else {
-							setSelected([...selected, item.value]);
+							updatedSelection = [...selectedMulti, item.value];
+						}
+						setSelectedMulti(updatedSelection);
+
+						// Call parent's onChange with label array
+						if (onChange) {
+							const selectedLabels = updatedSelection
+								.map(
+									(val) =>
+										data.find((d) => d.value === val)?.label
+								)
+								.filter(Boolean) as string[];
+							onChange(selectedLabels);
 						}
 					}}
 					className="px-4 py-3"
@@ -87,8 +109,8 @@ const MultiSelectComponent = ({
 
 	// Generate text for selected items
 	const getSelectedText = () => {
-		if (selected.length === 0) return "Select items";
-		const selectedLabels = selected
+		if (selectedMulti.length === 0) return "Select items";
+		const selectedLabels = selectedMulti
 			.map((val) => data.find((item) => item.value === val)?.label)
 			.filter(Boolean)
 			.join(", ");
@@ -110,7 +132,7 @@ const MultiSelectComponent = ({
 					)}
 					<Typography className="font-normal text-[#808080]">
 						{" "}
-						({selected.length} Selected)
+						({selectedMulti.length} Selected)
 					</Typography>
 				</Typography>
 				<Dropdown
@@ -133,7 +155,11 @@ const MultiSelectComponent = ({
 					value={value} // Keep null to avoid single-select behavior
 					onFocus={() => setIsFocus(true)}
 					onBlur={() => setIsFocus(false)}
-					onChange={() => onChange} // Disable default onChange
+					onChange={(item: Data) => {
+						if (!isMulti) {
+							onChange && onChange(item.label); // Pass selected label for single select
+						}
+					}}
 					searchPlaceholder="Search..."
 					renderItem={renderItem}
 					showsVerticalScrollIndicator={true}
@@ -144,6 +170,14 @@ const MultiSelectComponent = ({
 			</View>
 		);
 	} else {
+		useEffect(() => {
+			// Sync selectedSingle when parent value changes
+			if (value !== undefined && typeof value === "string") {
+				const found = data.find((d) => d.label === value);
+				setSelectedSingle(found ? found.value : null);
+			}
+		}, [value, data]);
+
 		return (
 			<View className="w-full gap-2">
 				<Typography className="text-title font-semibold">
@@ -169,9 +203,12 @@ const MultiSelectComponent = ({
 					labelField="label"
 					valueField="value"
 					placeholder={placeholder || "Select item"}
-					value={selected}
+					value={selectedSingle}
 					searchPlaceholder="Search..."
-					onChange={(item) => setSelected(item.value)}
+					onChange={(item: Data) => {
+						setSelectedSingle(item.value);
+						onChange && onChange(item.label); // ✅ now the parent gets the label (string)
+					}}
 					renderItem={renderItem}
 				/>
 			</View>
