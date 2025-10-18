@@ -44,6 +44,7 @@ export interface CareProviderState {
 	careProviderData: CareProviderPayload;
 	isLoading: boolean;
 	error: string | null;
+	errors: any;
 	register: (payload: CareProviderPayload) => void;
 	updateCareProviderData: (partialData: {
 		user_data?: Partial<CareProviderUserProps>;
@@ -59,7 +60,7 @@ export const useCareProviderStore = create<CareProviderState>((set, get) => ({
 			last_name: "",
 			email: "",
 			password: "",
-			user_type: "",
+			user_type: "provider",
 		},
 		profile_data: {
 			service_category: "",
@@ -88,6 +89,7 @@ export const useCareProviderStore = create<CareProviderState>((set, get) => ({
 	},
 	isLoading: false,
 	error: null,
+	errors: {},
 	register: async (payload: CareProviderPayload) => {
 		try {
 			console.log("Registering with payload:", payload);

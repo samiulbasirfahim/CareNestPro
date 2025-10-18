@@ -13,7 +13,7 @@ export default function Page() {
 		"childcare" | "elderlycare" | "tutoring" | "housekeeping"
 	>("childcare");
 
-	const { careProviderData, updateCareProviderData } = useCareProviderStore();
+	const { updateCareProviderData } = useCareProviderStore();
 
 	return (
 		<SafeAreaView className="w-full h-full bg-white">
