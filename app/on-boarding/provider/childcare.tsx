@@ -13,94 +13,94 @@ import { Toast } from "toastify-react-native";
 
 export default function Page() {
 	const [showModal, setShowModal] = useState<boolean>(false);
-	const { careProviderData, updateCareProviderData } = useCareProviderStore();
-
 	const router = useRouter();
 
-	const updateChangeHandler = (field: string) => (value: any) => {
-		updateCareProviderData({
-			user_data: {
-				[field]: value,
-			},
-		});
-	};
+	const { careProviderData, updateCareProviderData, register } =
+		useCareProviderStore();
 
 	const onSubmit = async () => {
-		console.log("On submit");
-		console.log(careProviderData);
+		try {
+			console.log("On submit");
+			console.log(careProviderData);
 
-		if (careProviderData.user_data.first_name === "") {
-			Toast.error("Please enter a fist name");
-			return;
-		}
-		if (careProviderData.user_data.last_name === "") {
-			Toast.error("Please enter a last name");
-			return;
-		}
-		if (careProviderData.profile_data.languages.length === 0) {
-			Toast.error("Please select at least one language");
-			return;
-		}
-		if (careProviderData.profile_data.country === "") {
-			Toast.error("Please select a country");
-			return;
-		}
-		if (careProviderData.profile_data.state === "") {
-			Toast.error("Please select a state");
-			return;
-		}
-		if (careProviderData.profile_data.city === "") {
-			Toast.error("Please enter a city");
-			return;
-		}
-		if (careProviderData.profile_data.zip_code === "") {
-			Toast.error("Please enter a zip code");
-			return;
-		}
-		if (careProviderData.profile_data.nationality === "") {
-			Toast.error("Please select a nationality");
-			return;
-		}
-		if (
-			careProviderData.profile_data.category_specific_details
-				.type_of_care_provider === ""
-		) {
-			Toast.error("Please select a type of care provider");
-			return;
-		}
-		if (careProviderData.profile_data.skills.length === 0) {
-			Toast.error("Please select at least one skill");
-			return;
-		}
-		if (careProviderData.profile_data.experience_level === "") {
-			Toast.error("Please select an experience level");
-			return;
-		}
-		if (careProviderData.profile_data.about_me === "") {
-			Toast.error("Please enter your about me");
-			return;
-		}
-		if (careProviderData.profile_data.profile_title === "") {
-			Toast.error("Please enter a title");
-			return;
-		}
-		if (careProviderData.profile_data.years_of_experience === 0) {
-			Toast.error("Please select your years of experience");
-			return;
-		}
-		if (careProviderData.profile_data.native_language === "") {
-			Toast.error("Please select a native language");
-			return;
-		}
-		if (
-			careProviderData.profile_data.category_specific_details
-				.communication_language === ""
-		) {
-			Toast.error("Please select an other language");
-			return;
-		}
+			if (careProviderData.user_data.first_name === "") {
+				Toast.error("Please enter a fist name");
+				return;
+			}
+			if (careProviderData.user_data.last_name === "") {
+				Toast.error("Please enter a last name");
+				return;
+			}
+			if (careProviderData.profile_data.languages.length === 0) {
+				Toast.error("Please select at least one language");
+				return;
+			}
+			if (careProviderData.profile_data.country === "") {
+				Toast.error("Please select a country");
+				return;
+			}
+			if (careProviderData.profile_data.state === "") {
+				Toast.error("Please select a state");
+				return;
+			}
+			if (careProviderData.profile_data.city === "") {
+				Toast.error("Please enter a city");
+				return;
+			}
+			if (careProviderData.profile_data.zip_code === "") {
+				Toast.error("Please enter a zip code");
+				return;
+			}
+			if (careProviderData.profile_data.nationality === "") {
+				Toast.error("Please select a nationality");
+				return;
+			}
+			if (
+				careProviderData.profile_data.category_specific_details
+					.type_of_care_provider === ""
+			) {
+				Toast.error("Please select a type of care provider");
+				return;
+			}
+			if (careProviderData.profile_data.skills.length === 0) {
+				Toast.error("Please select at least one skill");
+				return;
+			}
+			if (careProviderData.profile_data.experience_level === "") {
+				Toast.error("Please select an experience level");
+				return;
+			}
+			if (careProviderData.profile_data.about_me === "") {
+				Toast.error("Please enter your about me");
+				return;
+			}
+			if (careProviderData.profile_data.profile_title === "") {
+				Toast.error("Please enter a title");
+				return;
+			}
+			if (careProviderData.profile_data.years_of_experience === 0) {
+				Toast.error("Please select your years of experience");
+				return;
+			}
+			if (careProviderData.profile_data.native_language === "") {
+				Toast.error("Please select a native language");
+				return;
+			}
+			if (
+				careProviderData.profile_data.category_specific_details
+					.communication_language === ""
+			) {
+				Toast.error("Please select an other language");
+				return;
+			}
 
-		router.push("/signup");
+			router.push({
+				pathname: "/signup",
+				params: { role: "childcare" },
+			});
+		} catch (err: any) {
+			console.log(err.message);
+		}
 	};
 
 	return (
@@ -189,31 +189,31 @@ export default function Page() {
 						});
 					}}
 				/>
-				<DropDown
-					list={["Bangladesh", "Nigeria", "USA"]}
-					title="Country"
+				<Input
+					label="Country"
+					placeholder="Input country"
 					value={careProviderData.profile_data.country}
-					onChange={(value: any) =>
+					onChangeText={(value: any) => {
 						updateCareProviderData({
 							profile_data: {
 								...careProviderData.profile_data,
 								country: value,
 							},
-						})
-					}
+						});
+					}}
 				/>
-				<DropDown
-					list={["Option 1", "Option 2", "Option 3"]}
-					title="State"
+				<Input
+					label="State"
+					placeholder="Input state"
 					value={careProviderData.profile_data.state}
-					onChange={(value: any) =>
+					onChangeText={(value: any) => {
 						updateCareProviderData({
 							profile_data: {
 								...careProviderData.profile_data,
 								state: value,
 							},
-						})
-					}
+						});
+					}}
 				/>
 				<Input
 					label="City"
@@ -241,11 +241,11 @@ export default function Page() {
 						});
 					}}
 				/>
-				<DropDown
-					list={["Option 1", "Option 2", "Option 3"]}
-					title="Nationality"
+				<Input
+					label="Nationality"
+					placeholder="Input nationality"
 					value={careProviderData.profile_data.nationality}
-					onChange={(value: any) => {
+					onChangeText={(value: any) => {
 						updateCareProviderData({
 							profile_data: {
 								...careProviderData.profile_data,
@@ -1455,18 +1455,18 @@ export default function Page() {
 						to potential careseekers
 					</Typography>
 				</View>
-				<DropDown
-					list={["1 - 3 years", "4 - 8 years", "9 - 12 years"]}
-					title="Years of experience"
-					value={careProviderData.profile_data.years_of_experience}
-					onChange={(value: any) =>
+				<Input
+					label="Years of experience"
+					placeholder="Input years of experience"
+					value={careProviderData.profile_data.years_of_experience.toString()}
+					onChangeText={(value: any) => {
 						updateCareProviderData({
 							profile_data: {
 								...careProviderData.profile_data,
 								years_of_experience: value,
 							},
-						})
-					}
+						});
+					}}
 				/>
 				<DropDown
 					list={["English", "Mandarine", "Others"]}
@@ -1503,8 +1503,18 @@ export default function Page() {
 				/>
 
 				<DropDown
-					list={["English", "Mandarine", "Others"]}
+					list={["Tutoring", "Housekeeping", "Elderly Care"]}
 					title="Other services you can offer"
+					isMulti={true}
+					values={careProviderData.profile_data.additional_services}
+					onChange={(value: any) => {
+						updateCareProviderData({
+							profile_data: {
+								...careProviderData.profile_data,
+								additional_services: value,
+							},
+						});
+					}}
 				/>
 				<Pressable
 					style={({ pressed }) => ({
