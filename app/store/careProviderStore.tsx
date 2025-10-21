@@ -32,6 +32,7 @@ export interface CareProviderProfileDataProps {
 		preferred_option: string;
 		special_preferences: string[];
 		communication_language: string;
+		personality_and_interpersonal_skills?: string[];
 	};
 }
 
@@ -45,7 +46,7 @@ export interface CareProviderState {
 	isLoading: boolean;
 	error: string | null;
 	errors: any;
-	register: (payload: CareProviderPayload) => void;
+	register: (payload: CareProviderPayload) => any;
 	updateCareProviderData: (partialData: {
 		user_data?: Partial<CareProviderUserProps>;
 		profile_data?: Partial<CareProviderProfileDataProps>;
@@ -84,6 +85,7 @@ export const useCareProviderStore = create<CareProviderState>((set, get) => ({
 				preferred_option: "",
 				special_preferences: [],
 				communication_language: "",
+				personality_and_interpersonal_skills: [],
 			},
 		},
 	},
@@ -93,7 +95,7 @@ export const useCareProviderStore = create<CareProviderState>((set, get) => ({
 	register: async (payload: CareProviderPayload) => {
 		try {
 			console.log("Registering with payload:", payload);
-			console.log("POST URL:", `${baseURL}/api/signup/`);
+
 			const response = await axios.post(
 				`${baseURL}/api/provider/public-onboarding/register-and-create-profile/`,
 				payload,
@@ -145,18 +147,24 @@ export const useCareProviderStore = create<CareProviderState>((set, get) => ({
 							communication_language:
 								payload.profile_data.category_specific_details
 									.communication_language,
+							personality_and_interpersonal_skills:
+								payload.profile_data.category_specific_details
+									?.personality_and_interpersonal_skills,
 						},
 					},
 				},
 				isLoading: false,
 				error: null,
 			});
+			return response;
 		} catch (err: any) {
 			console.log("Register error: ", err?.response?.data || err.message);
+			console.log(err);
 			set({
 				error:
+					err?.response?.data?.detail ||
 					err?.response?.data?.message ||
-					err.message ||
+					err?.response?.data?.error ||
 					"Registration failed",
 				isLoading: false,
 			});
