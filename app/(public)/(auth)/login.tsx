@@ -1,10 +1,49 @@
+import { useAuthStore } from "@/app/store/authStore";
 import SafeView from "@/components/layout/safe-view";
 import { Input, InputPassword } from "@/components/ui/input";
 import { Typography } from "@/components/ui/typography";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
+import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
+import { Toast } from "toastify-react-native";
 
 export default function Page() {
+	const router = useRouter();
+	const { login, user } = useAuthStore();
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+
+	const onSubmit = async () => {
+		try {
+			if (!email) {
+				Toast.error("Please enter your email address");
+				return;
+			}
+			if (!password) {
+				Toast.error("Please enter your password");
+				return;
+			}
+			const response = await login({ email, password });
+
+			if (response?.status === 200) {
+				Toast.success("Login successful");
+				console.log(user);
+				if (user?.user_type === "provider") {
+					router.push("/provider/(tabs)/home");
+				}
+				return;
+			}
+			Toast.error(
+				response?.data?.message ||
+					response?.data?.error ||
+					"Login failed. Please try again."
+			);
+		} catch (err: any) {
+			console.log("Error occured during login.");
+			console.log(err.message);
+		}
+	};
+
 	return (
 		<>
 			<SafeView>
@@ -18,11 +57,19 @@ export default function Page() {
 					<Input
 						label="Email Address"
 						placeholder="Input email address"
+						value={email}
+						onChangeText={(value: any) => {
+							setEmail(value);
+						}}
 					/>
 					<View className="gap-2">
 						<InputPassword
 							label="Password"
 							placeholder="Input Password"
+							value={password}
+							onChangeText={(value: any) => {
+								setPassword(value);
+							}}
 						/>
 						<Link
 							href={"/forgot-password"}
@@ -39,14 +86,14 @@ export default function Page() {
 								transform: [{ scale: pressed ? 0.98 : 1 }],
 							})}
 							className="bg-primary items-center py-3 rounded-lg w-full border-2 border-primary"
+							onPress={onSubmit}
 						>
-							<Link
-								href={"/on-boarding/seeker"}
-								replace
+							<Typography
+								variant="subtitle"
 								className="text-center text-lg text-white font-semibold"
 							>
 								Login
-							</Link>
+							</Typography>
 						</Pressable>
 
 						<Text className="text-foreground text-lg">
