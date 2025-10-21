@@ -1,7 +1,10 @@
+import { JobProps, useJobsStore } from "@/app/store/jobsStore";
 import { Link } from "expo-router";
 import { BadgeCheck, Bell, ListFilter, Search } from "lucide-react-native";
+import { useCallback, useEffect, useState } from "react";
 import {
 	Pressable,
+	RefreshControl,
 	SafeAreaView,
 	ScrollView,
 	Text,
@@ -9,269 +12,46 @@ import {
 	View,
 } from "react-native";
 
-export interface JobProps {
-	id: number;
-	title: string;
-	description: string;
-	postedAt: string;
-	budget: number;
-	skills: string[];
-}
-
-export const jobs: JobProps[] = [
-	{
-		id: 1,
-		postedAt: "Posted 10 minutes ago",
-		title: "Housekeeper needed for 3-bedroom apartment (weekly service)",
-		description:
-			"Experienced housekeeper required to maintain cleanliness in a 3-bedroom apartment in Ikeja. Must be organized, punctual, and detail-oriented. Should know how to handle laundry and basic cooking.",
-		budget: 15000,
-		skills: [
-			"sleep-in",
-			"Non-smoker",
-			"Experience with twins",
-			"cook basic meals",
-			"help with homework",
-			"Sign language",
-			"Special needs experience",
-			"Experience with speech delay",
-			"live-in",
-			"Behavioral support",
-			"Speaks Igbo Fluently",
-			"Experience with autism",
-			"Speaks French Fluently",
-			"Speaks Hausa Fluently",
-			"Speaks Yoruba Fluently",
-		],
-	},
-	{
-		id: 2,
-		postedAt: "Posted 20 minutes ago",
-		title: "Nanny for weekend child care (Friday–Sunday)",
-		description:
-			"Looking for a caring nanny to stay with two toddlers over weekends. Meals provided. Must have prior childcare experience and references.",
-		budget: 18500,
-		skills: [
-			"sleep-in",
-			"Non-smoker",
-			"Experience with twins",
-			"cook basic meals",
-			"help with homework",
-			"Sign language",
-			"Special needs experience",
-			"Experience with speech delay",
-			"live-in",
-			"Behavioral support",
-			"Speaks Igbo Fluently",
-			"Experience with autism",
-			"Speaks French Fluently",
-			"Speaks Hausa Fluently",
-			"Speaks Yoruba Fluently",
-		],
-	},
-	{
-		id: 3,
-		postedAt: "Posted 30 minutes ago",
-		title: "Personal chef for private family (2-week contract)",
-		description:
-			"Private family in Lekki seeks a personal chef to prepare healthy meals. Knowledge of local and continental dishes required. Accommodation available.",
-		budget: 30000,
-		skills: [
-			"sleep-in",
-			"Non-smoker",
-			"Experience with twins",
-			"cook basic meals",
-			"help with homework",
-			"Sign language",
-			"Special needs experience",
-			"Experience with speech delay",
-			"live-in",
-			"Behavioral support",
-			"Speaks Igbo Fluently",
-			"Experience with autism",
-			"Speaks French Fluently",
-			"Speaks Hausa Fluently",
-			"Speaks Yoruba Fluently",
-		],
-	},
-	{
-		id: 4,
-		postedAt: "Posted 45 minutes ago",
-		title: "Driver needed for daily school runs",
-		description:
-			"Responsible driver required to pick and drop two kids daily. Must have valid driver’s license and clean record. Vehicle provided.",
-		budget: 10000,
-		skills: [
-			"sleep-in",
-			"Non-smoker",
-			"Experience with twins",
-			"cook basic meals",
-			"help with homework",
-			"Sign language",
-			"Special needs experience",
-			"Experience with speech delay",
-			"live-in",
-			"Behavioral support",
-			"Speaks Igbo Fluently",
-			"Experience with autism",
-			"Speaks French Fluently",
-			"Speaks Hausa Fluently",
-			"Speaks Yoruba Fluently",
-		],
-	},
-	{
-		id: 5,
-		postedAt: "Posted 1 hour ago",
-		title: "Elderly care assistant for 5-day shift",
-		description:
-			"Caring individual needed to assist an elderly woman with daily routines, light cooking, and companionship. Nursing background preferred.",
-		budget: 22000,
-		skills: [
-			"sleep-in",
-			"Non-smoker",
-			"Experience with twins",
-			"cook basic meals",
-			"help with homework",
-			"Sign language",
-			"Special needs experience",
-			"Experience with speech delay",
-			"live-in",
-			"Behavioral support",
-			"Speaks Igbo Fluently",
-			"Experience with autism",
-			"Speaks French Fluently",
-			"Speaks Hausa Fluently",
-			"Speaks Yoruba Fluently",
-		],
-	},
-	{
-		id: 6,
-		postedAt: "Posted 1 hour ago",
-		title: "Pet sitter for 7 days (dog & cat)",
-		description:
-			"Seeking trustworthy pet sitter for one week. Must feed, walk, and monitor pets daily. Accommodation optional.",
-		budget: 12000,
-		skills: [
-			"sleep-in",
-			"Non-smoker",
-			"Experience with twins",
-			"cook basic meals",
-			"help with homework",
-			"Sign language",
-			"Special needs experience",
-			"Experience with speech delay",
-			"live-in",
-			"Behavioral support",
-			"Speaks Igbo Fluently",
-			"Experience with autism",
-			"Speaks French Fluently",
-			"Speaks Hausa Fluently",
-			"Speaks Yoruba Fluently",
-		],
-	},
-	{
-		id: 7,
-		postedAt: "Posted 2 hours ago",
-		title: "Housemaid needed for family of four (live-in)",
-		description:
-			"Family in Victoria Island needs a full-time housemaid to handle cleaning, laundry, and childcare support. Meals and accommodation included.",
-		budget: 20000,
-		skills: [
-			"sleep-in",
-			"Non-smoker",
-			"Experience with twins",
-			"cook basic meals",
-			"help with homework",
-			"Sign language",
-			"Special needs experience",
-			"Experience with speech delay",
-			"live-in",
-			"Behavioral support",
-			"Speaks Igbo Fluently",
-			"Experience with autism",
-			"Speaks French Fluently",
-			"Speaks Hausa Fluently",
-			"Speaks Yoruba Fluently",
-		],
-	},
-	{
-		id: 8,
-		postedAt: "Posted 3 hours ago",
-		title: "Gardener for weekly lawn maintenance",
-		description:
-			"Looking for experienced gardener to manage small residential garden. Duties include trimming, watering, and general upkeep.",
-		budget: 8000,
-		skills: [
-			"sleep-in",
-			"Non-smoker",
-			"Experience with twins",
-			"cook basic meals",
-			"help with homework",
-			"Sign language",
-			"Special needs experience",
-			"Experience with speech delay",
-			"live-in",
-			"Behavioral support",
-			"Speaks Igbo Fluently",
-			"Experience with autism",
-			"Speaks French Fluently",
-			"Speaks Hausa Fluently",
-			"Speaks Yoruba Fluently",
-		],
-	},
-	{
-		id: 9,
-		postedAt: "Posted 4 hours ago",
-		title: "Temporary babysitter for 5 evenings",
-		description:
-			"Babysitter required for five consecutive evenings. Two children (ages 4 & 6). Must be patient and fun.",
-		budget: 14000,
-		skills: [
-			"sleep-in",
-			"Non-smoker",
-			"Experience with twins",
-			"cook basic meals",
-			"help with homework",
-			"Sign language",
-			"Special needs experience",
-			"Experience with speech delay",
-			"live-in",
-			"Behavioral support",
-			"Speaks Igbo Fluently",
-			"Experience with autism",
-			"Speaks French Fluently",
-			"Speaks Hausa Fluently",
-			"Speaks Yoruba Fluently",
-		],
-	},
-	{
-		id: 10,
-		postedAt: "Posted 5 hours ago",
-		title: "Laundry service provider (per-day work)",
-		description:
-			"Need someone skilled in laundry and ironing for a one-week service. Should provide quick, clean work.",
-		budget: 9500,
-		skills: [
-			"sleep-in",
-			"Non-smoker",
-			"Experience with twins",
-			"cook basic meals",
-			"help with homework",
-			"Sign language",
-			"Special needs experience",
-			"Experience with speech delay",
-			"live-in",
-			"Behavioral support",
-			"Speaks Igbo Fluently",
-			"Experience with autism",
-			"Speaks French Fluently",
-			"Speaks Hausa Fluently",
-			"Speaks Yoruba Fluently",
-		],
-	},
-];
-
 export default function HomePage() {
+	const { jobs, getJobs, isLoading, error } = useJobsStore();
+	const [refreshing, setRefreshing] = useState(false);
+
+	useEffect(() => {
+		getJobs();
+	}, []);
+
+	const onRefresh = useCallback(async () => {
+		setRefreshing(true);
+		await getJobs();
+		setRefreshing(false);
+	}, [getJobs]);
+
+	if (isLoading && !refreshing) {
+		return (
+			<SafeAreaView className="w-full h-full flex items-center justify-center">
+				<Text className="text-base font-medium">Loading jobs...</Text>
+			</SafeAreaView>
+		);
+	}
+
+	if (error) {
+		return (
+			<SafeAreaView className="w-full h-full flex items-center justify-center">
+				<Text className="text-base font-medium text-red-500">
+					{error}
+				</Text>
+			</SafeAreaView>
+		);
+	}
+
+	if (!jobs.length) {
+		return (
+			<SafeAreaView className="w-full h-full flex items-center justify-center">
+				<Text className="text-base font-medium">No jobs found</Text>
+			</SafeAreaView>
+		);
+	}
+
 	return (
 		<SafeAreaView className="w-full h-full">
 			<View className="w-full pt-14 h-40 flex flex-col gap-3 bg-[#F3FAFC] p-5">
@@ -314,6 +94,13 @@ export default function HomePage() {
 			</View>
 			<ScrollView
 				className="p-5 bg-white"
+				refreshControl={
+					<RefreshControl
+						refreshing={refreshing}
+						onRefresh={onRefresh}
+						colors={["#0D99C9"]}
+					/>
+				}
 				contentContainerStyle={{
 					flexGrow: 1,
 					paddingBottom: 40,
@@ -325,10 +112,9 @@ export default function HomePage() {
 						key={index}
 						id={job.id}
 						title={job.title}
-						description={job.description}
-						postedAt={job.postedAt}
-						budget={job.budget}
-						skills={job.skills}
+						summary_short={job.summary_short}
+						posted_ago={job.posted_ago}
+						budget_display={job.budget_display}
 					/>
 				))}
 			</ScrollView>
@@ -336,7 +122,13 @@ export default function HomePage() {
 	);
 }
 
-function JobCard({ id, title, description, postedAt, budget }: JobProps) {
+function JobCard({
+	id,
+	title,
+	summary_short,
+	posted_ago,
+	budget_display,
+}: JobProps) {
 	return (
 		<Link
 			href={{
@@ -347,16 +139,16 @@ function JobCard({ id, title, description, postedAt, budget }: JobProps) {
 		>
 			<Pressable className="w-full bg-white border border-[#E6E6E6] p-3 rounded-lg flex flex-col gap-2">
 				<Text className="text-[#808080] text-sm font-medium">
-					{postedAt}
+					{posted_ago}
 				</Text>
 				<Text className="text-[#4D4D4D] text-base font-medium">
 					{title}
 				</Text>
 				<Text className="text-[#999999] text-base font-medium">
-					{description}
+					{summary_short}
 				</Text>
 				<Text className="text-[#436D7B] text-base font-medium">
-					Budget - #{budget}/day
+					{budget_display}
 				</Text>
 			</Pressable>
 		</Link>
