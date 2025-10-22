@@ -1,3 +1,4 @@
+import { useAuthStore } from "@/app/store/authStore";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "expo-router";
 import { ArrowLeft, ChevronRight, X } from "lucide-react-native";
@@ -119,6 +120,9 @@ export function LogoutModal({
 	showModal: boolean;
 	onClose: () => void;
 }) {
+	const { logout } = useAuthStore.getState();
+	const router = useRouter();
+
 	return (
 		<Portal>
 			{showModal && (
@@ -139,7 +143,11 @@ export function LogoutModal({
 									title="Log Out"
 									className="bg-[#D22853] border-[#D22853] flex-1"
 									textClassName="text-lg text-white"
-									onPress={onClose}
+									onPress={() => {
+										logout();
+										router.push("/");
+										onClose();
+									}}
 								/>
 								<Button
 									title="Cancel"

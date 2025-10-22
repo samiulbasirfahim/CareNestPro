@@ -25,6 +25,7 @@ export interface AuthState {
 	error: string | null;
 	errors: any;
 	login: (payload: AuthPayload) => any;
+	logout: () => void;
 	clearError: () => void;
 }
 
@@ -70,6 +71,18 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 				isLoading: false,
 			});
 		}
+	},
+
+	logout: () => {
+		SecureStore.deleteItemAsync("accessToken");
+		SecureStore.deleteItemAsync("refreshToken");
+		set({
+			user: null,
+			accessToken: null,
+			refreshToken: null,
+			isLoading: false,
+			error: null,
+		});
 	},
 
 	clearError: () => set({ error: null }),
