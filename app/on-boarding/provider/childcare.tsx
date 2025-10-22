@@ -1535,7 +1535,6 @@ export default function Page() {
 				showModal={showModal}
 				onClose={() => {
 					setShowModal(false);
-					// router.push("/signup");
 				}}
 			/>
 		</SafeAreaView>
