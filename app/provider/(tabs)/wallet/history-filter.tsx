@@ -1,10 +1,20 @@
+import { useWalletStore } from "@/app/store/walletStore";
 import { Button } from "@/components/ui/button";
 import DateInput from "@/components/ui/date-input";
 import { useRouter } from "expo-router";
 import { ArrowLeft, ChevronDown } from "lucide-react-native";
 import { useState } from "react";
-import { Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
+import {
+	ActivityIndicator,
+	Pressable,
+	SafeAreaView,
+	ScrollView,
+	Text,
+	View,
+} from "react-native";
 import { twMerge } from "tailwind-merge";
+import { Toast } from "toastify-react-native";
+import { TransactionCard } from ".";
 
 export default function WalletHistoryFilter() {
 	const router = useRouter();
@@ -16,6 +26,32 @@ export default function WalletHistoryFilter() {
 		null
 	);
 	const [selectedEndDate, setSelectedEndDate] = useState<Date | null>(null);
+
+	const { isLoading, error, filterWalletHistory, walletHistory } =
+		useWalletStore();
+
+	const onSubmit = async () => {
+		try {
+			if (!selectedStartDate || !selectedEndDate) {
+				Toast.error("Please select a date range");
+				return;
+			}
+			await filterWalletHistory(
+				selectedStartDate.toISOString(),
+				selectedEndDate.toISOString()
+			);
+		} catch (err: any) {
+			console.log(err.message);
+		}
+	};
+
+	if (isLoading) {
+		return <ActivityIndicator size="large" color="#0D99C9" />;
+	}
+
+	if (error) {
+		return <Text className="text-red-500 text-base">{error}</Text>;
+	}
 
 	return (
 		<SafeAreaView className="w-full h-full bg-white">
@@ -29,6 +65,11 @@ export default function WalletHistoryFilter() {
 					</Text>
 				</View>
 			</View>
+
+			{isLoading && <ActivityIndicator size="large" color="#0D99C9" />}
+
+			{error && <Text className="text-red-500 text-base">{error}</Text>}
+
 			<ScrollView
 				className="p-5 bg-white"
 				contentContainerStyle={{
@@ -83,12 +124,43 @@ export default function WalletHistoryFilter() {
 					value={selectedEndDate}
 					onChange={setSelectedEndDate}
 				/>
-				<Button title="View" />
+				<Button onPress={onSubmit} title="View" />
 				<Button
 					variant="primary-outline"
 					renderIcon={<ChevronDown size={20} color="#0D99C9" />}
 					title="Download"
 				/>
+
+				{(!selectedStartDate || !selectedEndDate) && (
+					<View className="w-full h-full flex items-center">
+						<Text className="text-base font-normal text-[#CCCCCC]">
+							Please select a date range
+						</Text>
+					</View>
+				)}
+
+				{walletHistory.length === 0 && (
+					<View className="w-full h-full flex items-center">
+						<Text className="text-base font-normal text-[#CCCCCC]">
+							No transactions found
+						</Text>
+					</View>
+				)}
+
+				{selectedStartDate &&
+					selectedEndDate &&
+					walletHistory.map((transaction, index) => (
+						<Pressable
+							key={index}
+							onPress={() =>
+								router.push(
+									`/provider/wallet/${transaction.id}`
+								)
+							}
+						>
+							<TransactionCard {...transaction} />
+						</Pressable>
+					))}
 			</ScrollView>
 		</SafeAreaView>
 	);

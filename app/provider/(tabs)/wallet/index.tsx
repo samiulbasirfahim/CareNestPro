@@ -1,9 +1,14 @@
+import { useWalletStore, WalletHistoryProps } from "@/app/store/walletStore";
 import { Button } from "@/components/ui/button";
+import { format, parseISO } from "date-fns";
 import { useRouter } from "expo-router";
 import { ArrowLeft, ListFilter, Search, Wallet } from "lucide-react-native";
+import { useCallback, useEffect, useState } from "react";
 import {
+	ActivityIndicator,
 	ImageBackground,
 	Pressable,
+	RefreshControl,
 	SafeAreaView,
 	ScrollView,
 	Text,
@@ -11,60 +16,52 @@ import {
 	View,
 } from "react-native";
 
-type TransactionProps = {
-	id: number;
-	type: "Wallet funded" | "Withdrawal";
-	date: string;
-	time: string;
-	amount: string;
-};
-
-const transactions: TransactionProps[] = [
-	{
-		id: 1,
-		type: "Wallet funded",
-		date: "07-03-24",
-		time: "02:15 am",
-		amount: "₦3,800.00",
-	},
-	{
-		id: 2,
-		type: "Withdrawal",
-		date: "07-03-24",
-		time: "02:15 am",
-		amount: "₦3,800.00",
-	},
-	{
-		id: 3,
-		type: "Wallet funded",
-		date: "07-03-24",
-		time: "02:15 am",
-		amount: "₦3,800.00",
-	},
-	{
-		id: 4,
-		type: "Wallet funded",
-		date: "07-03-24",
-		time: "02:15 am",
-		amount: "₦3,800.00",
-	},
-	{
-		id: 5,
-		type: "Wallet funded",
-		date: "07-03-24",
-		time: "02:15 am",
-		amount: "₦3,800.00",
-	},
-	{
-		id: 6,
-		type: "Wallet funded",
-		date: "07-03-24",
-		time: "02:15 am",
-		amount: "₦3,800.00",
-	},
-];
 export default function WalletPage() {
 	const router = useRouter();
+	const {
+		isLoading,
+		walletData,
+		walletHistory,
+		getWallet,
+		getWalletHistory,
+		searchQuery,
+		setSearchQuery,
+		fetchSearchQuery,
+		error,
+	} = useWalletStore();
+	const [refreshing, setRefreshing] = useState(false);
+
+	useEffect(() => {
+		getWallet();
+		getWalletHistory();
+		console.log("HERE....");
+		console.log(walletData);
+	}, []);
+
+	const onRefresh = useCallback(async () => {
+		setRefreshing(true);
+		await getWallet();
+		await getWalletHistory();
+		setRefreshing(false);
+	}, [getWallet, getWalletHistory]);
+
+	if (isLoading && !refreshing) {
+		return (
+			<SafeAreaView className="w-full h-full bg-white">
+				<ActivityIndicator size="large" color="#0D99C9" />
+			</SafeAreaView>
+		);
+	}
+
+	if (error) {
+		return (
+			<SafeAreaView className="w-full h-full flex items-center justify-center">
+				<Text className="text-base font-medium text-red-500">
+					{error}
+				</Text>
+			</SafeAreaView>
+		);
+	}
 
 	return (
 		<SafeAreaView className="w-full h-full bg-white">
@@ -85,6 +82,13 @@ export default function WalletPage() {
 					paddingBottom: 70,
 				}}
 				contentContainerClassName="gap-6"
+				refreshControl={
+					<RefreshControl
+						refreshing={refreshing}
+						onRefresh={onRefresh}
+						colors={["#0D99C9"]}
+					/>
+				}
 			>
 				<ImageBackground
 					source={require("@/assets/images/wallet-history-banner-bg.png")}
@@ -95,7 +99,7 @@ export default function WalletPage() {
 						<View className="w-full flex flex-row gap-4 items-center">
 							<View className="flex flex-col gap-2 flex-1">
 								<Text className="text-xl font-medium text-[#0D99C9]">
-									$ 53,589.00
+									₦ {walletData.current_balance}
 								</Text>
 								<Text className="text-base font-normal text-[#265977]">
 									Total amount earned
@@ -106,14 +110,19 @@ export default function WalletPage() {
 
 							<View className="flex flex-col gap-2 items-end pl-8">
 								<Text className="text-xl font-medium text-[#0D99C9]">
-									25
+									{walletData.total_hours}
 								</Text>
 								<Text className="text-base font-normal text-[#265977]">
 									Total hours
 								</Text>
 							</View>
 						</View>
-						<Button title="Withdraw Fund" className="mt-7" />
+
+						<Button
+							disabled={walletData.current_balance <= 5}
+							title="Withdraw Fund"
+							className="mt-7"
+						/>
 					</View>
 				</ImageBackground>
 
@@ -129,6 +138,16 @@ export default function WalletPage() {
 								placeholder="Search for amount"
 								style={{
 									textAlignVertical: "center",
+								}}
+								value={searchQuery}
+								onChangeText={(text: any) => {
+									if (text.length > 0) {
+										setSearchQuery(text);
+										fetchSearchQuery(text);
+									} else {
+										setSearchQuery("");
+										getWalletHistory();
+									}
 								}}
 							/>
 							<Pressable
@@ -153,10 +172,20 @@ export default function WalletPage() {
 					</View>
 				</View>
 
-				{transactions.map((transaction, index) => (
+				{walletHistory.length === 0 && (
+					<View className="w-full h-full flex items-center">
+						<Text className="text-base font-normal text-[#CCCCCC]">
+							No transactions found
+						</Text>
+					</View>
+				)}
+
+				{walletHistory.map((transaction, index) => (
 					<Pressable
 						key={index}
-						onPress={() => router.push("/provider/wallet/[id]")}
+						onPress={() =>
+							router.push(`/provider/wallet/${transaction.id}`)
+						}
 					>
 						<TransactionCard {...transaction} />
 					</Pressable>
@@ -166,13 +195,20 @@ export default function WalletPage() {
 	);
 }
 
-function TransactionCard({ type, date, time, amount }: TransactionProps) {
+export function TransactionCard({
+	id,
+	transaction_title,
+	transaction_date,
+	amount,
+}: WalletHistoryProps) {
 	// Define color and icon based on type
-	const isFunded = type === "Wallet funded";
+	const isFunded = transaction_title === "Deposit" ? true : false;
 	const iconColor = isFunded ? "#7EC87E" : "#FFB647";
 	const bgColor = isFunded ? "#F8FCF8" : "#FFFBF5";
 	const textColor = isFunded ? "#737C28" : "#737C28";
 	const Icon = isFunded ? Wallet : Wallet;
+
+	const dateObj = parseISO(transaction_date);
 
 	return (
 		<View className="w-full flex flex-row items-center gap-6 p-5 py-4 rounded-lg border border-[#EDEDED] bg-white">
@@ -187,12 +223,16 @@ function TransactionCard({ type, date, time, amount }: TransactionProps) {
 			{/* Middle Info */}
 			<View className="flex flex-1 flex-col">
 				<Text className="text-[#4D4D4D] text-lg font-medium">
-					{type}
+					{transaction_title}
 				</Text>
 				<View className="flex flex-row gap-2 items-center">
-					<Text className="text-[#8F8F8F] text-sm">{date}</Text>
+					<Text className="text-[#8F8F8F] text-sm">
+						{format(dateObj, "dd MMM yyyy")}
+					</Text>
 					<View className="w-[1px] h-[12px] bg-[#C9C9C9]" />
-					<Text className="text-[#8F8F8F] text-sm">{time}</Text>
+					<Text className="text-[#8F8F8F] text-sm">
+						{format(dateObj, "hh.mm a")}
+					</Text>
 				</View>
 			</View>
 
@@ -202,7 +242,7 @@ function TransactionCard({ type, date, time, amount }: TransactionProps) {
 					style={{ color: textColor }}
 					className="text-lg font-medium"
 				>
-					{amount}
+					₦ {amount}
 				</Text>
 			</View>
 		</View>
