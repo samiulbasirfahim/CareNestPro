@@ -40,6 +40,7 @@ export default function Page() {
 
 			if (response?.status === 201) {
 				Toast.success(response?.data?.message || "Signup successful.");
+				router.push("/login");
 			} else if (response?.status === 400) {
 				Toast.error(
 					response?.data?.message ||
@@ -64,20 +65,21 @@ export default function Page() {
 						</Text>
 					</View>
 
-					{role && ["childcare", "elderly"].includes(role) && (
-						<Input
-							label="Email address"
-							placeholder="Input email address"
-							value={careProviderData.user_data.email}
-							onChangeText={(value: any) => {
-								updateCareProviderData({
-									user_data: {
-										email: value,
-									},
-								});
-							}}
-						/>
-					)}
+					{role &&
+						["childcare", "elderly", "tutoring"].includes(role) && (
+							<Input
+								label="Email address"
+								placeholder="Input email address"
+								value={careProviderData.user_data.email}
+								onChangeText={(value: any) => {
+									updateCareProviderData({
+										user_data: {
+											email: value,
+										},
+									});
+								}}
+							/>
+						)}
 
 					<InputPassword
 						label="Password"
