@@ -120,7 +120,7 @@ export function LogoutModal({
 	showModal: boolean;
 	onClose: () => void;
 }) {
-	const { logout } = useAuthStore.getState();
+	const { logout } = useAuthStore();
 	const router = useRouter();
 
 	return (
