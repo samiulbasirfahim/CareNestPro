@@ -38,6 +38,10 @@ export default function Page() {
 					response?.data?.error ||
 					"Login failed. Please try again."
 			);
+
+			if (user?.user_type === "provider") {
+				router.push("/provider/(tabs)/home");
+			}
 		} catch (err: any) {
 			console.log("Error occured during login.");
 			console.log(err.message);
