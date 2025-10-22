@@ -32,7 +32,11 @@ export interface CareProviderProfileDataProps {
 		preferred_option: string;
 		special_preferences: string[];
 		communication_language: string;
-		personality_and_interpersonal_skills?: string[];
+		personality_and_interpersonal_skills: string[];
+		subjects_experienced_in: string[];
+		tutoring_services: string[];
+		experience_level_taught: string[];
+		housekeeping_preference: string;
 	};
 }
 
@@ -86,6 +90,10 @@ export const useCareProviderStore = create<CareProviderState>((set, get) => ({
 				special_preferences: [],
 				communication_language: "",
 				personality_and_interpersonal_skills: [],
+				subjects_experienced_in: [],
+				tutoring_services: [],
+				experience_level_taught: [],
+				housekeeping_preference: "",
 			},
 		},
 	},
@@ -150,6 +158,18 @@ export const useCareProviderStore = create<CareProviderState>((set, get) => ({
 							personality_and_interpersonal_skills:
 								payload.profile_data.category_specific_details
 									?.personality_and_interpersonal_skills,
+							subjects_experienced_in:
+								payload.profile_data.category_specific_details
+									.subjects_experienced_in,
+							tutoring_services:
+								payload.profile_data.category_specific_details
+									.tutoring_services,
+							experience_level_taught:
+								payload.profile_data.category_specific_details
+									.experience_level_taught,
+							housekeeping_preference:
+								payload.profile_data.category_specific_details
+									.housekeeping_preference,
 						},
 					},
 				},

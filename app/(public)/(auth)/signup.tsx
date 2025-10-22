@@ -66,7 +66,12 @@ export default function Page() {
 					</View>
 
 					{role &&
-						["childcare", "elderly", "tutoring"].includes(role) && (
+						[
+							"childcare",
+							"elderly",
+							"tutoring",
+							"housekeeping",
+						].includes(role) && (
 							<Input
 								label="Email address"
 								placeholder="Input email address"
