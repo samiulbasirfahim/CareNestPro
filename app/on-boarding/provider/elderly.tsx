@@ -15,8 +15,7 @@ export default function Page() {
 	const [showModal, setShowModal] = useState<boolean>(false);
 	const router = useRouter();
 
-	const { careProviderData, updateCareProviderData, register } =
-		useCareProviderStore();
+	const { careProviderData, updateCareProviderData } = useCareProviderStore();
 
 	const onSubmit = async () => {
 		try {
