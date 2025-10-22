@@ -25,7 +25,7 @@ export default function Page() {
 			}
 			const response = await login({ email, password });
 
-			if (response?.status === 200) {
+			if (response?.ok || response?.status === 200) {
 				Toast.success("Login successful");
 				console.log(user);
 				if (user?.user_type === "provider") {
