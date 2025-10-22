@@ -23,25 +23,18 @@ export default function Page() {
 				Toast.error("Please enter your password");
 				return;
 			}
-			const response = await login({ email, password });
+			const user = await login({ email, password });
 
-			if (response?.ok || response?.status === 200) {
+			if (user) {
 				Toast.success("Login successful");
-				console.log(user);
-				if (user?.user_type === "provider") {
+
+				if (user.user_type === "provider") {
 					router.push("/provider/(tabs)/home");
 				}
 				return;
 			}
-			Toast.error(
-				response?.data?.message ||
-					response?.data?.error ||
-					"Login failed. Please try again."
-			);
 
-			if (user?.user_type === "provider") {
-				router.push("/provider/(tabs)/home");
-			}
+			Toast.error("Login failed. Please check your credentials.");
 		} catch (err: any) {
 			console.log("Error occured during login.");
 			console.log(err.message);

@@ -58,7 +58,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 				isLoading: false,
 				error: null,
 			});
-			return response;
+			return user;
 		} catch (err: any) {
 			console.log("Login error: ", err?.response?.data || err.message);
 			console.log(err);
