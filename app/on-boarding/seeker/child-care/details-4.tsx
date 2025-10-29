@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import TimeInput from "@/components/ui/time-input";
 import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib";
+import { useCareSeekerStore } from "@/store/careSeekerStore";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import { useRouter } from "expo-router";
 import { Info } from "lucide-react-native";
@@ -24,11 +25,13 @@ import { twMerge } from "tailwind-merge";
 
 export default function Page() {
 	const router = useRouter();
-	const [activeTab, setActiveTab] = useState<"reoccuring" | "one-off">(
-		"reoccuring"
-	);
+	// const [activeTab, setActiveTab] = useState<"reoccuring" | "one-off">(
+	// 	"reoccuring"
+	// );
 
 	const [showModal, setShowModal] = useState<boolean>(false);
+
+	const { careSeekerData, updateCareSeekerData } = useCareSeekerStore();
 
 	return (
 		<SafeAreaView className="flex-1 bg-white">
@@ -49,10 +52,21 @@ export default function Page() {
 							opacity: pressed ? 0.7 : 1,
 							transform: [{ scale: pressed ? 0.98 : 1 }],
 						})}
-						onPress={() => setActiveTab("reoccuring")}
+						onPress={() =>
+							updateCareSeekerData({
+								job_data: {
+									...careSeekerData.job_data,
+									schedule: {
+										...careSeekerData.job_data.schedule,
+										job_type: "reoccuring",
+									},
+								},
+							})
+						}
 						className={twMerge(
 							"h-full w-[48%] flex items-center justify-center p-3 rounded-md",
-							activeTab === "reoccuring"
+							careSeekerData.job_data.schedule.job_type ===
+								"reoccuring"
 								? "bg-primary"
 								: "bg-transparent"
 						)}
@@ -61,7 +75,8 @@ export default function Page() {
 							<Text
 								className={twMerge(
 									"text-foreground font-normal text-lg",
-									activeTab === "reoccuring"
+									careSeekerData.job_data.schedule
+										.job_type === "reoccuring"
 										? "text-white"
 										: ""
 								)}
@@ -76,10 +91,21 @@ export default function Page() {
 							opacity: pressed ? 0.7 : 1,
 							transform: [{ scale: pressed ? 0.98 : 1 }],
 						})}
-						onPress={() => setActiveTab("one-off")}
+						onPress={() =>
+							updateCareSeekerData({
+								job_data: {
+									...careSeekerData.job_data,
+									schedule: {
+										...careSeekerData.job_data.schedule,
+										job_type: "one-off",
+									},
+								},
+							})
+						}
 						className={twMerge(
 							"h-full w-[48%] flex items-center justify-center p-3 rounded-md",
-							activeTab === "one-off"
+							careSeekerData.job_data.schedule.job_type ===
+								"one-off"
 								? "bg-primary"
 								: "bg-transparent"
 						)}
@@ -88,7 +114,10 @@ export default function Page() {
 							<Text
 								className={twMerge(
 									"text-foreground font-normal text-lg",
-									activeTab === "one-off" ? "text-white" : ""
+									careSeekerData.job_data.schedule
+										.job_type === "one-off"
+										? "text-white"
+										: ""
 								)}
 							>
 								One - Off
@@ -97,7 +126,11 @@ export default function Page() {
 					</Pressable>
 				</View>
 
-				{activeTab === "reoccuring" ? <Reoccuring /> : <OneOff />}
+				{careSeekerData.job_data.schedule.job_type === "reoccuring" ? (
+					<Reoccuring />
+				) : (
+					<OneOff />
+				)}
 
 				<Pressable
 					style={({ pressed }) => ({

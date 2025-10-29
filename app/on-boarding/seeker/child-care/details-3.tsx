@@ -1,12 +1,52 @@
 import DropDown from "@/components/ui/dropdown";
 import { Header } from "@/components/ui/header";
 import { Typography } from "@/components/ui/typography";
+import { useCareSeekerStore } from "@/store/careSeekerStore";
 import { useRouter } from "expo-router";
 import { Pressable, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Toast } from "toastify-react-native";
 
 export default function Page() {
 	const router = useRouter();
+	const { careSeekerData, updateCareSeekerData } = useCareSeekerStore();
+
+	const onSubmit = async () => {
+		try {
+			console.log("On Submit");
+			console.log(careSeekerData);
+			if (
+				careSeekerData.job_data.details.provider_experience_requirements
+					?.communication_and_language.length === 0
+			) {
+				Toast.error(
+					"Please select at least one communication language"
+				);
+				return;
+			}
+			if (
+				careSeekerData.job_data.details.provider_experience_requirements
+					?.special_preferences.length === 0
+			) {
+				Toast.error("Please select at least one special preference");
+				return;
+			}
+			if (
+				careSeekerData.job_data.details.provider_experience_requirements
+					?.preferred_option.length === 0
+			) {
+				Toast.error("Please select at least one preferred option");
+				return;
+			}
+
+			router.push({
+				pathname: "/on-boarding/seeker/child-care/details-4",
+				params: { role: "childcare" },
+			});
+		} catch (err: any) {
+			console.log("Error: ", err.message);
+		}
+	};
 
 	return (
 		<SafeAreaView className="flex-1 bg-white">
@@ -37,6 +77,33 @@ export default function Page() {
 						list={["Live-In", "Live-Out", "Hybrid"]}
 						title="Personality and Interpersonal Skills"
 						isMulti={true}
+						values={
+							careSeekerData.job_data.details
+								.provider_experience_requirements
+								?.preferred_option
+						}
+						onChange={(value: any) => {
+							const existingSeekerInfo = careSeekerData.job_data
+								.details.provider_experience_requirements || {
+								communication_and_language: [],
+								special_preferences: [],
+								preferred_option: [],
+								additional_care_categories: [],
+							};
+
+							updateCareSeekerData({
+								job_data: {
+									...careSeekerData.job_data,
+									details: {
+										...careSeekerData.job_data.details,
+										provider_experience_requirements: {
+											...existingSeekerInfo,
+											preferred_option: value,
+										},
+									},
+								},
+							});
+						}}
 					/>
 				</View>
 
@@ -53,6 +120,33 @@ export default function Page() {
 						]}
 						title="Communication & Language"
 						isMulti={true}
+						values={
+							careSeekerData.job_data.details
+								.provider_experience_requirements
+								?.preferred_option
+						}
+						onChange={(value: any) => {
+							const existingSeekerInfo = careSeekerData.job_data
+								.details.provider_experience_requirements || {
+								communication_and_language: [],
+								special_preferences: [],
+								preferred_option: [],
+								additional_care_categories: [],
+							};
+
+							updateCareSeekerData({
+								job_data: {
+									...careSeekerData.job_data,
+									details: {
+										...careSeekerData.job_data.details,
+										provider_experience_requirements: {
+											...existingSeekerInfo,
+											communication_and_language: value,
+										},
+									},
+								},
+							});
+						}}
 					/>
 				</View>
 
@@ -68,6 +162,33 @@ export default function Page() {
 						]}
 						title="Special Preferences"
 						isMulti={true}
+						values={
+							careSeekerData.job_data.details
+								.provider_experience_requirements
+								?.preferred_option
+						}
+						onChange={(value: any) => {
+							const existingSeekerInfo = careSeekerData.job_data
+								.details.provider_experience_requirements || {
+								communication_and_language: [],
+								special_preferences: [],
+								preferred_option: [],
+								additional_care_categories: [],
+							};
+
+							updateCareSeekerData({
+								job_data: {
+									...careSeekerData.job_data,
+									details: {
+										...careSeekerData.job_data.details,
+										provider_experience_requirements: {
+											...existingSeekerInfo,
+											special_preferences: value,
+										},
+									},
+								},
+							});
+						}}
 					/>
 				</View>
 
@@ -76,6 +197,34 @@ export default function Page() {
 						list={["Elderly Care", "Tutoring", "Housekeeping"]}
 						title="Want your care provider to offer more than one type of care?"
 						subtitle="Select an extra category below"
+						isMulti={true}
+						values={
+							careSeekerData.job_data.details
+								.provider_experience_requirements
+								?.preferred_option
+						}
+						onChange={(value: any) => {
+							const existingSeekerInfo = careSeekerData.job_data
+								.details.provider_experience_requirements || {
+								communication_and_language: [],
+								special_preferences: [],
+								preferred_option: [],
+								additional_care_categories: [],
+							};
+
+							updateCareSeekerData({
+								job_data: {
+									...careSeekerData.job_data,
+									details: {
+										...careSeekerData.job_data.details,
+										provider_experience_requirements: {
+											...existingSeekerInfo,
+											additional_care_categories: value,
+										},
+									},
+								},
+							});
+						}}
 					/>
 				</View>
 
@@ -84,9 +233,7 @@ export default function Page() {
 						opacity: pressed ? 0.7 : 1,
 						transform: [{ scale: pressed ? 0.98 : 1 }],
 					})}
-					onPress={() =>
-						router.push("/on-boarding/seeker/child-care/details-4")
-					}
+					onPress={onSubmit}
 					className="bg-primary items-center py-3 rounded-lg w-full mt-6"
 				>
 					<Typography

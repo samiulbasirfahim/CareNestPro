@@ -2,14 +2,18 @@ import { OptionCard } from "@/components/common/option-card";
 import SafeView from "@/components/layout/safe-view";
 import { Header } from "@/components/ui/header";
 import { Typography } from "@/components/ui/typography";
+import { useCareSeekerStore } from "@/store/careSeekerStore";
 import { router } from "expo-router";
 import { useState } from "react";
 import { Pressable, SafeAreaView, ScrollView, View } from "react-native";
+import { Toast } from "toastify-react-native";
 
 export default function Page() {
 	const [selectedProvider, setSelectedProvider] = useState<
 		"childcare" | "elderly" | "tutoring" | "housekeeping"
 	>("childcare");
+
+	const { careSeekerData, updateCareSeekerData } = useCareSeekerStore();
 
 	return (
 		<SafeAreaView className="w-full h-full bg-white">
@@ -70,6 +74,18 @@ export default function Page() {
 						})}
 						className="bg-primary items-center py-3 rounded-lg w-full border-2 border-primary"
 						onPress={() => {
+							updateCareSeekerData({
+								job_data: {
+									...careSeekerData.job_data,
+									service_category: selectedProvider as any,
+								},
+							});
+
+							if (!selectedProvider) {
+								Toast.error("Please select a provider");
+								return;
+							}
+
 							router.push({
 								pathname:
 									selectedProvider === "childcare"
