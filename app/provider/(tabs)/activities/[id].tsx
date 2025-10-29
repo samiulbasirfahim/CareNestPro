@@ -13,6 +13,7 @@ import {
 	SafeAreaView,
 	ScrollView,
 	Text,
+	TouchableOpacity,
 	View,
 } from "react-native";
 import { Toast } from "toastify-react-native";
@@ -34,7 +35,7 @@ export default function ActivityDetails() {
 		null
 	);
 
-	const [rating, setRating] = useState(3);
+	const [rating, setRating] = useState(0);
 	const [reviewCareSeeker, setReviewCareSeeker] = useState("");
 
 	const onSubmit = async () => {
@@ -192,13 +193,22 @@ export default function ActivityDetails() {
 						/>
 					</View>
 
-					{/* Review */}
-					<Textarea
-						label="Review the care seeker"
-						placeholder="Write feedback about your experience"
-						value={reviewCareSeeker}
-						onChange={(text: any) => setReviewCareSeeker(text)}
-					/>
+					<View className="w-full flex flex-col gap-2 relative">
+						<Textarea
+							label="Review the care seeker"
+							placeholder="Input feedback of your time with caregiver"
+							value={reviewCareSeeker}
+							onChange={(text: any) => setReviewCareSeeker(text)}
+							inputStyle="min-h-[150px] pb-10"
+						/>
+
+						{/* Stars */}
+						<StarRating
+							rating={rating}
+							onChange={setRating}
+							className="absolute bottom-4 left-4"
+						/>
+					</View>
 
 					{details.review_from_seeker && (
 						<>
@@ -221,6 +231,29 @@ export default function ActivityDetails() {
 		</SafeAreaView>
 	);
 }
+
+interface StarRatingProps {
+	rating: number;
+	onChange: (value: number) => void;
+	className?: string;
+}
+
+const StarRating = ({ rating, onChange, className }: StarRatingProps) => {
+	return (
+		<View className={cn("flex flex-row gap-2 mt-3", className)}>
+			{[1, 2, 3, 4, 5].map((index) => (
+				<TouchableOpacity key={index} onPress={() => onChange(index)}>
+					<Star
+						size={16}
+						strokeWidth={1.5}
+						color={index <= rating ? "#CB9E49" : "#CFCFCF"}
+						fill={index <= rating ? "#CB9E49" : "transparent"}
+					/>
+				</TouchableOpacity>
+			))}
+		</View>
+	);
+};
 
 function InfoBox({
 	title,
