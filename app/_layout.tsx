@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { StatusBar, useColorScheme } from "react-native";
 import { Host } from "react-native-portalize";
 import ToastManager from "toastify-react-native";
-import "../global.css";
+import "./global.css";
 
 export default function RootLayout() {
 	const [isReady, setIsReady] = useState(false);
