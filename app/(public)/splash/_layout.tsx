@@ -1,11 +1,9 @@
 import PaginationDots from "@/components/common/pagination-dot";
-import { useAuthStore } from "@/store/authStore";
 import {
 	createMaterialTopTabNavigator,
 	MaterialTopTabBarProps,
 } from "@react-navigation/material-top-tabs";
-import { router, useRouter, withLayoutContext } from "expo-router";
-import { useEffect } from "react";
+import { router, withLayoutContext } from "expo-router";
 import { Pressable, StatusBar, Text, useColorScheme, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -15,21 +13,6 @@ export const Tab = withLayoutContext(Navigator);
 export default function SplashLayout() {
 	const colorScheme = useColorScheme();
 	const isDark = colorScheme === "dark";
-	const router = useRouter();
-
-	const { accessToken, user, restoreSession } = useAuthStore();
-
-	useEffect(() => {
-		const init = async () => {
-			await restoreSession();
-			if (accessToken && user) {
-				if (user?.user_type === "provider") {
-					return router.push("/provider/(tabs)/home");
-				}
-			}
-		};
-		init();
-	}, []);
 
 	return (
 		<>
