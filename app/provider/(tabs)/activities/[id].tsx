@@ -197,7 +197,6 @@ export default function ActivityDetails() {
 						label="Review the care seeker"
 						placeholder="Write feedback about your experience"
 						value={reviewCareSeeker}
-						// onChangeText={(text: any) => setReviewCareSeeker(text)}
 						onChange={(text: any) => setReviewCareSeeker(text)}
 					/>
 
