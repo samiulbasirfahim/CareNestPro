@@ -83,7 +83,11 @@ export default function Summary() {
 					</Typography>
 				</View>
 
-				<Button title="Submit Request" className="mt-8" />
+				<Button
+					onPress={() => router.push("/seeker/(tabs)/home")}
+					title="Submit Request"
+					className="mt-8"
+				/>
 			</ScrollView>
 		</SafeAreaView>
 	);
