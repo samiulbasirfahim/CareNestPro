@@ -1,8 +1,8 @@
-import { useCareProviderStore } from "@/app/store/careProviderStore";
 import { OptionCard } from "@/components/common/option-card";
 import SafeView from "@/components/layout/safe-view";
 import { Header } from "@/components/ui/header";
 import { Typography } from "@/components/ui/typography";
+import { useCareProviderStore } from "@/store/careProviderStore";
 import { router } from "expo-router";
 import { useState } from "react";
 import { Pressable, SafeAreaView, ScrollView, View } from "react-native";

@@ -1,7 +1,7 @@
-import { baseURL } from "@/app/config";
-import { useAuthStore } from "@/app/store/authStore";
 import { Button } from "@/components/ui/button";
 import { InputPassword } from "@/components/ui/input";
+import { baseURL } from "@/config";
+import { useAuthStore } from "@/store/authStore";
 import axios from "axios";
 import { useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";

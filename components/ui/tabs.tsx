@@ -1,4 +1,4 @@
-import { cn } from "@/app/lib";
+import { cn } from "@/lib";
 import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 

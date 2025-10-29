@@ -1,10 +1,10 @@
-import { useCareProviderStore } from "@/app/store/careProviderStore";
 import { EnableLocationModal } from "@/components/common/enable-location-modal";
 import DropDown from "@/components/ui/dropdown";
 import { Header } from "@/components/ui/header";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Typography } from "@/components/ui/typography";
+import { useCareProviderStore } from "@/store/careProviderStore";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";

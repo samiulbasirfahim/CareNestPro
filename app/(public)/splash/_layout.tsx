@@ -1,5 +1,5 @@
-import { useAuthStore } from "@/app/store/authStore";
 import PaginationDots from "@/components/common/pagination-dot";
+import { useAuthStore } from "@/store/authStore";
 import {
 	createMaterialTopTabNavigator,
 	MaterialTopTabBarProps,

@@ -1,6 +1,6 @@
-import { cn } from "@/app/lib";
-import { useWalletStore } from "@/app/store/walletStore";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib";
+import { useWalletStore } from "@/store/walletStore";
 import { format, parseISO } from "date-fns";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowLeft, ChevronDown } from "lucide-react-native";

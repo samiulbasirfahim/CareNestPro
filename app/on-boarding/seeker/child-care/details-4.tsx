@@ -1,4 +1,3 @@
-import { cn } from "@/app/lib";
 import { Button } from "@/components/ui/button";
 import DateInput from "@/components/ui/date-input";
 import MultiSelectComponent from "@/components/ui/dropdown";
@@ -6,6 +5,7 @@ import { Header } from "@/components/ui/header";
 import { Input } from "@/components/ui/input";
 import TimeInput from "@/components/ui/time-input";
 import { Typography } from "@/components/ui/typography";
+import { cn } from "@/lib";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import { useRouter } from "expo-router";
 import { Info } from "lucide-react-native";

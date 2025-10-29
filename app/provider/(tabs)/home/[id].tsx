@@ -1,5 +1,5 @@
-import { useJobsStore } from "@/app/store/jobsStore";
 import { Button } from "@/components/ui/button";
+import { useJobsStore } from "@/store/jobsStore";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
 import { useCallback, useEffect, useState } from "react";

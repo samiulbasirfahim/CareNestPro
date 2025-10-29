@@ -1,4 +1,4 @@
-import { cn } from "@/app/lib";
+import { cn } from "@/lib";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { CalendarDays } from "lucide-react-native";
 import { useState } from "react";

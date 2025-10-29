@@ -1,6 +1,6 @@
-import { useWalletStore } from "@/app/store/walletStore";
 import { Button } from "@/components/ui/button";
 import DateInput from "@/components/ui/date-input";
+import { useWalletStore } from "@/store/walletStore";
 import { useRouter } from "expo-router";
 import { ArrowLeft, ChevronDown } from "lucide-react-native";
 import { useState } from "react";

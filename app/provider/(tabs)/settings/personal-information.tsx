@@ -1,6 +1,6 @@
-import { usePersonalInfoStore } from "@/app/store/personalInfoStore";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { usePersonalInfoStore } from "@/store/personalInfoStore";
 import { useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
 import { useEffect, useState } from "react";

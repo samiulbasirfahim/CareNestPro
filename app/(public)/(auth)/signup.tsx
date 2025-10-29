@@ -1,6 +1,6 @@
-import { useCareProviderStore } from "@/app/store/careProviderStore";
 import SafeView from "@/components/layout/safe-view";
 import { Input, InputPassword } from "@/components/ui/input";
+import { useCareProviderStore } from "@/store/careProviderStore";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";

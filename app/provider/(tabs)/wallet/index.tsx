@@ -1,5 +1,5 @@
-import { useWalletStore, WalletHistoryProps } from "@/app/store/walletStore";
 import { Button } from "@/components/ui/button";
+import { useWalletStore, WalletHistoryProps } from "@/store/walletStore";
 import { format, parseISO } from "date-fns";
 import { useRouter } from "expo-router";
 import { ArrowLeft, ListFilter, Search, Wallet } from "lucide-react-native";

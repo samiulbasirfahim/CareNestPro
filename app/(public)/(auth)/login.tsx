@@ -1,7 +1,7 @@
-import { useAuthStore } from "@/app/store/authStore";
 import SafeView from "@/components/layout/safe-view";
 import { Input, InputPassword } from "@/components/ui/input";
 import { Typography } from "@/components/ui/typography";
+import { useAuthStore } from "@/store/authStore";
 import { Link, useRouter } from "expo-router";
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";

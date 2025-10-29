@@ -8,14 +8,14 @@ import {
 	Settings,
 	Wallet,
 } from "lucide-react-native";
-import { useColorScheme, View } from "react-native";
+import { SafeAreaView, useColorScheme, View } from "react-native";
 
 export default function TabsLayout() {
 	const colorScheme = useColorScheme();
 	const isDark = colorScheme === "dark";
 
 	return (
-		<>
+		<SafeAreaView className="w-full h-full">
 			<StatusBar
 				translucent={true}
 				backgroundColor={isDark ? "transparent" : "#000"}
@@ -185,6 +185,6 @@ export default function TabsLayout() {
 					}}
 				/>
 			</Tabs>
-		</>
+		</SafeAreaView>
 	);
 }

@@ -1,6 +1,6 @@
-import { useCareProviderStore } from "@/app/store/careProviderStore";
 import { Header } from "@/components/ui/header";
 import { Typography } from "@/components/ui/typography";
+import { useCareProviderStore } from "@/store/careProviderStore";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";

@@ -1,4 +1,4 @@
-import { JobProps, useJobsStore } from "@/app/store/jobsStore";
+import { JobProps, useJobsStore } from "@/store/jobsStore";
 import { Link } from "expo-router";
 import { BadgeCheck, Bell, ListFilter, Search } from "lucide-react-native";
 import { useCallback, useEffect, useState } from "react";

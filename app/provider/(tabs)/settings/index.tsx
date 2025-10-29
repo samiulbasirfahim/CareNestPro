@@ -1,5 +1,5 @@
-import { useAuthStore } from "@/app/store/authStore";
 import { Button } from "@/components/ui/button";
+import { useAuthStore } from "@/store/authStore";
 import { useRouter } from "expo-router";
 import { ArrowLeft, ChevronRight, X } from "lucide-react-native";
 import { useState } from "react";
