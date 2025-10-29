@@ -14,14 +14,24 @@ import {
 } from "react-native";
 
 import { Button } from "@/components/ui/button";
+import { useIdentityVerificationStore } from "@/store/identityVerificationStore";
 import * as DocumentPicker from "expo-document-picker";
+import { Toast } from "toastify-react-native";
 
 export default function VerifyIdentity() {
 	const router = useRouter();
 
-	const [file, setFile] = useState<any>(null);
+	const [governmentIdFile, setGovernmentIdFile] = useState<any>(null);
+	const [profilePictureFile, setProfilePictureFile] = useState<any>(null);
 
-	const handleFilePick = async () => {
+	const { verifyGovernmentIdentity, verifyProfilePicture, isLoading, error } =
+		useIdentityVerificationStore();
+
+	const handleFilePick = async ({
+		type,
+	}: {
+		type: "government_id" | "profile_picture";
+	}) => {
 		try {
 			const result = await DocumentPicker.getDocumentAsync({
 				type: ["image/jpeg", "image/png"],
@@ -37,7 +47,68 @@ export default function VerifyIdentity() {
 				alert("File size exceeds 3MB limit");
 				return;
 			}
-			setFile(selected);
+
+			if (type === "government_id") {
+				setGovernmentIdFile(selected);
+			} else {
+				setProfilePictureFile(selected);
+			}
+		} catch (err) {
+			console.log("File selection error:", err);
+		}
+	};
+
+	const handleSubmit = async () => {
+		try {
+			if (!governmentIdFile && !profilePictureFile) {
+				Toast.error("Please select a file");
+				return;
+			}
+
+			if (governmentIdFile) {
+				const response = await verifyGovernmentIdentity({
+					government_id: governmentIdFile,
+				});
+
+				if (!response) {
+					Toast.error(error || "Failed to verify identity");
+					return;
+				}
+				if (response?.status === 200) {
+					Toast.success(
+						response.data?.message ||
+							"Identity verified successfully"
+					);
+				} else {
+					Toast.error(
+						response?.data?.detail ||
+							response?.data?.message ||
+							"Failed to verify identity"
+					);
+				}
+			}
+			if (profilePictureFile) {
+				const response = await verifyProfilePicture({
+					image: profilePictureFile,
+				});
+
+				if (!response) {
+					Toast.error(error || "Failed to verify profile picture");
+					return;
+				}
+				if (response?.status === 200) {
+					Toast.success(
+						response.data?.message ||
+							"Profile picture uploaded successfully"
+					);
+				} else {
+					Toast.error(
+						response?.data?.detail ||
+							response?.data?.message ||
+							"Failed to verify profile picture"
+					);
+				}
+			}
 		} catch (err) {
 			console.log("File selection error:", err);
 		}
@@ -73,7 +144,7 @@ export default function VerifyIdentity() {
 					Upload picture of yourself
 				</Text>
 				<Pressable
-					onPress={handleFilePick}
+					onPress={() => handleFilePick({ type: "profile_picture" })}
 					className="w-full border border-[#E3E3E3] rounded-lg py-8 px-4 flex items-center justify-center bg-white"
 					style={({ pressed }) => ({
 						opacity: pressed ? 0.9 : 1,
@@ -81,9 +152,9 @@ export default function VerifyIdentity() {
 					})}
 				>
 					{/* Placeholder or selected file preview */}
-					{file ? (
+					{profilePictureFile ? (
 						<Image
-							source={{ uri: file.uri }}
+							source={{ uri: profilePictureFile.uri }}
 							className="w-20 h-20 rounded-md mb-3"
 							resizeMode="cover"
 						/>
@@ -108,7 +179,7 @@ export default function VerifyIdentity() {
 					Upload Government ID
 				</Text>
 				<Pressable
-					onPress={handleFilePick}
+					onPress={() => handleFilePick({ type: "government_id" })}
 					className="w-full border border-[#E3E3E3] rounded-lg py-8 px-4 flex items-center justify-center bg-white"
 					style={({ pressed }) => ({
 						opacity: pressed ? 0.9 : 1,
@@ -116,9 +187,9 @@ export default function VerifyIdentity() {
 					})}
 				>
 					{/* Placeholder or selected file preview */}
-					{file ? (
+					{governmentIdFile ? (
 						<Image
-							source={{ uri: file.uri }}
+							source={{ uri: governmentIdFile.uri }}
 							className="w-20 h-20 rounded-md mb-3"
 							resizeMode="cover"
 						/>
@@ -139,7 +210,11 @@ export default function VerifyIdentity() {
 					</Text>
 				</Pressable>
 
-				<Button title="Get Verified" />
+				<Button
+					onPress={handleSubmit}
+					title={isLoading ? "Uploading..." : "Get Verified"}
+					disabled={isLoading}
+				/>
 			</ScrollView>
 		</SafeAreaView>
 	);
