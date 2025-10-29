@@ -1,4 +1,5 @@
 import { JobProps, useJobsStore } from "@/store/jobsStore";
+import { usePersonalInfoStore } from "@/store/personalInfoStore";
 import { Link } from "expo-router";
 import { BadgeCheck, Bell, ListFilter, Search } from "lucide-react-native";
 import { useCallback, useEffect, useState } from "react";
@@ -14,6 +15,7 @@ import {
 
 export default function HomePage() {
 	const { jobs, getJobs, isLoading, error } = useJobsStore();
+	const { personalInfo } = usePersonalInfoStore();
 	const [refreshing, setRefreshing] = useState(false);
 
 	useEffect(() => {
@@ -59,7 +61,7 @@ export default function HomePage() {
 					<View className="flex flex-row gap-2 items-center">
 						<BadgeCheck size={24} color="#DDF3DF" fill="#8ED796" />
 						<Text className="text-[#636363] text-base font-medium">
-							Hello, Susanna!
+							Hello, {personalInfo.name || "Susanna"}!
 						</Text>
 					</View>
 					<View>
