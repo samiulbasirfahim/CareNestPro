@@ -52,6 +52,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
 			await SecureStore.setItemAsync("accessToken", access);
 			await SecureStore.setItemAsync("refreshToken", refresh);
+			await SecureStore.setItemAsync("user", JSON.stringify(user));
 			set({
 				user,
 				accessToken: access,
@@ -78,29 +79,33 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 		try {
 			set({ isLoading: true });
 			const accessToken = await SecureStore.getItemAsync("accessToken");
+			console.log("Access token: ", accessToken);
 			const refreshToken = await SecureStore.getItemAsync("refreshToken");
+			const userObj = await SecureStore.getItemAsync("user");
+			console.log("Refresh token: ", refreshToken);
 
 			if (accessToken && refreshToken) {
 				// Optionally fetch user info using the access token
-				const response = await axios.get(
-					`${baseURL}/api/auth/profile/`,
-					{
-						headers: {
-							Authorization: `Bearer ${accessToken}`,
-						},
-						timeout: 8000,
-					}
-				);
+				// const response = await axios.get(
+				// 	`${baseURL}/api/auth/profile/`,
+				// 	{
+				// 		headers: {
+				// 			Authorization: `Bearer ${accessToken}`,
+				// 		},
+				// 		timeout: 8000,
+				// 	}
+				// );
 
-				console.log("✅ Restored user session:", response.data);
+				// console.log("✅ Restored user session:", response.data);
 
 				set({
-					user: response.data,
+					user: JSON.parse(userObj as any),
 					accessToken,
 					refreshToken,
 					isLoading: false,
 					error: null,
 				});
+				console.log("User: ", accessToken);
 			} else {
 				console.log("No tokens found — user not logged in.");
 				set({ isLoading: false });
