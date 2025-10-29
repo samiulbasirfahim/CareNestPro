@@ -4,6 +4,7 @@ import { baseURL } from "../config";
 import { useAuthStore } from "./authStore";
 
 export interface PersonalInfoProps {
+	name: string;
 	email: string;
 	country: string;
 	bank_account_number: string;
@@ -22,6 +23,7 @@ export interface PersonalInfoState {
 
 export const usePersonalInfoStore = create<PersonalInfoState>((set, get) => ({
 	personalInfo: {
+		name: "",
 		email: "",
 		country: "",
 		bank_account_number: "",
@@ -51,11 +53,12 @@ export const usePersonalInfoStore = create<PersonalInfoState>((set, get) => ({
 
 			set({
 				personalInfo: {
+					name: response.data.name || "",
 					email: response.data.email || "",
 					country: response.data.country || "",
 					bank_account_number:
 						response.data.bank_account_number || "",
-					bank_code: response.data.bank_code || "", // ✅ fixed typo (was bacnk_code)
+					bank_code: response.data.bank_code || "",
 				},
 				isLoading: false,
 				error: null,
@@ -106,6 +109,7 @@ export const usePersonalInfoStore = create<PersonalInfoState>((set, get) => ({
 			// Update local state after save
 			set({
 				personalInfo: {
+					name: response.data.name,
 					email: response.data.email,
 					country: response.data.country,
 					bank_account_number: response.data.bank_account_number,

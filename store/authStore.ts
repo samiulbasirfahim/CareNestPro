@@ -25,6 +25,7 @@ export interface AuthState {
 	error: string | null;
 	errors: any;
 	login: (payload: AuthPayload) => any;
+	restoreSession: () => Promise<void>;
 	logout: () => void;
 	clearError: () => void;
 }
@@ -69,6 +70,48 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 					err?.response?.data?.error ||
 					"Login failed",
 				isLoading: false,
+			});
+		}
+	},
+
+	restoreSession: async () => {
+		try {
+			set({ isLoading: true });
+			const accessToken = await SecureStore.getItemAsync("accessToken");
+			const refreshToken = await SecureStore.getItemAsync("refreshToken");
+
+			if (accessToken && refreshToken) {
+				// Optionally fetch user info using the access token
+				const response = await axios.get(
+					`${baseURL}/api/auth/profile/`,
+					{
+						headers: {
+							Authorization: `Bearer ${accessToken}`,
+						},
+						timeout: 8000,
+					}
+				);
+
+				console.log("✅ Restored user session:", response.data);
+
+				set({
+					user: response.data,
+					accessToken,
+					refreshToken,
+					isLoading: false,
+					error: null,
+				});
+			} else {
+				console.log("No tokens found — user not logged in.");
+				set({ isLoading: false });
+			}
+		} catch (err: any) {
+			console.log("⚠️ Failed to restore session:", err?.message);
+			set({
+				isLoading: false,
+				user: null,
+				accessToken: null,
+				refreshToken: null,
 			});
 		}
 	},
