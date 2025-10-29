@@ -9,7 +9,7 @@ import { Toast } from "toastify-react-native";
 
 export default function Page() {
 	const router = useRouter();
-	const { login, user } = useAuthStore();
+	const { login, isLoading } = useAuthStore();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -89,7 +89,7 @@ export default function Page() {
 								variant="subtitle"
 								className="text-center text-lg text-white font-semibold"
 							>
-								Login
+								{isLoading ? "Logging in..." : "Login"}
 							</Typography>
 						</Pressable>
 
