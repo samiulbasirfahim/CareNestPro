@@ -85,18 +85,20 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 			console.log("Refresh token: ", refreshToken);
 
 			if (accessToken && refreshToken) {
-				// Optionally fetch user info using the access token
-				// const response = await axios.get(
-				// 	`${baseURL}/api/auth/profile/`,
-				// 	{
-				// 		headers: {
-				// 			Authorization: `Bearer ${accessToken}`,
-				// 		},
-				// 		timeout: 8000,
-				// 	}
-				// );
+				const response = await axios.post(
+					`${baseURL}/api/token/refresh/`,
+					{
+						refresh: refreshToken,
+					},
+					{
+						headers: {
+							Authorization: `Bearer ${accessToken}`,
+						},
+						timeout: 8000,
+					}
+				);
 
-				// console.log("✅ Restored user session:", response.data);
+				console.log("✅ Restored user session:", response.data);
 
 				set({
 					user: JSON.parse(userObj as any),
@@ -105,7 +107,6 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 					isLoading: false,
 					error: null,
 				});
-				console.log("User: ", accessToken);
 			} else {
 				console.log("No tokens found — user not logged in.");
 				set({ isLoading: false });
