@@ -30,6 +30,8 @@ export default function Page() {
 
 				if (user.user_type === "provider") {
 					router.push("/provider/(tabs)/home");
+				} else {
+					router.push("/seeker/(tabs)/home");
 				}
 				return;
 			}
