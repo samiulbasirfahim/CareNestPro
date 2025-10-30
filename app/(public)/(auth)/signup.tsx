@@ -44,7 +44,9 @@ export default function Page() {
 			}
 
 			if (response?.status === 200) {
-				Toast.success("Preview generated successfully");
+				Toast.success(
+					response?.data?.message || "Preview generated successfully"
+				);
 				router.push("/seeker/summary");
 			}
 		} catch (err: any) {
