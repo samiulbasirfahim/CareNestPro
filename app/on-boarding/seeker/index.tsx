@@ -10,7 +10,7 @@ import { Toast } from "toastify-react-native";
 
 export default function Page() {
 	const [selectedProvider, setSelectedProvider] = useState<
-		"childcare" | "elderly" | "tutoring" | "housekeeping"
+		"childcare" | "elderlycare" | "tutoring" | "housekeeping"
 	>("childcare");
 
 	const { careSeekerData, updateCareSeekerData } = useCareSeekerStore();
@@ -43,8 +43,10 @@ export default function Page() {
 								image={require("@/assets/images/on-boarding/category/image-2.png")}
 								title="Elderly Care"
 								subtitle="Find Your Perfect Elderly Care provider"
-								selected={selectedProvider === "elderly"}
-								onPress={() => setSelectedProvider("elderly")}
+								selected={selectedProvider === "elderlycare"}
+								onPress={() =>
+									setSelectedProvider("elderlycare")
+								}
 							/>
 						</View>
 						<View className="gap-4 flex-row">
@@ -90,7 +92,7 @@ export default function Page() {
 								pathname:
 									selectedProvider === "childcare"
 										? "/on-boarding/seeker/child-care/details-1"
-										: selectedProvider === "elderly"
+										: selectedProvider === "elderlycare"
 											? "/on-boarding/seeker/elderly-care/details-1"
 											: selectedProvider === "tutoring"
 												? "/on-boarding/seeker/tutoring/details-1"

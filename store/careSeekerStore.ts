@@ -11,7 +11,7 @@ export interface CareSeekerUserProps {
 }
 
 export interface CareSeekerJobDataProps {
-	service_category: "childcare" | "elderlyCare" | "tutoring" | "housekeeping";
+	service_category: "childcare" | "elderlycare" | "tutoring" | "housekeeping";
 	details: {
 		location_information: {
 			use_current_location: boolean;
@@ -91,14 +91,14 @@ export interface CareSeekerJobDataProps {
 		price_min: string;
 		price_max: string;
 	};
-	title: string;
-	summary: string;
-	skills_and_expertise: string[];
 }
 
 export interface CareSeekerPayload {
 	user_data: CareSeekerUserProps;
 	job_data: CareSeekerJobDataProps;
+	title: string;
+	summary: string;
+	skills_and_expertise: string[];
 }
 
 export interface CareSeekerState {
@@ -198,10 +198,10 @@ export const useCareSeekerStore = create<CareSeekerState>((set, get) => ({
 				price_min: "",
 				price_max: "",
 			},
-			title: "",
-			summary: "",
-			skills_and_expertise: [],
 		},
+		title: "",
+		summary: "",
+		skills_and_expertise: [],
 	},
 
 	isLoading: false,
@@ -253,6 +253,9 @@ export const useCareSeekerStore = create<CareSeekerState>((set, get) => ({
 				},
 			};
 
+			console.log("LOOK HERE>>>");
+			console.log(transformedJobData);
+
 			const response = await axios.post(
 				`${baseURL}/api/seeker/public-onboarding/generate-preview/`,
 				transformedJobData,
@@ -271,11 +274,10 @@ export const useCareSeekerStore = create<CareSeekerState>((set, get) => ({
 					},
 					job_data: {
 						...jobData,
-						title: response.data.title,
-						summary: response.data.summary,
-						skills_and_expertise:
-							response.data.skills_and_expertise,
 					},
+					title: response.data.title,
+					summary: response.data.summary,
+					skills_and_expertise: response.data.skills_and_expertise,
 				},
 				isLoading: false,
 				error: null,
@@ -293,6 +295,12 @@ export const useCareSeekerStore = create<CareSeekerState>((set, get) => ({
 			});
 			console.log(jobData);
 			console.log(err);
+			console.log("❌ Axios error message:", err.message);
+			console.log("❌ Axios error response data:", err?.response?.data);
+			console.log(
+				"❌ Axios error response status:",
+				err?.response?.status
+			);
 		}
 	},
 
@@ -386,6 +394,9 @@ export const useCareSeekerStore = create<CareSeekerState>((set, get) => ({
 					job_data: {
 						...payload.job_data,
 					},
+					title: payload.title,
+					summary: payload.summary,
+					skills_and_expertise: payload.skills_and_expertise,
 				},
 				isLoading: false,
 				error: null,
@@ -401,6 +412,12 @@ export const useCareSeekerStore = create<CareSeekerState>((set, get) => ({
 					"Registration failed",
 			});
 			console.log(err);
+			console.log("❌ Axios error message:", err.message);
+			console.log("❌ Axios error response data:", err?.response?.data);
+			console.log(
+				"❌ Axios error response status:",
+				err?.response?.status
+			);
 		}
 	},
 
