@@ -106,6 +106,7 @@ export interface CareSeekerState {
 	isLoading: boolean;
 	error: string | null;
 	errors: any;
+	generatePreview: (payload: CareSeekerJobDataProps) => any;
 	register: (payload: CareSeekerPayload) => any;
 	updateCareSeekerData: (partialData: {
 		user_data?: Partial<CareSeekerUserProps>;
@@ -206,17 +207,173 @@ export const useCareSeekerStore = create<CareSeekerState>((set, get) => ({
 	isLoading: false,
 	error: null,
 	errors: {},
-	register: async (payload) => {
+	generatePreview: async (jobData) => {
 		try {
 			set({ isLoading: true });
+
+			const transformedJobData = {
+				...jobData,
+				details: {
+					...jobData.details,
+					child_information: {
+						...jobData.details.child_information,
+						children:
+							jobData.details?.child_information?.children.map(
+								(child) => ({
+									...child,
+									age: new Date(child.age)
+										.toISOString()
+										.split("T")[0],
+								})
+							),
+					},
+				},
+				schedule: {
+					...jobData.schedule,
+					start_date: jobData.schedule.start_date
+						? new Date(jobData.schedule.start_date)
+								.toISOString()
+								.split("T")[0]
+						: "",
+					end_date: jobData.schedule.end_date
+						? new Date(jobData.schedule.end_date)
+								.toISOString()
+								.split("T")[0]
+						: "",
+					start_time: jobData.schedule.start_time
+						? new Date(jobData.schedule.start_time)
+								.toTimeString()
+								.split(" ")[0]
+						: "",
+					end_time: jobData.schedule.end_time
+						? new Date(jobData.schedule.end_time)
+								.toTimeString()
+								.split(" ")[0]
+						: "",
+				},
+			};
+
 			const response = await axios.post(
 				`${baseURL}/api/seeker/public-onboarding/generate-preview/`,
-				payload,
+				transformedJobData,
 				{
 					headers: { "Content-Type": "application/json" },
 					timeout: 10000,
 				}
 			);
+
+			const previousUserData = get().careSeekerData.user_data;
+
+			set({
+				careSeekerData: {
+					user_data: {
+						...previousUserData,
+					},
+					job_data: {
+						...jobData,
+						title: response.data.title,
+						summary: response.data.summary,
+						skills_and_expertise:
+							response.data.skills_and_expertise,
+					},
+				},
+				isLoading: false,
+				error: null,
+				errors: {},
+			});
+
+			return response;
+		} catch (err: any) {
+			set({
+				isLoading: false,
+				error:
+					err?.response?.data?.detail ||
+					err?.response?.data?.message ||
+					"Preview generation failed",
+			});
+			console.log(jobData);
+			console.log(err);
+		}
+	},
+
+	register: async (payload) => {
+		try {
+			set({ isLoading: true });
+			const transformedJobData = {
+				...payload.job_data,
+				details: {
+					...payload.job_data.details,
+					child_information: {
+						...payload.job_data.details.child_information,
+						children:
+							payload.job_data.details?.child_information?.children.map(
+								(child) => ({
+									...child,
+									age: new Date(child.age)
+										.toISOString()
+										.split("T")[0],
+								})
+							),
+					},
+				},
+				schedule: {
+					...payload.job_data.schedule,
+					recurrence_pattern:
+						payload.job_data.schedule.job_type === "reoccuring"
+							? {
+									days: payload.job_data.schedule.repeat_on,
+									frequency:
+										payload.job_data.schedule.repeat_every
+											.period,
+								}
+							: {
+									days: [],
+									frequency: "",
+								},
+					start_date: payload.job_data.schedule.start_date
+						? new Date(payload.job_data.schedule.start_date)
+								.toISOString()
+								.split("T")[0]
+						: "",
+					end_date: payload.job_data.schedule.end_date
+						? new Date(payload.job_data.schedule.end_date)
+								.toISOString()
+								.split("T")[0]
+						: "",
+					start_time: payload.job_data.schedule.start_time
+						? new Date(payload.job_data.schedule.start_time)
+								.toTimeString()
+								.split(" ")[0]
+						: "",
+					end_time: payload.job_data.schedule.end_time
+						? new Date(payload.job_data.schedule.end_time)
+								.toTimeString()
+								.split(" ")[0]
+						: "",
+				},
+			};
+
+			console.log("HERE>...");
+			console.log({
+				...payload,
+				job_data: {
+					...transformedJobData,
+				},
+			});
+			const response = await axios.post(
+				`${baseURL}/api/seeker/public-onboarding/register-and-publish/`,
+				{
+					...payload,
+					job_data: {
+						...transformedJobData,
+					},
+				},
+				{
+					headers: { "Content-Type": "application/json" },
+					timeout: 10000,
+				}
+			);
+			console.log(response);
 			set({
 				careSeekerData: {
 					user_data: {
@@ -243,6 +400,7 @@ export const useCareSeekerStore = create<CareSeekerState>((set, get) => ({
 					err?.response?.data?.message ||
 					"Registration failed",
 			});
+			console.log(err);
 		}
 	},
 

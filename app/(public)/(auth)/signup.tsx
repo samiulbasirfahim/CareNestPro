@@ -1,9 +1,10 @@
 import SafeView from "@/components/layout/safe-view";
 import { Input, InputPassword } from "@/components/ui/input";
 import { useCareProviderStore } from "@/store/careProviderStore";
+import { useCareSeekerStore } from "@/store/careSeekerStore";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, Text, View } from "react-native";
 import { Toast } from "toastify-react-native";
 
 export default function Page() {
@@ -11,11 +12,47 @@ export default function Page() {
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const { register, updateCareProviderData, careProviderData } =
 		useCareProviderStore();
+	const {
+		generatePreview,
+		careSeekerData,
+		updateCareSeekerData,
+		error,
+		isLoading,
+	} = useCareSeekerStore();
 	const { role } = useLocalSearchParams<{ role?: string }>();
 
 	console.log("Role: ", role);
 
-	const signupHandler = async () => {
+	const seekerSignupHandler = async () => {
+		try {
+			if (careSeekerData.user_data.password === "") {
+				Toast.error("Please enter your password.");
+				return;
+			}
+			if (careSeekerData.user_data.password !== confirmPassword) {
+				Toast.error("Passwords do not match");
+				return;
+			}
+
+			const response = await generatePreview(careSeekerData.job_data);
+
+			console.log(response);
+			console.log(error);
+			if (!response) {
+				Toast.error("Something went wrong. Please try again.");
+				return;
+			}
+
+			if (response?.status === 200) {
+				Toast.success("Preview generated successfully");
+				router.push("/seeker/summary");
+			}
+		} catch (err: any) {
+			console.log(err.message);
+		}
+	};
+
+	const providerSignupHandler = async () => {
 		try {
 			if (careProviderData.user_data.email === "") {
 				Toast.error("Please enter your email.");
@@ -86,18 +123,33 @@ export default function Page() {
 							/>
 						)}
 
-					<InputPassword
-						label="Password"
-						placeholder="Input Password"
-						value={careProviderData.user_data.password}
-						onChangeText={(value: any) => {
-							updateCareProviderData({
-								user_data: {
-									password: value,
-								},
-							});
-						}}
-					/>
+					{role === "seeker" ? (
+						<InputPassword
+							label="Password"
+							placeholder="Input Password"
+							value={careSeekerData.user_data.password}
+							onChangeText={(value: any) => {
+								updateCareSeekerData({
+									user_data: {
+										password: value,
+									},
+								});
+							}}
+						/>
+					) : (
+						<InputPassword
+							label="Password"
+							placeholder="Input Password"
+							value={careProviderData.user_data.password}
+							onChangeText={(value: any) => {
+								updateCareProviderData({
+									user_data: {
+										password: value,
+									},
+								});
+							}}
+						/>
+					)}
 
 					<InputPassword
 						label="Confirm Password"
@@ -114,7 +166,11 @@ export default function Page() {
 								opacity: pressed ? 0.7 : 1,
 								transform: [{ scale: pressed ? 0.98 : 1 }],
 							})}
-							onPress={signupHandler}
+							onPress={
+								role === "seeker"
+									? seekerSignupHandler
+									: providerSignupHandler
+							}
 							className="bg-primary items-center py-3 rounded-lg w-full"
 						>
 							<Text className="text-center text-lg text-white font-semibold">
@@ -123,6 +179,17 @@ export default function Page() {
 						</Pressable>
 					</View>
 				</View>
+
+				{isLoading && (
+					<View className="absolute inset-0 bg-black/30 flex items-center justify-center z-50">
+						<View className="bg-white p-6 rounded-2xl flex items-center justify-center shadow-lg">
+							<ActivityIndicator size="large" color="#0D99C9" />
+							<Text className="mt-3 text-[#333] font-medium text-base">
+								Generating preview...
+							</Text>
+						</View>
+					</View>
+				)}
 			</SafeView>
 		</>
 	);
