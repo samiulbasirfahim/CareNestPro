@@ -5,6 +5,7 @@ import { Typography } from "@/components/ui/typography";
 import { useCareSeekerStore } from "@/store/careSeekerStore";
 import { useRouter } from "expo-router";
 import { Pressable, SafeAreaView, ScrollView, View } from "react-native";
+import { Toast } from "toastify-react-native";
 
 const getDefaultChildInfo = () => ({
 	who_needs_care: "",
@@ -26,6 +27,67 @@ export default function Page() {
 	const childInfo =
 		careSeekerData.job_data.details.child_information ||
 		getDefaultChildInfo();
+
+	const onSubmit = async () => {
+		try {
+			console.log("Child Care Details Submit:", childInfo);
+
+			if (!childInfo.childcare_type) {
+				Toast.show({
+					type: "error",
+					text1: "Please select a childcare type",
+				});
+				return;
+			}
+
+			if (!childInfo.number_of_children) {
+				Toast.show({
+					type: "error",
+					text1: "Please select the number of children needing care",
+				});
+				return;
+			}
+
+			const count = parseInt(childInfo.number_of_children);
+			if (
+				isNaN(count) ||
+				!Array.isArray(childInfo.children) ||
+				childInfo.children.length !== count
+			) {
+				Toast.show({
+					type: "error",
+					text1: "Please make sure all children are added correctly",
+				});
+				return;
+			}
+
+			for (let i = 0; i < childInfo.children.length; i++) {
+				const child = childInfo.children[i];
+				if (!child.age) {
+					Toast.show({
+						type: "error",
+						text1: `Please enter the age of child ${i + 1}`,
+					});
+					return;
+				}
+				if (!child.gender) {
+					Toast.show({
+						type: "error",
+						text1: `Please select the gender of child ${i + 1}`,
+					});
+					return;
+				}
+			}
+
+			router.push("/on-boarding/seeker/child-care/details-3");
+		} catch (err: any) {
+			console.log("Error:", err.message);
+			Toast.show({
+				type: "error",
+				text1: "Something went wrong, please try again.",
+			});
+		}
+	};
 
 	return (
 		<SafeAreaView className="w-full h-full bg-white">
@@ -162,9 +224,7 @@ export default function Page() {
 						opacity: pressed ? 0.7 : 1,
 						transform: [{ scale: pressed ? 0.98 : 1 }],
 					})}
-					onPress={() =>
-						router.push("/on-boarding/seeker/child-care/details-3")
-					}
+					onPress={onSubmit}
 					className="bg-primary items-center py-3 rounded-lg w-full mt-6"
 				>
 					<Typography
