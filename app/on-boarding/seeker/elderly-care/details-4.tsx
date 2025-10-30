@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import TimeInput from "@/components/ui/time-input";
 import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib";
+import { useCareSeekerStore } from "@/store/careSeekerStore";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import { useRouter } from "expo-router";
 import { Info } from "lucide-react-native";
@@ -21,19 +22,80 @@ import {
 import { Portal } from "react-native-portalize";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { twMerge } from "tailwind-merge";
+import { Toast } from "toastify-react-native";
 
 export default function Page() {
 	const router = useRouter();
-	const [activeTab, setActiveTab] = useState<"reoccuring" | "one-off">(
-		"reoccuring"
-	);
+
+	const { careSeekerData, updateCareSeekerData, isLoading } =
+		useCareSeekerStore();
 
 	const [showModal, setShowModal] = useState<boolean>(false);
+
+	const onSubmit = async () => {
+		try {
+			console.log("Submitting schedule details...");
+			const schedule = careSeekerData.job_data.schedule;
+			const budget = careSeekerData.job_data.budget;
+
+			if (!schedule.job_type) {
+				Toast.error("Please select a job type");
+				return;
+			}
+			if (!schedule.start_date) {
+				Toast.error("Please select a start date");
+				return;
+			}
+			if (!schedule.start_time) {
+				Toast.error("Please select a start time");
+				return;
+			}
+			if (!schedule.end_time) {
+				Toast.error("Please select an end time");
+				return;
+			}
+			if (!budget.price_min || !budget.price_max) {
+				Toast.error("Please set your minimum and maximum hourly rate");
+				return;
+			}
+
+			if (schedule.job_type === "reoccuring") {
+				if (!schedule.end_date) {
+					Toast.error("Please select an end date");
+					return;
+				}
+				if (!schedule.repeat_every.count) {
+					Toast.error("Please specify how often to repeat");
+					return;
+				}
+				if (!schedule.repeat_every.period) {
+					Toast.error("Please select a repeat frequency");
+					return;
+				}
+				if (!schedule.repeat_on || schedule.repeat_on.length === 0) {
+					Toast.error("Please select at least one repeat day");
+					return;
+				}
+			}
+
+			console.log("Validation passed ✅", careSeekerData);
+			setShowModal(false);
+			router.push({
+				pathname: "/signup",
+				params: {
+					role: "seeker",
+				},
+			});
+		} catch (err: any) {
+			console.log("Error on submit:", err.message);
+			Toast.error("Something went wrong. Please try again.");
+		}
+	};
 
 	return (
 		<SafeAreaView className="flex-1 bg-white">
 			<Header
-				title="Child care details"
+				title="Elderly care details"
 				subtitle="Kindly select options to help us understand your preferences"
 			/>
 			<ScrollView
@@ -49,10 +111,21 @@ export default function Page() {
 							opacity: pressed ? 0.7 : 1,
 							transform: [{ scale: pressed ? 0.98 : 1 }],
 						})}
-						onPress={() => setActiveTab("reoccuring")}
+						onPress={() =>
+							updateCareSeekerData({
+								job_data: {
+									...careSeekerData.job_data,
+									schedule: {
+										...careSeekerData.job_data.schedule,
+										job_type: "reoccuring",
+									},
+								},
+							})
+						}
 						className={twMerge(
 							"h-full w-[48%] flex items-center justify-center p-3 rounded-md",
-							activeTab === "reoccuring"
+							careSeekerData.job_data.schedule.job_type ===
+								"reoccuring"
 								? "bg-primary"
 								: "bg-transparent"
 						)}
@@ -61,7 +134,8 @@ export default function Page() {
 							<Text
 								className={twMerge(
 									"text-foreground font-normal text-lg",
-									activeTab === "reoccuring"
+									careSeekerData.job_data.schedule
+										.job_type === "reoccuring"
 										? "text-white"
 										: ""
 								)}
@@ -76,10 +150,21 @@ export default function Page() {
 							opacity: pressed ? 0.7 : 1,
 							transform: [{ scale: pressed ? 0.98 : 1 }],
 						})}
-						onPress={() => setActiveTab("one-off")}
+						onPress={() =>
+							updateCareSeekerData({
+								job_data: {
+									...careSeekerData.job_data,
+									schedule: {
+										...careSeekerData.job_data.schedule,
+										job_type: "one-off",
+									},
+								},
+							})
+						}
 						className={twMerge(
 							"h-full w-[48%] flex items-center justify-center p-3 rounded-md",
-							activeTab === "one-off"
+							careSeekerData.job_data.schedule.job_type ===
+								"one-off"
 								? "bg-primary"
 								: "bg-transparent"
 						)}
@@ -88,7 +173,10 @@ export default function Page() {
 							<Text
 								className={twMerge(
 									"text-foreground font-normal text-lg",
-									activeTab === "one-off" ? "text-white" : ""
+									careSeekerData.job_data.schedule
+										.job_type === "one-off"
+										? "text-white"
+										: ""
 								)}
 							>
 								One - Off
@@ -97,7 +185,11 @@ export default function Page() {
 					</Pressable>
 				</View>
 
-				{activeTab === "reoccuring" ? <Reoccuring /> : <OneOff />}
+				{careSeekerData.job_data.schedule.job_type === "reoccuring" ? (
+					<Reoccuring />
+				) : (
+					<OneOff />
+				)}
 
 				<Pressable
 					style={({ pressed }) => ({
@@ -119,7 +211,7 @@ export default function Page() {
 				showModal={showModal}
 				onClose={() => {
 					setShowModal(false);
-					router.push("/signup");
+					onSubmit();
 				}}
 			/>
 		</SafeAreaView>
@@ -127,32 +219,78 @@ export default function Page() {
 }
 
 const Reoccuring = () => {
-	const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(
-		null
-	);
-	const [selectedEndDate, setSelectedEndDate] = useState<Date | null>(null);
+	const { careSeekerData, updateCareSeekerData } = useCareSeekerStore();
 
-	const [selectedStartTime, setSelectedStartTime] = useState<Date | null>(
-		null
+	const [selectedRepeat, setSelectedRepeat] = useState<string[]>(
+		careSeekerData.job_data.schedule.repeat_on || []
 	);
-	const [selectedEndTime, setSelectedEndTime] = useState<Date | null>(null);
 
-	const [selectedRepeat, setSelectedRepeat] = useState<number[] | []>([]);
+	const days = [
+		{ short: "S", name: "Sunday" },
+		{ short: "M", name: "Monday" },
+		{ short: "T", name: "Tuesday" },
+		{ short: "W", name: "Wednesday" },
+		{ short: "T", name: "Thursday" },
+		{ short: "F", name: "Friday" },
+		{ short: "S", name: "Saturday" },
+	];
+
+	const handleDayToggle = (day: string) => {
+		let updatedDays: string[];
+
+		if (selectedRepeat.includes(day)) {
+			updatedDays = selectedRepeat.filter((d) => d !== day);
+		} else {
+			updatedDays = [...selectedRepeat, day];
+		}
+
+		setSelectedRepeat(updatedDays);
+
+		updateCareSeekerData({
+			job_data: {
+				...careSeekerData.job_data,
+				schedule: {
+					...careSeekerData.job_data.schedule,
+					repeat_on: updatedDays,
+				},
+			},
+		});
+	};
 
 	return (
 		<View className="w-full flex flex-col gap-3 py-5">
 			<DateInput
 				label="Start Date"
 				placeholder="Select date"
-				value={selectedStartDate}
-				onChange={setSelectedStartDate}
+				value={careSeekerData.job_data.schedule.start_date as any}
+				onChange={(value: any) => {
+					updateCareSeekerData({
+						job_data: {
+							...careSeekerData.job_data,
+							schedule: {
+								...careSeekerData.job_data.schedule,
+								start_date: value,
+							},
+						},
+					});
+				}}
 			/>
 
 			<DateInput
 				label="End Date"
 				placeholder="Select date"
-				value={selectedEndDate}
-				onChange={setSelectedEndDate}
+				value={careSeekerData.job_data.schedule.end_date as any}
+				onChange={(value: any) => {
+					updateCareSeekerData({
+						job_data: {
+							...careSeekerData.job_data,
+							schedule: {
+								...careSeekerData.job_data.schedule,
+								end_date: value,
+							},
+						},
+					});
+				}}
 			/>
 
 			<View className="w-full flex flex-row gap-3 items-center">
@@ -162,6 +300,25 @@ const Reoccuring = () => {
 						labelStyle="font-medium text-base"
 						placeholder="Specify No of times"
 						inputStyle="h-14"
+						value={
+							careSeekerData.job_data.schedule.repeat_every
+								.count as any
+						}
+						onChangeText={(value: any) => {
+							updateCareSeekerData({
+								job_data: {
+									...careSeekerData.job_data,
+									schedule: {
+										...careSeekerData.job_data.schedule,
+										repeat_every: {
+											...careSeekerData.job_data.schedule
+												.repeat_every,
+											count: value,
+										},
+									},
+								},
+							});
+						}}
 					/>
 				</View>
 
@@ -175,6 +332,24 @@ const Reoccuring = () => {
 							"Custom",
 						]}
 						placeholder="Weekly"
+						value={
+							careSeekerData.job_data.schedule.repeat_every.period
+						}
+						onChange={(value: any) => {
+							updateCareSeekerData({
+								job_data: {
+									...careSeekerData.job_data,
+									schedule: {
+										...careSeekerData.job_data.schedule,
+										repeat_every: {
+											...careSeekerData.job_data.schedule
+												.repeat_every,
+											period: value,
+										},
+									},
+								},
+							});
+						}}
 					/>
 				</View>
 			</View>
@@ -185,40 +360,32 @@ const Reoccuring = () => {
 				</Text>
 
 				<View className="w-full flex flex-row gap-2 items-center justify-around flex-wrap">
-					{["S", "M", "T", "W", "T", "F", "S"].map((day, index) => (
+					{days.map((day, index) => (
 						<Pressable
+							key={index}
+							onPress={() => handleDayToggle(day.name)}
 							style={({ pressed }) => ({
 								opacity: pressed ? 0.7 : 1,
 								transform: [{ scale: pressed ? 0.98 : 1 }],
 							})}
-							key={index}
-							onPress={() => {
-								if (
-									selectedRepeat.find((val) => val === index)
-								) {
-									setSelectedRepeat(
-										selectedRepeat.filter(
-											(val) => val !== index
-										)
-									);
-								} else {
-									setSelectedRepeat([
-										...selectedRepeat,
-										index,
-									]);
-								}
-							}}
 						>
 							<View
 								className={cn(
-									"w-8 h-8 rounded-full flex items-center justify-center bg-transparent border border-[#E6E6E6]",
-									selectedRepeat.find((val) => val === index)
-										? "border-primary"
+									"w-8 h-8 rounded-full flex items-center justify-center border border-[#E6E6E6]",
+									selectedRepeat.includes(day.name)
+										? "border-primary bg-primary/10"
 										: ""
 								)}
 							>
-								<Text className="text-sm text-foreground">
-									{day}
+								<Text
+									className={cn(
+										"text-sm font-medium",
+										selectedRepeat.includes(day.name)
+											? "text-primary"
+											: "text-foreground"
+									)}
+								>
+									{day.short}
 								</Text>
 							</View>
 						</Pressable>
@@ -231,8 +398,20 @@ const Reoccuring = () => {
 					<TimeInput
 						label="Start Time"
 						placeholder="Select Time"
-						value={selectedStartTime}
-						onChange={setSelectedStartTime}
+						value={
+							careSeekerData.job_data.schedule.start_time as any
+						}
+						onChange={(value: any) => {
+							updateCareSeekerData({
+								job_data: {
+									...careSeekerData.job_data,
+									schedule: {
+										...careSeekerData.job_data.schedule,
+										start_time: value,
+									},
+								},
+							});
+						}}
 					/>
 				</View>
 
@@ -240,8 +419,18 @@ const Reoccuring = () => {
 					<TimeInput
 						label="End Time"
 						placeholder="Select Time"
-						value={selectedEndTime}
-						onChange={setSelectedEndTime}
+						value={careSeekerData.job_data.schedule.end_time as any}
+						onChange={(value: any) => {
+							updateCareSeekerData({
+								job_data: {
+									...careSeekerData.job_data,
+									schedule: {
+										...careSeekerData.job_data.schedule,
+										end_time: value,
+									},
+								},
+							});
+						}}
 					/>
 				</View>
 			</View>
@@ -263,27 +452,40 @@ const Reoccuring = () => {
 				<View className="relative flex flex-1 items-center justify-center pr-9">
 					<MultiSlider
 						isMarkersSeparated={true}
-						customMarkerLeft={(e) => {
-							return (
-								<CustomSliderMarkerLeft
-									currentValue={e.currentValue}
-								/>
-							);
-						}}
-						customMarkerRight={(e) => {
-							return (
-								<CustomSliderMarkerRight
-									currentValue={e.currentValue}
-								/>
-							);
-						}}
+						customMarkerLeft={(e) => (
+							<CustomSliderMarkerLeft
+								currentValue={e.currentValue}
+							/>
+						)}
+						customMarkerRight={(e) => (
+							<CustomSliderMarkerRight
+								currentValue={e.currentValue}
+							/>
+						)}
 						enabledOne={true}
 						enabledTwo={true}
 						min={10}
 						max={3000}
 						step={10}
-						values={[80, 1230]}
+						values={[
+							Number(careSeekerData.job_data.budget.price_min) ||
+								10,
+							Number(careSeekerData.job_data.budget.price_max) ||
+								3000,
+						]}
 						sliderLength={320}
+						onValuesChange={(values) => {
+							updateCareSeekerData({
+								job_data: {
+									...careSeekerData.job_data,
+									budget: {
+										...careSeekerData.job_data.budget,
+										price_min: values[0].toString(),
+										price_max: values[1].toString(),
+									},
+								},
+							});
+						}}
 					/>
 
 					<View className="w-full flex flex-row items-center justify-between bg-red-500">
@@ -355,22 +557,25 @@ const CustomSliderMarkerRight = ({ currentValue }: any) => {
 };
 
 const OneOff = () => {
-	const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(
-		null
-	);
-
-	const [selectedStartTime, setSelectedStartTime] = useState<Date | null>(
-		null
-	);
-	const [selectedEndTime, setSelectedEndTime] = useState<Date | null>(null);
+	const { careSeekerData, updateCareSeekerData } = useCareSeekerStore();
 
 	return (
 		<View className="w-full flex flex-col gap-3 py-5">
 			<DateInput
 				label="Date"
 				placeholder="Select date"
-				value={selectedStartDate}
-				onChange={setSelectedStartDate}
+				value={careSeekerData.job_data.schedule.start_date as any}
+				onChange={(value: any) => {
+					updateCareSeekerData({
+						job_data: {
+							...careSeekerData.job_data,
+							schedule: {
+								...careSeekerData.job_data.schedule,
+								start_date: value,
+							},
+						},
+					});
+				}}
 			/>
 
 			<View className="w-full flex flex-row gap-3 items-center">
@@ -378,8 +583,20 @@ const OneOff = () => {
 					<TimeInput
 						label="Start Time"
 						placeholder="Select Time"
-						value={selectedStartTime}
-						onChange={setSelectedStartTime}
+						value={
+							careSeekerData.job_data.schedule.start_time as any
+						}
+						onChange={(value: any) => {
+							updateCareSeekerData({
+								job_data: {
+									...careSeekerData.job_data,
+									schedule: {
+										...careSeekerData.job_data.schedule,
+										start_time: value,
+									},
+								},
+							});
+						}}
 					/>
 				</View>
 
@@ -387,8 +604,18 @@ const OneOff = () => {
 					<TimeInput
 						label="End Time"
 						placeholder="Select Time"
-						value={selectedEndTime}
-						onChange={setSelectedEndTime}
+						value={careSeekerData.job_data.schedule.end_time as any}
+						onChange={(value: any) => {
+							updateCareSeekerData({
+								job_data: {
+									...careSeekerData.job_data,
+									schedule: {
+										...careSeekerData.job_data.schedule,
+										end_time: value,
+									},
+								},
+							});
+						}}
 					/>
 				</View>
 			</View>
@@ -410,27 +637,40 @@ const OneOff = () => {
 				<View className="relative flex flex-1 items-center justify-center pr-9">
 					<MultiSlider
 						isMarkersSeparated={true}
-						customMarkerLeft={(e) => {
-							return (
-								<CustomSliderMarkerLeft
-									currentValue={e.currentValue}
-								/>
-							);
-						}}
-						customMarkerRight={(e) => {
-							return (
-								<CustomSliderMarkerRight
-									currentValue={e.currentValue}
-								/>
-							);
-						}}
+						customMarkerLeft={(e) => (
+							<CustomSliderMarkerLeft
+								currentValue={e.currentValue}
+							/>
+						)}
+						customMarkerRight={(e) => (
+							<CustomSliderMarkerRight
+								currentValue={e.currentValue}
+							/>
+						)}
 						enabledOne={true}
 						enabledTwo={true}
 						min={10}
 						max={3000}
 						step={10}
-						values={[80, 1230]}
+						values={[
+							Number(careSeekerData.job_data.budget.price_min) ||
+								10,
+							Number(careSeekerData.job_data.budget.price_max) ||
+								3000,
+						]}
 						sliderLength={320}
+						onValuesChange={(values) => {
+							updateCareSeekerData({
+								job_data: {
+									...careSeekerData.job_data,
+									budget: {
+										...careSeekerData.job_data.budget,
+										price_min: values[0].toString(),
+										price_max: values[1].toString(),
+									},
+								},
+							});
+						}}
 					/>
 
 					<View className="w-full flex flex-row items-center justify-between bg-red-500">
@@ -455,6 +695,7 @@ export function SignupModal({
 	onClose: () => void;
 }) {
 	const { height } = useWindowDimensions();
+	const { careSeekerData, updateCareSeekerData } = useCareSeekerStore();
 	return (
 		<Portal>
 			{showModal && (
@@ -486,11 +727,29 @@ export function SignupModal({
 							<Input
 								label="Email address"
 								placeholder="Input email address"
+								value={careSeekerData.user_data.email}
+								onChangeText={(value: any) => {
+									updateCareSeekerData({
+										user_data: {
+											...careSeekerData.user_data,
+											email: value,
+										},
+									});
+								}}
 							/>
 							<Button
 								title="Sign Up"
 								textClassName="text-lg"
-								onPress={onClose}
+								onPress={() => {
+									if (!careSeekerData.user_data.email) {
+										Toast.error(
+											"Please enter your email address"
+										);
+										return;
+									}
+
+									onClose();
+								}}
 								className="mt-12"
 							/>
 						</View>
