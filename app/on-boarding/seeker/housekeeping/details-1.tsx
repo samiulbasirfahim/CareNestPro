@@ -20,7 +20,7 @@ export default function Page() {
 				className="p-6 bg-white"
 				contentContainerStyle={{
 					flexGrow: 1,
-					paddingBottom: 40,
+					paddingBottom: 60,
 				}}
 				contentContainerClassName="gap-6"
 			>

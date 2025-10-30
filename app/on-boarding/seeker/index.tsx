@@ -25,7 +25,7 @@ export default function Page() {
 				className="py-0 w-full bg-white"
 				contentContainerStyle={{
 					flexGrow: 1,
-					paddingBottom: 40,
+					paddingBottom: 60,
 				}}
 				contentContainerClassName="gap-6"
 			>

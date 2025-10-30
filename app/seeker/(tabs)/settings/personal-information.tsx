@@ -67,7 +67,7 @@ export default function PersonalInformation() {
 				className="p-5 bg-white"
 				contentContainerStyle={{
 					flexGrow: 1,
-					paddingBottom: 40,
+					paddingBottom: 60,
 				}}
 				refreshControl={
 					<RefreshControl

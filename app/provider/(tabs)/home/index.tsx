@@ -105,7 +105,7 @@ export default function HomePage() {
 				}
 				contentContainerStyle={{
 					flexGrow: 1,
-					paddingBottom: 40,
+					paddingBottom: 60,
 				}}
 				contentContainerClassName="gap-6"
 			>

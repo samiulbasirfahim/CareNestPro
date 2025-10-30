@@ -58,7 +58,7 @@ export default function Page() {
 				className="p-3 bg-white"
 				contentContainerStyle={{
 					flexGrow: 1,
-					paddingBottom: 40,
+					paddingBottom: 60,
 				}}
 			>
 				<View className="w-full flex flex-wrap flex-row gap-1 py-3">

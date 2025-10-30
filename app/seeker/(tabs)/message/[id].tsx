@@ -49,7 +49,7 @@ export default function MessageInbox() {
 					className="p-5 "
 					contentContainerStyle={{
 						flexGrow: 1,
-						paddingBottom: 40,
+						paddingBottom: 60,
 					}}
 					contentContainerClassName="gap-6"
 				>
