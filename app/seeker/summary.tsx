@@ -49,9 +49,9 @@ export default function Summary() {
 				return;
 			}
 
-			if (response?.status === 200) {
+			if (response?.status === 201) {
 				Toast.success("Care seeker onboarding successful.");
-				router.push("/seeker/(tabs)/home");
+				router.push("/login");
 			}
 		} catch (err: any) {
 			console.log("Error on submit:", err.message);
@@ -90,7 +90,7 @@ export default function Summary() {
 
 				<View className="bg-white p-4 border border-[#E6E6E6] rounded-md">
 					<Text className="text-[#666666] text-base font-normal">
-						{careSeekerData.job_data.summary}
+						{careSeekerData.summary}
 					</Text>
 				</View>
 
