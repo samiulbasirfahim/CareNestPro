@@ -29,13 +29,8 @@ export default function Page() {
 
 	const [showModal, setShowModal] = useState<boolean>(false);
 
-	const {
-		careSeekerData,
-		updateCareSeekerData,
-		generatePreview,
-		error,
-		isLoading,
-	} = useCareSeekerStore();
+	const { careSeekerData, updateCareSeekerData, isLoading } =
+		useCareSeekerStore();
 
 	const onSubmit = async () => {
 		try {
