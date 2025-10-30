@@ -14,13 +14,13 @@ import { useState } from "react";
 import {
 	Image,
 	Pressable,
+	SafeAreaView,
 	ScrollView,
 	Text,
 	useWindowDimensions,
 	View,
 } from "react-native";
 import { Portal } from "react-native-portalize";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { twMerge } from "tailwind-merge";
 import { Toast } from "toastify-react-native";
 

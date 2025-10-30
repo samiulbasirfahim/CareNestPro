@@ -14,6 +14,7 @@ import { useState } from "react";
 import {
 	Image,
 	Pressable,
+	SafeAreaView,
 	ScrollView,
 	Text,
 	useWindowDimensions,
@@ -21,7 +22,6 @@ import {
 } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { Portal } from "react-native-portalize";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { twMerge } from "tailwind-merge";
 import { Toast } from "toastify-react-native";
 

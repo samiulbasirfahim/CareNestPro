@@ -3,8 +3,7 @@ import { Header } from "@/components/ui/header";
 import { Typography } from "@/components/ui/typography";
 import { useCareSeekerStore } from "@/store/careSeekerStore";
 import { useRouter } from "expo-router";
-import { Pressable, ScrollView, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Pressable, SafeAreaView, ScrollView, View } from "react-native";
 import { Toast } from "toastify-react-native";
 
 export default function Page() {
