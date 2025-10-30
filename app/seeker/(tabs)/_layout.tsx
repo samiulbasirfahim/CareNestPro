@@ -1,7 +1,13 @@
 import NoRippleTabButton from "@/components/ui/no-rippler-pressable";
 import { Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { House, Pyramid, ScrollText, Wallet } from "lucide-react-native";
+import {
+	House,
+	Pyramid,
+	ScrollText,
+	Settings,
+	Wallet,
+} from "lucide-react-native";
 import { SafeAreaView, useColorScheme, View } from "react-native";
 
 export default function TabsLayout() {
@@ -145,6 +151,35 @@ export default function TabsLayout() {
 								}}
 							>
 								<ScrollText color={color} size={22} />
+							</View>
+						),
+					}}
+				/>
+				<Tabs.Screen
+					name="settings"
+					options={{
+						title: "Settings",
+						tabBarButton: (props) => (
+							<NoRippleTabButton {...props} />
+						),
+						tabBarIcon: ({ color, focused }) => (
+							<View
+								style={{
+									alignItems: "center",
+									justifyContent: "center",
+									borderTopWidth: 1,
+									borderTopColor: focused
+										? "#1F6E9D"
+										: "transparent",
+									paddingTop: 5,
+									paddingBottom: 5,
+									width: 60,
+									height: 35,
+									position: "absolute",
+									top: -5,
+								}}
+							>
+								<Settings color={color} size={22} />
 							</View>
 						),
 					}}
