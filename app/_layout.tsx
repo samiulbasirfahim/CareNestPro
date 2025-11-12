@@ -19,6 +19,8 @@ export default function RootLayout() {
 					name="provider"
 					options={{ headerShown: false }}
 				/>
+				<Stack.Screen name="seeker" options={{ headerShown: false }} />
+				<Stack.Screen name="choose" options={{ headerShown: false }} />
 			</Stack>
 			<ToastManager />
 		</Host>
