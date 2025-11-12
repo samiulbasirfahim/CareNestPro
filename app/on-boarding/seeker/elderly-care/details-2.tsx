@@ -118,7 +118,7 @@ export default function Page() {
 				contentContainerClassName="gap-6"
 			>
 				<DropDown
-					list={["Copanionship", "Carer"]}
+					list={["Companionship", "Carer"]}
 					title="Elderly care Type"
 					value={elderlyInfo.elderly_care_type}
 					onChange={(value: string) =>
