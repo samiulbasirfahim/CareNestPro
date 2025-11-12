@@ -3,7 +3,7 @@ import {
 	createMaterialTopTabNavigator,
 	MaterialTopTabBarProps,
 } from "@react-navigation/material-top-tabs";
-import { router, withLayoutContext } from "expo-router";
+import { router, useLocalSearchParams, withLayoutContext } from "expo-router";
 import { Pressable, StatusBar, Text, useColorScheme, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -45,6 +45,9 @@ function SplashTabBar({ state, navigation }: MaterialTopTabBarProps) {
 	}
 
 	const insets = useSafeAreaInsets();
+
+	const { choosedType } = useLocalSearchParams();
+
 	return (
 		<>
 			<View
@@ -65,15 +68,18 @@ function SplashTabBar({ state, navigation }: MaterialTopTabBarProps) {
 						})}
 						onPress={() => {
 							if (currentIndex === totalPage - 1) {
-								return router.push("/on-boarding/provider");
+								return router.push(
+									choosedType === "provider"
+										? "/on-boarding/provider"
+										: "/on-boarding/seeker"
+								);
 							}
 							goRight();
 						}}
 					>
 						<Text className="text-primary text-xl">
 							{currentIndex === totalPage - 1
-								? // ? "Get Started"
-									"Care Provider"
+								? "Get Started"
 								: "Next"}
 						</Text>
 					</Pressable>
@@ -90,9 +96,11 @@ function SplashTabBar({ state, navigation }: MaterialTopTabBarProps) {
 					})}
 					className="bg-primary rounded-2xl px-6 py-3 border-2 border-primary"
 					onPress={() => {
-						router.push({
-							pathname: "/on-boarding/seeker",
-						});
+						router.push(
+							choosedType === "provider"
+								? "/on-boarding/provider"
+								: "/on-boarding/seeker"
+						);
 					}}
 				>
 					<Text className="text-white text-center font-semibold text-lg">
