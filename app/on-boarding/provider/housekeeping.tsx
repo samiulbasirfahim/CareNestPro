@@ -157,6 +157,9 @@ export default function Page() {
 								borderColor: "#CCCCCC",
 							}}
 							fillColor="#0D99C9"
+							onPress={() => {
+								setShowModal(true);
+							}}
 						/>
 					</View>
 					<Typography className="flex-1">
