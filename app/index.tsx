@@ -22,7 +22,7 @@ export default function Page() {
 					return router.push("/seeker/(tabs)/home");
 				}
 			} else {
-				return router.push("/(public)/splash");
+				return router.push("/choose");
 			}
 		};
 		init();
