@@ -1,11 +1,21 @@
 import LOCATION from "@/assets/svgs/location.svg";
+import { baseURL } from "@/config";
+import { useCareProviderStore } from "@/store/careProviderStore";
+import axios from "axios";
+import * as Device from "expo-device"; // Optional: to check if running on real device
+import * as Location from "expo-location";
+import { useState } from "react";
 import {
+	Alert,
 	ImageBackground,
+	Linking,
+	Platform,
 	Pressable,
 	useWindowDimensions,
 	View,
 } from "react-native";
 import { Portal } from "react-native-portalize";
+import { Toast } from "toastify-react-native";
 import { Button } from "../ui/button";
 import { Typography } from "../ui/typography";
 
@@ -17,6 +27,87 @@ export function EnableLocationModal({
 	onClose: () => void;
 }) {
 	const { height } = useWindowDimensions();
+	const [isLoading, setIsLoading] = useState(false);
+
+	const { careProviderData, updateCareProviderData } = useCareProviderStore();
+
+	const handleAllowLocation = async () => {
+		setIsLoading(true);
+
+		// Quick check: Doesn't work on Android emulators
+		if (Platform.OS === "android" && !Device.isDevice) {
+			Toast.error(
+				"Oops!, Location needs a real device—try on your phone."
+			);
+			setIsLoading(false);
+			return;
+		}
+
+		// Step 1: Request foreground permission
+		const { status } = await Location.requestForegroundPermissionsAsync();
+		if (status !== "granted") {
+			Alert.alert(
+				"Permission Needed",
+				"We need your location to personalize your experience. You can enable it in settings.",
+				[
+					{
+						text: "Open Settings",
+						onPress: () => Linking.openSettings(),
+					},
+				]
+			);
+			setIsLoading(false);
+			return;
+		}
+
+		// Step 2: Get precise current location
+		try {
+			const location = await Location.getCurrentPositionAsync({
+				accuracy: Location.Accuracy.High, // Or .Highest for even more precision (uses GPS + WiFi)
+				timeInterval: 1000, // Update every second if needed
+				distanceInterval: 1, // Minimum distance change to trigger update
+			});
+
+			const { latitude, longitude } = location.coords;
+			console.log("Precise Coordinates:", { latitude, longitude });
+
+			// Now do something with the coords, e.g., save to state, navigate to next screen, or send to your backend
+			// Example: setLocation({ lat: latitude, lng: longitude });
+
+			//   Alert.alert('Success!', `Got your location: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`);
+			const response = await axios.get(
+				`${baseURL}/api/location/reverse-geocode/?lat=${latitude}&lon=${longitude}`
+			);
+			console.log("Reverse Geolocation response:", response.data);
+
+			if (response.status === 200) {
+				updateCareProviderData({
+					profile_data: {
+						...careProviderData.profile_data,
+						country: response.data?.country,
+						state: response.data?.state,
+						city: response.data?.city,
+						zip_code: response.data?.zip_code,
+						nationality: response.data?.nationality,
+					},
+				});
+				Toast.success("Location successfully fetched");
+				onClose();
+			} else {
+				Toast.error(
+					response.data?.message ||
+						response.data?.detail ||
+						"Location cannot fetched. Please try again later."
+				);
+			}
+		} catch (error: any) {
+			console.error("Location error:", error);
+			Alert.alert("Error", `Couldn't get location: ${error.message}`);
+		}
+
+		setIsLoading(false);
+	};
+
 	return (
 		<Portal>
 			{showModal && (
@@ -61,9 +152,14 @@ export function EnableLocationModal({
 								them on your phone settings
 							</Typography>
 							<Button
-								title="Allow only while using this App"
 								textClassName="text-lg"
-								onPress={onClose}
+								title={
+									isLoading
+										? "Loading..."
+										: "Allow only while using this App"
+								}
+								onPress={handleAllowLocation}
+								disabled={isLoading}
 							/>
 							<Button
 								variant="primary-outline"
