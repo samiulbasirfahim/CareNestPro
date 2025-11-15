@@ -11,6 +11,7 @@ interface DateInputProps {
 	onChange?: (date: Date | null) => void;
 	className?: string;
 	iconColor?: string;
+	maximumDate?: Date;
 }
 
 const DateInput: React.FC<DateInputProps> = ({
@@ -20,6 +21,7 @@ const DateInput: React.FC<DateInputProps> = ({
 	onChange,
 	className,
 	iconColor,
+	maximumDate,
 }) => {
 	const [date, setDate] = useState<Date>(value || new Date());
 	const [showPicker, setShowPicker] = useState(false);
@@ -29,15 +31,10 @@ const DateInput: React.FC<DateInputProps> = ({
 
 	const onDateChange = (event: any, selectedDate?: Date) => {
 		const currentDate = selectedDate || date;
-		setShowPicker(Platform.OS === "ios"); // On iOS, keep modal open; on Android, close it
+		setShowPicker(Platform.OS === "ios");
 		setDate(currentDate);
-		setInputValue(currentDate.toISOString().split("T")[0]); // Format as YYYY-MM-DD
+		setInputValue(currentDate.toISOString().split("T")[0]);
 		onChange?.(currentDate);
-	};
-
-	const formatDateForDisplay = (date: Date): string => {
-		// Customize format here, e.g., using date-fns: import { format } from 'date-fns'; return format(date, 'MM/dd/yyyy');
-		return date.toISOString().split("T")[0];
 	};
 
 	return (
@@ -70,14 +67,14 @@ const DateInput: React.FC<DateInputProps> = ({
 				</View>
 			</Pressable>
 
-			{/* Date Picker Modal */}
+			{/* Conditionally include maximumDate only when provided */}
 			{showPicker && (
 				<DateTimePicker
 					value={date}
 					mode="date"
-					display={Platform.OS === "ios" ? "spinner" : "default"} // Matches native UI
+					display={Platform.OS === "ios" ? "spinner" : "default"}
 					onChange={onDateChange}
-					maximumDate={new Date()} // Optional: Limit to today or future
+					{...(maximumDate ? { maximumDate } : {})}
 				/>
 			)}
 		</View>
