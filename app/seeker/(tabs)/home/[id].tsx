@@ -27,7 +27,7 @@ export default function JobDetails() {
 
 	// if no id, redirect to home
 	if (!id) {
-		router.push("/provider/(tabs)/home");
+		router.push("/seeker/(tabs)/home");
 		return null;
 	}
 

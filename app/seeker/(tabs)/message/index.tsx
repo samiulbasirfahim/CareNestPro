@@ -56,7 +56,7 @@ export default function Message() {
 					<Pressable
 						key={index}
 						onPress={() =>
-							router.push("/provider/(tabs)/message/[id]")
+							router.push("/seeker/(tabs)/message/[id]")
 						}
 					>
 						<MessageCard />

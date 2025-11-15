@@ -191,7 +191,7 @@ function ClosedTabItemCard({ item }: any) {
 	const router = useRouter();
 	return (
 		<Pressable
-			onPress={() => router.push(`/provider/activities/${item.id}`)}
+		// onPress={() => router.push(`/seeker/activities/${item.id}`)}
 		>
 			<View className="w-full flex flex-col gap-3 border border-[#E6E6E6] bg-white rounded-lg p-4">
 				<Text className="text-[#4D4D4D] text-base font-medium">

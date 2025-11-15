@@ -32,7 +32,7 @@ export default function Settings() {
 			>
 				<Pressable
 					onPress={() =>
-						router.push("/provider/settings/verify-identity")
+						router.push("/seeker/settings/verify-identity")
 					}
 				>
 					<View className="w-full flex flex-row items-center justify-between p-3 py-4 border border-[#E6E6E6] bg-white rounded-lg">
@@ -52,7 +52,7 @@ export default function Settings() {
 
 				<Pressable
 					onPress={() =>
-						router.push("/provider/settings/personal-information")
+						router.push("/seeker/settings/personal-information")
 					}
 				>
 					<View className="w-full flex flex-row items-center justify-between p-3 py-4 border border-[#E6E6E6] bg-white rounded-lg">
@@ -66,7 +66,7 @@ export default function Settings() {
 				</Pressable>
 
 				<Pressable
-					onPress={() => router.push("/provider/settings/payment")}
+					onPress={() => router.push("/seeker/settings/payment")}
 				>
 					<View className="w-full flex flex-row items-center justify-between p-3 py-4 border border-[#E6E6E6] bg-white rounded-lg">
 						<View className="flex flex-row items-center gap-3">
@@ -79,7 +79,7 @@ export default function Settings() {
 				</Pressable>
 
 				<Pressable
-					onPress={() => router.push("/provider/settings/password")}
+					onPress={() => router.push("/seeker/settings/password")}
 				>
 					<View className="w-full flex flex-row items-center justify-between p-3 py-4 border border-[#E6E6E6] bg-white rounded-lg">
 						<View className="flex flex-row items-center gap-3">
