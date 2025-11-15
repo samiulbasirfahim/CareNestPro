@@ -1,15 +1,29 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useId, useState } from "react";
-import { Pressable, Text, TextInput, TextInputProps, View } from "react-native";
+import {
+	KeyboardTypeOptions,
+	Pressable,
+	Text,
+	TextInput,
+	TextInputProps,
+	View,
+} from "react-native";
 import { twMerge } from "tailwind-merge";
 
 type Props = {
 	label: string;
 	labelStyle?: string;
 	inputStyle?: string;
+	keyboardType?: KeyboardTypeOptions;
 } & TextInputProps;
 
-export function Input({ label, labelStyle, inputStyle, ...props }: Props) {
+export function Input({
+	label,
+	labelStyle,
+	inputStyle,
+	keyboardType,
+	...props
+}: Props) {
 	const id = useId();
 	return (
 		<View className="items-start gap-2 w-full">
@@ -20,6 +34,7 @@ export function Input({ label, labelStyle, inputStyle, ...props }: Props) {
 				{label}
 			</Text>
 			<TextInput
+				keyboardType={keyboardType || "default"}
 				accessibilityLabelledBy={id}
 				{...props}
 				className={twMerge(
