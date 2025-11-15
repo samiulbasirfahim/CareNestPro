@@ -1457,6 +1457,7 @@ export default function Page() {
 				<Input
 					label="Years of experience"
 					placeholder="Input years of experience"
+					keyboardType="number-pad"
 					value={careProviderData.profile_data.years_of_experience.toString()}
 					onChangeText={(value: any) => {
 						updateCareProviderData({
