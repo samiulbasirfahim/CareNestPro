@@ -159,6 +159,7 @@ export default function Page() {
 							<DateInput
 								label={`Age of child ${index + 1}`}
 								placeholder="DD-MM-YYYY"
+								maximumDate={new Date()}
 								value={child.age as any}
 								onChange={(value: any) => {
 									const updatedChildren = [
